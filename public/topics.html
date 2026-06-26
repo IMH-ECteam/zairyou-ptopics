@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KENJE GROUP TOPICS 2026年6月号</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    background: #FFFCE8;
+    color: #3D3D3D;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* 背景装飾レイヤー */
+  .bg-deco {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bg-deco svg { position: absolute; opacity: 0.055; }
+
+  /* ヘッダー */
+  .header {
+    background: #FFE566;
+    border-bottom: 4px solid #3D3D3D;
+    padding: 40px 24px 36px;
+    position: relative;
+    z-index: 1;
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .header-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #3D3D3D;
+    font-weight: 700;
+    margin-bottom: 6px;
+    opacity: 0.55;
+    text-transform: uppercase;
+  }
+  .header-title {
+    font-family: 'Barlow Condensed', 'Noto Sans JP', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: #3D3D3D;
+    letter-spacing: 0px;
+    line-height: 1.0;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: #3D3D3D;
+    margin-top: 8px;
+    opacity: 0.65;
+    letter-spacing: 1px;
+  }
+  .header-right { text-align: right; }
+  .header-badge {
+    display: inline-block;
+    background: #3D3D3D;
+    color: #FFE566;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 7px 18px;
+    border-radius: 24px;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+  .header-vol {
+    font-size: 11px;
+    color: #3D3D3D;
+    opacity: 0.5;
+    letter-spacing: 1px;
+  }
+
+  /* アクセントライン */
+  .accent-bar {
+    background: #3D3D3D;
+    height: 3px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* TOC */
+  .toc {
+    background: #3D3D3D;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .toc a {
+    text-decoration: none;
+    padding: 15px 32px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255,229,102,0.85);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.2s;
+    letter-spacing: 1px;
+  }
+  .toc a:last-child { border-right: none; }
+  .toc a:hover { background: #FFE566; color: #3D3D3D; }
+
+  /* コンテナ */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 44px 16px 72px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* セクション */
+  .section { margin-bottom: 56px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 3px solid #3D3D3D;
+  }
+  .section-tag {
+    background: #3D3D3D;
+    color: #FFE566;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 5px 12px;
+    border-radius: 3px;
+    letter-spacing: 4px;
+    white-space: nowrap;
+  }
+  .section-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #3D3D3D;
+    letter-spacing: 1px;
+  }
+  .section-date {
+    margin-left: auto;
+    font-size: 10px;
+    color: #3D3D3D;
+    opacity: 0.4;
+    font-weight: 700;
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+
+  /* カードグリッド */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+    gap: 18px;
+  }
+
+  /* カード */
+  .card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2.5px solid #3D3D3D;
+    box-shadow: 5px 5px 0 #3D3D3D;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 #3D3D3D;
+  }
+
+  /* カードナンバーバー */
+  .card-numbar {
+    background: #3D3D3D;
+    color: #FFE566;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    letter-spacing: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* カード画像 */
+  .card-img-wrap {
+    width: 100%;
+    height: 155px;
+    overflow: hidden;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.3s;
+  }
+  .card:hover .card-img-wrap img { transform: scale(1.04); }
+  .card-img-placeholder { font-size: 50px; }
+
+  /* カード本体 */
+  .card-body {
+    padding: 14px 16px 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .card-badge {
+    display: inline-block;
+    background: #FFE566;
+    color: #3D3D3D;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 900;
+    width: fit-content;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: #3D3D3D;
+    line-height: 1.45;
+  }
+  .card-summary {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.65;
+    flex: 1;
+  }
+  .card-meta {
+    font-size: 11px;
+    color: #888;
+    border-top: 1px solid #eee;
+    padding-top: 8px;
+    margin-top: 2px;
+  }
+  .card-meta strong { color: #555; }
+
+  .detail-btn {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    padding: 9px 0;
+    border-radius: 4px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    background: #3D3D3D;
+    color: #FFE566;
+    letter-spacing: 1px;
+    transition: all 0.18s;
+    border: 2px solid #3D3D3D;
+  }
+  .detail-btn:hover {
+    background: #FFE566;
+    color: #3D3D3D;
+  }
+
+  /* フッター */
+  .footer {
+    background: #3D3D3D;
+    color: #FFE566;
+    text-align: center;
+    padding: 30px 24px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+  }
+  .footer p + p { margin-top: 5px; opacity: 0.45; font-size: 11px; }
+
+  @media (max-width: 600px) {
+    .header-title { font-size: 32px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .toc a { padding: 13px 18px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 背景の美容アイコン装飾 -->
+<div class="bg-deco">
+
+  <!-- ドライヤー（左上） -->
+  <svg width="180" height="160" style="top:2%;left:1%;" viewBox="0 0 180 160">
+    <ellipse cx="80" cy="70" rx="60" ry="45" fill="#3D3D3D"/>
+    <rect x="65" y="110" width="18" height="40" rx="8" fill="#3D3D3D"/>
+    <rect x="130" y="55" width="50" height="16" rx="8" fill="#3D3D3D"/>
+    <circle cx="70" cy="68" r="18" fill="#F5C400"/>
+    <circle cx="70" cy="68" r="10" fill="#3D3D3D"/>
+    <line x1="142" y1="40" x2="155" y2="30" stroke="#3D3D3D" stroke-width="6" stroke-linecap="round"/>
+    <line x1="155" y1="63" x2="170" y2="63" stroke="#3D3D3D" stroke-width="6" stroke-linecap="round"/>
+    <line x1="142" y1="85" x2="155" y2="95" stroke="#3D3D3D" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+
+  <!-- シャンプーボトル（右上） -->
+  <svg width="90" height="160" style="top:8%;right:4%;" viewBox="0 0 90 160">
+    <rect x="20" y="55" width="50" height="90" rx="14" fill="#3D3D3D"/>
+    <rect x="28" y="30" width="34" height="30" rx="6" fill="#3D3D3D"/>
+    <rect x="34" y="14" width="22" height="20" rx="5" fill="#3D3D3D"/>
+    <rect x="38" y="5" width="14" height="12" rx="4" fill="#3D3D3D"/>
+    <rect x="28" y="80" width="34" height="5" rx="2" fill="#F5C400"/>
+    <rect x="28" y="92" width="24" height="4" rx="2" fill="#F5C400"/>
+  </svg>
+
+  <!-- ハサミ（左下） -->
+  <svg width="130" height="130" style="bottom:18%;left:3%;" viewBox="0 0 100 100">
+    <circle cx="22" cy="28" r="14" fill="none" stroke="#3D3D3D" stroke-width="6"/>
+    <circle cx="22" cy="72" r="14" fill="none" stroke="#3D3D3D" stroke-width="6"/>
+    <line x1="33" y1="33" x2="85" y2="85" stroke="#3D3D3D" stroke-width="6" stroke-linecap="round"/>
+    <line x1="33" y1="67" x2="85" y2="15" stroke="#3D3D3D" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="22" cy="28" r="5" fill="#F5C400"/>
+    <circle cx="22" cy="72" r="5" fill="#F5C400"/>
+  </svg>
+
+  <!-- コーム（右下） -->
+  <svg width="160" height="75" style="bottom:12%;right:5%;" viewBox="0 0 160 50">
+    <rect x="0" y="0" width="160" height="18" rx="6" fill="#3D3D3D"/>
+    <rect x="12" y="14" width="8" height="30" rx="4" fill="#3D3D3D"/>
+    <rect x="28" y="14" width="8" height="30" rx="4" fill="#3D3D3D"/>
+    <rect x="44" y="14" width="8" height="30" rx="4" fill="#3D3D3D"/>
+    <rect x="60" y="14" width="8" height="30" rx="4" fill="#3D3D3D"/>
+    <rect x="76" y="14" width="8" height="30" rx="4" fill="#3D3D3D"/>
+    <rect x="92" y="14" width="8" height="30" rx="4" fill="#3D3D3D"/>
+    <rect x="108" y="14" width="8" height="30" rx="4" fill="#3D3D3D"/>
+    <rect x="124" y="14" width="8" height="30" rx="4" fill="#3D3D3D"/>
+    <rect x="140" y="14" width="8" height="30" rx="4" fill="#3D3D3D"/>
+  </svg>
+
+  <!-- コンディショナーボトル（中央左） -->
+  <svg width="80" height="130" style="top:42%;left:0.5%;" viewBox="0 0 70 110">
+    <ellipse cx="35" cy="82" rx="22" ry="26" fill="#3D3D3D"/>
+    <rect x="23" y="38" width="24" height="30" rx="4" fill="#3D3D3D"/>
+    <ellipse cx="35" cy="38" rx="12" ry="6" fill="#3D3D3D"/>
+    <rect x="30" y="24" width="10" height="17" rx="3" fill="#3D3D3D"/>
+    <rect x="14" y="72" width="42" height="5" rx="2" fill="#F5C400"/>
+    <rect x="18" y="83" width="30" height="4" rx="2" fill="#F5C400"/>
+  </svg>
+
+  <!-- スパークル（右中） -->
+  <svg width="70" height="70" style="top:35%;right:1.5%;" viewBox="0 0 60 60">
+    <polygon points="30,5 34,24 53,24 38,36 43,55 30,43 17,55 22,36 7,24 26,24" fill="#3D3D3D"/>
+  </svg>
+
+  <!-- ブラシ（左中） -->
+  <svg width="60" height="120" style="top:62%;left:2%;" viewBox="0 0 40 100">
+    <rect x="14" y="0" width="12" height="60" rx="4" fill="#3D3D3D"/>
+    <ellipse cx="20" cy="75" rx="14" ry="20" fill="#3D3D3D"/>
+    <ellipse cx="20" cy="68" rx="9" ry="6" fill="#F5C400"/>
+  </svg>
+
+  <!-- スパークル小（各所） -->
+  <svg width="30" height="30" style="top:55%;right:8%;" viewBox="0 0 30 30">
+    <line x1="15" y1="2" x2="15" y2="28" stroke="#3D3D3D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="2" y1="15" x2="28" y2="15" stroke="#3D3D3D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="5" y1="5" x2="25" y2="25" stroke="#3D3D3D" stroke-width="2" stroke-linecap="round"/>
+    <line x1="25" y1="5" x2="5" y2="25" stroke="#3D3D3D" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+  <svg width="25" height="25" style="top:25%;left:12%;" viewBox="0 0 30 30">
+    <line x1="15" y1="2" x2="15" y2="28" stroke="#3D3D3D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="2" y1="15" x2="28" y2="15" stroke="#3D3D3D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="5" y1="5" x2="25" y2="25" stroke="#3D3D3D" stroke-width="2" stroke-linecap="round"/>
+    <line x1="25" y1="5" x2="5" y2="25" stroke="#3D3D3D" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+  <svg width="20" height="20" style="bottom:35%;right:15%;" viewBox="0 0 30 30">
+    <line x1="15" y1="2" x2="15" y2="28" stroke="#3D3D3D" stroke-width="3" stroke-linecap="round"/>
+    <line x1="2" y1="15" x2="28" y2="15" stroke="#3D3D3D" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+
+</div>
+
+<!-- ヘッダー -->
+<header class="header">
+  <div class="header-inner">
+    <div>
+      <div class="header-label">Kenji Group · 商品戦略部</div>
+      <div class="header-title">材料トピックス</div>
+      <div class="header-sub">講習・セミナー案内 ／ キャンペーン案内</div>
+    </div>
+    <div class="header-right">
+      <div class="header-badge">KENJE GROUP TOPICS</div>
+      <div class="header-vol">2026年 6月号　|　発行：2026.6.18</div>
+    </div>
+  </div>
+</header>
+
+<!-- ナビ -->
+<nav class="toc">
+  <a href="#kōshū">📚 講習・セミナー案内</a>
+  <a href="#campaign">🎁 キャンペーン案内</a>
+</nav>
+
+<div class="container">
+
+  <!-- 📚 講習案内 -->
+  <section class="section" id="kōshū">
+    <div class="section-header">
+      <span class="section-tag">SEMINAR</span>
+      <span class="section-title">📚 講習・セミナー案内</span>
+      <span class="section-date">2026 JUNE</span>
+    </div>
+    <div class="cards-grid">
+
+      <div class="card">
+        <div class="card-numbar">
+          <span>SEMINAR · 01</span>
+          <span>6/29 MON · ONLINE</span>
+        </div>
+        <div class="card-img-wrap">
+          <img
+            src="https://drive.google.com/thumbnail?id=1euKeiIdz8y2EthIVo_hSt138l5k0qkJf&sz=w480"
+            alt="クールシャンプー攻略セミナー"
+            onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'card-img-placeholder\'>🌊</span>';"
+          >
+        </div>
+        <div class="card-body">
+          <span class="card-badge">オンライン 8:00〜 約30分</span>
+          <div class="card-title">クールシャンプー攻略セミナー</div>
+          <div class="card-summary">夏本番前に！上位サロンのリアルな販売術を30分で習得。3ステップのおすすめ法を伝授。</div>
+          <div class="card-meta"><strong>⏰ 申込：</strong>参加フォームより事前登録必須</div>
+          <a href="https://works.do/5fJPZEU" target="_blank" class="detail-btn">
+            📝 申込フォームはこちら →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 🎁 キャンペーン案内 -->
+  <section class="section" id="campaign">
+    <div class="section-header">
+      <span class="section-tag">CAMPAIGN</span>
+      <span class="section-title">🎁 キャンペーン案内</span>
+      <span class="section-date">2026 JUNE</span>
+    </div>
+    <div class="cards-grid">
+
+      <!-- 01 -->
+      <div class="card">
+        <div class="card-numbar">
+          <span>CAMPAIGN · 01</span><span>〜7月末</span>
+        </div>
+        <div class="card-img-wrap">
+          <img src="https://drive.google.com/thumbnail?id=15p46Af_IDaore_LeAFDuAl4JAY2iojxn&sz=w480" alt="e:amii 半額セール"
+            onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'card-img-placeholder\'>🔥</span>';">
+        </div>
+        <div class="card-body">
+          <span class="card-badge">🔥 在庫一掃 50%OFF</span>
+          <div class="card-title">e:amii 期間限定 半額セール</div>
+          <div class="card-summary">スキンウォッシュ500ml・ジュレ旧01（1000g）が50%OFF！なくなり次第終売。</div>
+          <div class="card-meta"><strong>📅 期間：</strong>6月3日（水）〜 7月31日（金）</div>
+          <a href="https://board.worksmobile.com/main/article/4080000000822715806?searchKind=basic&keyword=amii%E6%9C%9F%E9%96%93%E9%99%90%E5%AE%9A%E5%8D%8A%E9%A1%8D%E3%82%BB%E3%83%BC%E3%83%AB&boardNo=0&t=81672&isSearch=true" target="_blank" class="detail-btn">📄 詳細を見る →</a>
+        </div>
+      </div>
+
+      <!-- 02 -->
+      <div class="card">
+        <div class="card-numbar">
+          <span>CAMPAIGN · 02</span><span>〜7月末</span>
+        </div>
+        <div class="card-img-wrap">
+          <img src="https://drive.google.com/thumbnail?id=1E1EM8EahzPi8hHicngFv5eXvOZBZMqEC&sz=w480" alt="アミー詰替キャンペーン"
+            onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'card-img-placeholder\'>💧</span>';">
+        </div>
+        <div class="card-body">
+          <span class="card-badge">💧 詰替1L 全品10%OFF</span>
+          <div class="card-title">e:amii 詰替（1L）全品 10%OFF</div>
+          <div class="card-summary">モイストケアシリーズ・リペアミルクなど7商品が対象。まとめ仕入れのチャンス！</div>
+          <div class="card-meta"><strong>📅 期間：</strong>2026年6月15日〜7月31日</div>
+          <a href="https://board.worksmobile.com/main/article/4080000000826460694?searchKind=basic&keyword=amii%E6%9C%9F%E9%96%93%E9%99%90%E5%AE%9A%E5%8D%8A%E9%A1%8D%E3%82%BB%E3%83%BC%E3%83%AB&boardNo=0&t=81672&isSearch=true" target="_blank" class="detail-btn">📄 詳細を見る →</a>
+        </div>
+      </div>
+
+      <!-- 03 -->
+      <div class="card">
+        <div class="card-numbar">
+          <span>CAMPAIGN · 03</span><span>〜6月末</span>
+        </div>
+        <div class="card-img-wrap">
+          <img src="https://drive.google.com/thumbnail?id=1-n9alSyt7innSuTBFkcmJvrvf1vSRjmG&sz=w480" alt="ASEAVE キャンペーン"
+            onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'card-img-placeholder\'>🌿</span>';">
+        </div>
+        <div class="card-body">
+          <span class="card-badge">🌿 ケンジ限定特典あり</span>
+          <div class="card-title">ASEAVE（アシーブ）購入特典キャンペーン</div>
+          <div class="card-summary">90g 10個→12個、45g 10個→11個プレゼント！LABは実質4掛の限定特典も。</div>
+          <div class="card-meta"><strong>📅 期間：</strong>〜2026年6月30日（火）</div>
+          <a href="https://board.worksmobile.com/main/article/4080000000726965690?searchKind=basic&keyword=%E3%82%A2%E3%82%B7%E3%83%BC%E3%83%96&boardNo=0&t=72405&isSearch=true" target="_blank" class="detail-btn">📄 詳細・発注方法を見る →</a>
+        </div>
+      </div>
+
+      <!-- 04 -->
+      <div class="card">
+        <div class="card-numbar">
+          <span>CAMPAIGN · 04</span><span>数量限定</span>
+        </div>
+        <div class="card-img-wrap">
+          <img src="https://drive.google.com/thumbnail?id=15s7DrZm2MSqV7zTxoUd9OMDPFNf3toP8&sz=w480" alt="135°スクラブ＆バスシュガー"
+            onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'card-img-placeholder\'>🎁</span>';">
+        </div>
+        <div class="card-body">
+          <span class="card-badge">🎁 1+1 在庫限り終了</span>
+          <div class="card-title">135°スクラブ＆バスシュガー 1+1キャンペーン<br><small style="font-weight:400;color:#999;">ガルプロデュース</small></div>
+          <div class="card-summary">1個ご注文でもう1個プレゼント！実質3掛相当（2,145円）でご提供。数量限定・なくなり次第終了。</div>
+          <div class="card-meta"><strong>💴 上代：</strong>7,150円　<strong>通常卸：</strong>4,290円（6掛）</div>
+          <a href="https://board.worksmobile.com/main/article/4080000000830096026?t=49071&boardNo=4080000000005107062&isShowFilesArea=false" target="_blank" class="detail-btn">📄 詳細を見る →</a>
+        </div>
+      </div>
+
+      <!-- 05 -->
+      <div class="card">
+        <div class="card-numbar">
+          <span>CAMPAIGN · 05</span><span>〜7月末</span>
+        </div>
+        <div class="card-img-wrap">
+          <img src="https://drive.google.com/thumbnail?id=1Xqm2fJGncpDXIql3LYB19U3DFJ8Xp60T&sz=w480" alt="ガルプロデュース 10+1"
+            onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'card-img-placeholder\'>📦</span>';">
+        </div>
+        <div class="card-body">
+          <span class="card-badge">📦 10+1 多数ブランド対象</span>
+          <div class="card-title">ガルプロデュース 10+1キャンペーン<br><small style="font-weight:400;color:#999;">ガルプロデュース</small></div>
+          <div class="card-summary">同一商品10個ご購入で1個サービス！ジェームストランス・ステラボーテ・HONO・IL など多数対象。</div>
+          <div class="card-meta"><strong>📅 期間：</strong>〜2026年7月31日</div>
+          <a href="https://board.worksmobile.com/main/article/4080000000827723122?searchKind=basic&keyword=amii%E6%9C%9F%E9%96%93%E9%99%90%E5%AE%9A%E5%8D%8A%E9%A1%8D%E3%82%BB%E3%83%BC%E3%83%AB&boardNo=0&t=81672&isSearch=true" target="_blank" class="detail-btn">📄 詳細を見る →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- フッター -->
+<footer class="footer">
+  <p>KENJE GROUP TOPICS　ケンジグループ材料トピックス 2026年6月号</p>
+  <p>発行：商品戦略部　｜　お問い合わせは商品戦略部まで</p>
+</footer>
+
+</body>
+</html>
