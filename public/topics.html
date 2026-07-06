@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KENJE GROUP TOPICS 2026年6月号</title>
+<title>KENJE GROUP TOPICS 2026年7月号 W1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -129,7 +129,7 @@
   }
 
   /* セクション */
-  .section { margin-bottom: 56px; }
+  .section { margin-bottom: 60px; }
 
   .section-header {
     display: flex;
@@ -172,6 +172,11 @@
     grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
     gap: 18px;
   }
+  .cards-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 18px;
+  }
 
   /* カード */
   .card {
@@ -212,13 +217,36 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
   .card-img-wrap img {
     width: 100%; height: 100%; object-fit: cover;
     transition: transform 0.3s;
   }
   .card:hover .card-img-wrap img { transform: scale(1.04); }
-  .card-img-placeholder { font-size: 50px; }
+  .card-img-placeholder {
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f7f3d8 0%, #ede8c0 100%);
+  }
+
+  /* トピックス カード（ワイド） */
+  .card-wide {
+    display: flex;
+    flex-direction: row;
+  }
+  .card-wide .card-img-wrap {
+    width: 200px;
+    min-width: 200px;
+    height: auto;
+  }
+  .card-wide .card-body {
+    flex: 1;
+  }
 
   /* カード本体 */
   .card-body {
@@ -232,6 +260,26 @@
     display: inline-block;
     background: #FFE566;
     color: #3D3D3D;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 900;
+    width: fit-content;
+  }
+  .card-badge-red {
+    display: inline-block;
+    background: #FF4B4B;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 900;
+    width: fit-content;
+  }
+  .card-badge-green {
+    display: inline-block;
+    background: #2AA76A;
+    color: white;
     padding: 3px 10px;
     border-radius: 3px;
     font-size: 10px;
@@ -259,6 +307,50 @@
   }
   .card-meta strong { color: #555; }
 
+  /* 商品リスト */
+  .products-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+    color: #555;
+  }
+  .products-list li {
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.4;
+  }
+  .products-list li::before {
+    content: '▸';
+    color: #FFE566;
+    background: #3D3D3D;
+    font-size: 9px;
+    padding: 1px 4px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* 強調ポイント */
+  .point-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 4px;
+  }
+  .point-chip {
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 2px 9px;
+    font-size: 10.5px;
+    color: #555;
+    font-weight: 600;
+  }
+
+  /* 詳細ボタン */
   .detail-btn {
     display: block;
     text-align: center;
@@ -279,6 +371,258 @@
     background: #FFE566;
     color: #3D3D3D;
   }
+  .detail-btn-outline {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    padding: 8px 0;
+    border-radius: 4px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    background: transparent;
+    color: #3D3D3D;
+    letter-spacing: 1px;
+    transition: all 0.18s;
+    border: 2px solid #3D3D3D;
+  }
+  .detail-btn-outline:hover {
+    background: #3D3D3D;
+    color: #FFE566;
+  }
+
+  /* キャンペーン価格ハイライト */
+  .price-highlight {
+    background: #FFF3CD;
+    border: 1.5px solid #FFE566;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin-top: 6px;
+    font-size: 12px;
+  }
+  .price-highlight .price-label {
+    font-size: 10px;
+    color: #888;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+  }
+  .price-highlight .price-main {
+    font-size: 16px;
+    font-weight: 900;
+    color: #E53935;
+  }
+  .price-highlight .price-normal {
+    font-size: 11px;
+    color: #999;
+    text-decoration: line-through;
+    margin-left: 6px;
+  }
+
+  /* セミナーカード */
+  .seminar-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2.5px solid #3D3D3D;
+    box-shadow: 5px 5px 0 #3D3D3D;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .seminar-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 #3D3D3D;
+  }
+  .seminar-img {
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    overflow: hidden;
+  }
+  .seminar-img img {
+    width: 100%; height: auto; max-height: 100%; object-fit: contain; background: #f0f0f0;
+  }
+  .seminar-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+  }
+  .seminar-date-box {
+    background: #3D3D3D;
+    color: #FFE566;
+    border-radius: 5px;
+    padding: 10px 14px;
+    font-weight: 900;
+  }
+  .seminar-date-main {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+  .seminar-date-sub {
+    font-size: 12px;
+    margin-top: 4px;
+    opacity: 0.85;
+  }
+  .seminar-points {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .seminar-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    color: #555;
+  }
+  .seminar-point-num {
+    background: #FFE566;
+    color: #3D3D3D;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* 準備中プレースホルダー */
+  .coming-soon {
+    background: white;
+    border-radius: 8px;
+    border: 2.5px dashed #ccc;
+    padding: 48px 24px;
+    text-align: center;
+    color: #aaa;
+  }
+  .coming-soon-icon { font-size: 40px; margin-bottom: 12px; }
+  .coming-soon-text {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #bbb;
+  }
+  .coming-soon-sub {
+    font-size: 11px;
+    margin-top: 6px;
+    color: #ccc;
+    letter-spacing: 1px;
+  }
+
+  /* トピックスビッグカード */
+  .topic-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2.5px solid #3D3D3D;
+    box-shadow: 5px 5px 0 #3D3D3D;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .topic-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 #3D3D3D;
+  }
+  .topic-card-header {
+    background: #3D3D3D;
+    color: #FFE566;
+    padding: 12px 18px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .topic-card-body {
+    padding: 18px;
+  }
+  .topic-card-title {
+    font-size: 17px;
+    font-weight: 900;
+    color: #3D3D3D;
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+  .topic-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .topic-product-item {
+    border: 1.5px solid #e8e8e8;
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .topic-product-num {
+    background: #FFE566;
+    color: #3D3D3D;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 2px 8px;
+    border-radius: 3px;
+    width: fit-content;
+    letter-spacing: 2px;
+  }
+  .topic-product-name {
+    font-size: 12px;
+    font-weight: 900;
+    color: #3D3D3D;
+    line-height: 1.4;
+  }
+  .topic-product-desc {
+    font-size: 11px;
+    color: #777;
+    line-height: 1.55;
+    flex: 1;
+  }
+  .topic-product-feature {
+    font-size: 10.5px;
+    background: #f7f3d8;
+    border-radius: 3px;
+    padding: 3px 8px;
+    color: #5a5020;
+    font-weight: 700;
+    width: fit-content;
+  }
+
+  /* スタッフトークボックス */
+  .talk-box {
+    background: #f9f9f9;
+    border-left: 4px solid #FFE566;
+    border-radius: 0 5px 5px 0;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 11.5px;
+    color: #555;
+    line-height: 1.65;
+    font-style: italic;
+  }
+  .talk-box-label {
+    font-size: 9.5px;
+    letter-spacing: 2px;
+    font-weight: 900;
+    color: #888;
+    margin-bottom: 4px;
+    font-style: normal;
+  }
 
   /* フッター */
   .footer {
@@ -293,19 +637,460 @@
   }
   .footer p + p { margin-top: 5px; opacity: 0.45; font-size: 11px; }
 
-  @media (max-width: 600px) {
+  @media (max-width: 640px) {
     .header-title { font-size: 32px; }
     .cards-grid { grid-template-columns: 1fr; }
+    .cards-grid-2 { grid-template-columns: 1fr; }
     .toc a { padding: 13px 18px; font-size: 12px; }
+    .seminar-card { grid-template-columns: 1fr; }
+    .topic-products { grid-template-columns: 1fr; }
+    .card-wide { flex-direction: column; }
+    .card-wide .card-img-wrap { width: 100%; height: 155px; }
   }
+
+  /* ===== BLOG READING STYLE: トピックス ===== */
+  .topic-card {
+    background: #fff;
+    border-radius: 4px 4px 0 0;
+    border: none;
+    box-shadow: none;
+    border-left: 5px solid #FFE566;
+    overflow: visible;
+    margin-bottom: 32px;
+  }
+  .topic-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .topic-card-header {
+    background: #3D3D3D;
+    color: #FFE566;
+    padding: 14px 22px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: flex-start;
+    border-radius: 0;
+  }
+  .topic-card-header span:first-child {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #FFE566;
+  }
+  .topic-card-header span:last-child {
+    font-size: 15px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: normal;
+    text-transform: none;
+    font-family: inherit;
+  }
+  .topic-card-body {
+    padding: 0;
+    background: #fff;
+  }
+  .topic-card-title {
+    font-size: 19px;
+    font-weight: 900;
+    color: #3D3D3D;
+    line-height: 1.4;
+    margin: 0;
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .topic-article-lead {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.8;
+    padding: 16px 22px;
+    background: #fffdf0;
+    border-bottom: 1px solid #ece099;
+    margin: 0 !important;
+  }
+  .topic-products {
+    display: block !important;
+  }
+  .topic-product-item {
+    border: none !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #efefef !important;
+    padding: 24px 22px !important;
+    display: block !important;
+    gap: 0 !important;
+  }
+  .topic-product-item:last-child {
+    border-bottom: none !important;
+  }
+  .topic-product-num {
+    font-size: 10px;
+    padding: 3px 12px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    display: inline-block;
+    letter-spacing: 3px;
+  }
+  .topic-product-name {
+    font-size: 16px;
+    font-weight: 900;
+    color: #3D3D3D;
+    line-height: 1.4;
+    margin-bottom: 14px;
+  }
+  .topic-product-item img {
+    width: 100% !important;
+    max-width: 400px !important;
+    max-height: 280px !important;
+    object-fit: contain !important;
+    border-radius: 8px !important;
+    margin: 0 0 14px 0 !important;
+    display: block !important;
+    background: #f8f8f8 !important;
+  }
+  .topic-product-feature {
+    font-size: 11.5px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+    display: inline-block;
+    border: 1px solid #ece099;
+    background: #f7f3d8;
+    border-radius: 3px;
+    color: #5a5020;
+    font-weight: 700;
+  }
+  .topic-product-desc {
+    font-size: 13px !important;
+    color: #555 !important;
+    line-height: 1.78 !important;
+    margin-bottom: 16px !important;
+    flex: none !important;
+  }
+  .talk-box {
+    font-size: 12.5px;
+    line-height: 1.72;
+    padding: 14px 18px;
+    border-left-width: 5px;
+    margin-top: 0;
+    margin-bottom: 14px;
+    background: #f9f9f9;
+    border-radius: 0 6px 6px 0;
+  }
+  .talk-box-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    margin-bottom: 7px;
+    color: #aaa;
+    font-weight: 900;
+    font-style: normal;
+  }
+  .card-img-wrap {
+    height: auto !important;
+    min-height: 120px;
+    max-height: 220px;
+    overflow: hidden;
+  }
+  .card-img-wrap img {
+    height: auto !important;
+    object-fit: contain !important;
+    background: #fff;
+  }
+  @media (max-width: 640px) {
+    .topic-card-title { font-size: 16px; padding: 14px 16px 12px; }
+    .topic-article-lead { padding: 14px 16px; }
+    .topic-product-item { padding: 18px 16px !important; }
+    .topic-product-name { font-size: 15px; }
+    .card-wide .card-img-wrap { height: auto !important; }
+  }
+  /* ===== END BLOG STYLE ===== */
+
+
+  /* ===== LAYOUT TIDY OVERRIDES ===== */
+  :root {
+    --ink: #333333;
+    --muted: #666666;
+    --paper: #ffffff;
+    --soft: #fff7cf;
+    --line: #e7dfb4;
+    --yellow: #FFE566;
+  }
+
+  body {
+    background: linear-gradient(180deg, #fff9d6 0%, #fffdf0 42%, #ffffff 100%);
+    color: var(--ink);
+  }
+
+  .bg-deco svg { opacity: 0.035; }
+
+  .header {
+    padding: 34px 24px 30px;
+    border-bottom: 1px solid rgba(61, 61, 61, 0.16);
+    box-shadow: 0 8px 22px rgba(61, 61, 61, 0.08);
+  }
+
+  .header-inner,
+  .container {
+    max-width: 1120px;
+  }
+
+  .header-title {
+    font-size: clamp(34px, 5vw, 56px);
+  }
+
+  .header-sub {
+    max-width: 560px;
+    line-height: 1.6;
+  }
+
+  .header-badge,
+  .section-tag,
+  .topic-product-num {
+    border-radius: 999px;
+  }
+
+  .toc {
+    gap: 6px;
+    padding: 8px 12px;
+    box-shadow: 0 8px 20px rgba(61, 61, 61, 0.08);
+  }
+
+  .toc a {
+    border: 0;
+    border-radius: 999px;
+    padding: 10px 18px;
+    color: #fff6bd;
+  }
+
+  .container {
+    padding: 46px 20px 76px;
+  }
+
+  .section {
+    margin-bottom: 52px;
+  }
+
+  .section-header {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid var(--line);
+    border-left: 6px solid var(--yellow);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 24px rgba(61, 61, 61, 0.06);
+  }
+
+  .section-title {
+    font-size: 22px;
+  }
+
+  .cards-grid,
+  .cards-grid-2 {
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 20px;
+  }
+
+  .card,
+  .seminar-card,
+  .topic-card {
+    border: 1px solid rgba(61, 61, 61, 0.18);
+    border-radius: 8px;
+    box-shadow: 0 10px 24px rgba(61, 61, 61, 0.09);
+  }
+
+  .card:hover,
+  .seminar-card:hover,
+  .topic-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px rgba(61, 61, 61, 0.12);
+  }
+
+  .card-numbar,
+  .topic-card-header {
+    letter-spacing: 2px;
+  }
+
+  .card-img-wrap {
+    min-height: 170px;
+    max-height: 240px;
+    background: #fafafa;
+  }
+
+  .card-img-wrap img {
+    width: 100%;
+    height: 100% !important;
+    object-fit: contain !important;
+    padding: 10px;
+  }
+
+  .card-body {
+    padding: 18px;
+    gap: 10px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .card-summary,
+  .card-meta {
+    font-size: 12px;
+  }
+
+  .topic-card {
+    overflow: hidden;
+    border-left: 0;
+    margin-bottom: 24px;
+  }
+
+  .topic-card-header {
+    padding: 12px 18px;
+    justify-content: space-between;
+  }
+
+  .topic-card-header span:last-child {
+    color: var(--yellow);
+    font-size: 12px;
+  }
+
+  .topic-card-title {
+    font-size: 20px;
+    padding: 18px 22px 12px;
+  }
+
+  .topic-article-lead {
+    padding: 14px 22px;
+    border-bottom-color: var(--line);
+  }
+
+  .topic-products {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    padding: 18px 22px 22px;
+  }
+
+  .topic-product-item {
+    display: flex !important;
+    flex-direction: column;
+    min-width: 0;
+    border: 1px solid var(--line) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    background: #fffef7;
+  }
+
+  .topic-product-item img {
+    max-width: none !important;
+    width: 100% !important;
+    height: 190px !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    margin: 0 0 12px !important;
+    padding: 10px;
+    border: 1px solid #eeeeee;
+  }
+
+  .topic-product-name {
+    font-size: 15px;
+    min-height: 3.1em;
+    margin-bottom: 10px;
+  }
+
+  .topic-product-feature {
+    width: auto;
+    line-height: 1.5;
+  }
+
+  .topic-product-desc {
+    font-size: 12px !important;
+    line-height: 1.7 !important;
+  }
+
+  .talk-box {
+    margin-top: auto;
+    margin-bottom: 12px;
+    background: #ffffff;
+    border: 1px solid #eee3a4;
+    border-left: 5px solid var(--yellow);
+  }
+
+  .detail-btn-outline {
+    align-self: flex-start;
+  }
+
+  @media (max-width: 900px) {
+    .topic-products {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .header {
+      padding: 28px 18px 24px;
+    }
+
+    .header-inner {
+      align-items: flex-start;
+    }
+
+    .header-right {
+      text-align: left;
+    }
+
+    .toc {
+      justify-content: flex-start;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+    }
+
+    .toc a {
+      white-space: nowrap;
+    }
+
+    .container {
+      padding: 30px 14px 56px;
+    }
+
+    .section-header {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .section-date {
+      margin-left: 0;
+    }
+
+    .topic-card-header {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .topic-products {
+      grid-template-columns: 1fr;
+      padding: 14px;
+    }
+
+    .topic-product-item {
+      padding: 14px !important;
+    }
+
+    .topic-product-name {
+      min-height: 0;
+    }
+  }
+  /* ===== END LAYOUT TIDY OVERRIDES ===== */
+
 </style>
 </head>
 <body>
 
 <!-- 背景の美容アイコン装飾 -->
 <div class="bg-deco">
-
-  <!-- ドライヤー（左上） -->
   <svg width="180" height="160" style="top:2%;left:1%;" viewBox="0 0 180 160">
     <ellipse cx="80" cy="70" rx="60" ry="45" fill="#3D3D3D"/>
     <rect x="65" y="110" width="18" height="40" rx="8" fill="#3D3D3D"/>
@@ -316,8 +1101,6 @@
     <line x1="155" y1="63" x2="170" y2="63" stroke="#3D3D3D" stroke-width="6" stroke-linecap="round"/>
     <line x1="142" y1="85" x2="155" y2="95" stroke="#3D3D3D" stroke-width="6" stroke-linecap="round"/>
   </svg>
-
-  <!-- シャンプーボトル（右上） -->
   <svg width="90" height="160" style="top:8%;right:4%;" viewBox="0 0 90 160">
     <rect x="20" y="55" width="50" height="90" rx="14" fill="#3D3D3D"/>
     <rect x="28" y="30" width="34" height="30" rx="6" fill="#3D3D3D"/>
@@ -326,8 +1109,6 @@
     <rect x="28" y="80" width="34" height="5" rx="2" fill="#F5C400"/>
     <rect x="28" y="92" width="24" height="4" rx="2" fill="#F5C400"/>
   </svg>
-
-  <!-- ハサミ（左下） -->
   <svg width="130" height="130" style="bottom:18%;left:3%;" viewBox="0 0 100 100">
     <circle cx="22" cy="28" r="14" fill="none" stroke="#3D3D3D" stroke-width="6"/>
     <circle cx="22" cy="72" r="14" fill="none" stroke="#3D3D3D" stroke-width="6"/>
@@ -336,8 +1117,6 @@
     <circle cx="22" cy="28" r="5" fill="#F5C400"/>
     <circle cx="22" cy="72" r="5" fill="#F5C400"/>
   </svg>
-
-  <!-- コーム（右下） -->
   <svg width="160" height="75" style="bottom:12%;right:5%;" viewBox="0 0 160 50">
     <rect x="0" y="0" width="160" height="18" rx="6" fill="#3D3D3D"/>
     <rect x="12" y="14" width="8" height="30" rx="4" fill="#3D3D3D"/>
@@ -350,8 +1129,6 @@
     <rect x="124" y="14" width="8" height="30" rx="4" fill="#3D3D3D"/>
     <rect x="140" y="14" width="8" height="30" rx="4" fill="#3D3D3D"/>
   </svg>
-
-  <!-- コンディショナーボトル（中央左） -->
   <svg width="80" height="130" style="top:42%;left:0.5%;" viewBox="0 0 70 110">
     <ellipse cx="35" cy="82" rx="22" ry="26" fill="#3D3D3D"/>
     <rect x="23" y="38" width="24" height="30" rx="4" fill="#3D3D3D"/>
@@ -360,20 +1137,14 @@
     <rect x="14" y="72" width="42" height="5" rx="2" fill="#F5C400"/>
     <rect x="18" y="83" width="30" height="4" rx="2" fill="#F5C400"/>
   </svg>
-
-  <!-- スパークル（右中） -->
   <svg width="70" height="70" style="top:35%;right:1.5%;" viewBox="0 0 60 60">
     <polygon points="30,5 34,24 53,24 38,36 43,55 30,43 17,55 22,36 7,24 26,24" fill="#3D3D3D"/>
   </svg>
-
-  <!-- ブラシ（左中） -->
   <svg width="60" height="120" style="top:62%;left:2%;" viewBox="0 0 40 100">
     <rect x="14" y="0" width="12" height="60" rx="4" fill="#3D3D3D"/>
     <ellipse cx="20" cy="75" rx="14" ry="20" fill="#3D3D3D"/>
     <ellipse cx="20" cy="68" rx="9" ry="6" fill="#F5C400"/>
   </svg>
-
-  <!-- スパークル小（各所） -->
   <svg width="30" height="30" style="top:55%;right:8%;" viewBox="0 0 30 30">
     <line x1="15" y1="2" x2="15" y2="28" stroke="#3D3D3D" stroke-width="3" stroke-linecap="round"/>
     <line x1="2" y1="15" x2="28" y2="15" stroke="#3D3D3D" stroke-width="3" stroke-linecap="round"/>
@@ -390,166 +1161,392 @@
     <line x1="15" y1="2" x2="15" y2="28" stroke="#3D3D3D" stroke-width="3" stroke-linecap="round"/>
     <line x1="2" y1="15" x2="28" y2="15" stroke="#3D3D3D" stroke-width="3" stroke-linecap="round"/>
   </svg>
-
 </div>
 
 <!-- ヘッダー -->
 <header class="header">
   <div class="header-inner">
     <div>
-      <div class="header-label">Kenje Group · 商品戦略部</div>
-      <div class="header-title">材料トピックス</div>
-      <div class="header-sub">講習・セミナー案内 ／ キャンペーン案内</div>
+      <p class="header-label">KENJE GROUP · 商品戦略部</p>
+      <h1 class="header-title">材料トピックス</h1>
+      <p class="header-sub">美容室スタッフのための最新商品＆キャンペーン情報</p>
     </div>
     <div class="header-right">
-      <div class="header-badge">KENJE GROUP TOPICS</div>
-      <div class="header-vol">2026年 6月号　|　発行：2026.6.18</div>
+      <p class="header-badge">2026.07 W1</p>
+      <p class="header-vol">2026年7月 第1週号</p>
     </div>
   </div>
 </header>
+<div class="accent-bar"></div>
 
-<!-- ナビ -->
+<!-- ナビゲーション -->
 <nav class="toc">
-  <a href="#kōshū">📚 講習・セミナー案内</a>
-  <a href="#campaign">🎁 キャンペーン案内</a>
+  <a href="#topics">📰 トピックス</a>
+  <a href="#campaign">🎁 キャンペーン</a>
+  <a href="#seminar">🎓 講習</a>
+  <a href="#newproduct">✨ 新商品</a>
 </nav>
 
 <div class="container">
 
-  <!-- 📚 講習案内 -->
-  <section class="section" id="kōshū">
+  <!-- ========== トピックス ========== -->
+  <section class="section" id="topics">
     <div class="section-header">
-      <span class="section-tag">SEMINAR</span>
-      <span class="section-title">📚 講習・セミナー案内</span>
-      <span class="section-date">2026 JUNE</span>
+      <span class="section-tag">TOPICS</span>
+      <h2 class="section-title">トピックス</h2>
+      <span class="section-date">2026.06.26</span>
     </div>
-    <div class="cards-grid">
 
-      <div class="card">
-        <div class="card-numbar">
-          <span>SEMINAR · 01</span>
-          <span>6/29 MON · ONLINE</span>
+    <!-- トピックス 1 -->
+    <div class="topic-card" style="margin-bottom: 18px;">
+      <div class="topic-card-header">
+        <span>TOPICS 01</span>
+        <span>痩せ対策 &amp; 脱毛ケア</span>
+      </div>
+      <div class="topic-card-body">
+        <div class="topic-card-title">
+          夏の露出期に刺さる！痩せ対策・脱毛＆頭皮ケア<br>最新提案シート
         </div>
-        <div class="card-img-wrap">
-          <img
-            src="/img/img1.png"
-            alt="クールシャンプー攻略セミナー"
-            onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'card-img-placeholder\'>🌊</span>';"
-          >
-        </div>
-        <div class="card-body">
-          <span class="card-badge">オンライン 8:00〜 約30分</span>
-          <div class="card-title">クールシャンプー攻略セミナー</div>
-          <div class="card-summary">夏本番前に！上位サロンのリアルな販売術を30分で習得。3ステップのおすすめ法を伝授。</div>
-          <div class="card-meta"><strong>⏰ 申込：</strong>参加フォームより事前登録必須</div>
-          <a href="https://works.do/5fJPZEU" target="_blank" class="detail-btn">
-            📝 申込フォームはこちら →
-          </a>
+        <p class="topic-article-lead">
+          お洋服が薄着になるこの季節、お客様の関心はヘアスタイルだけでなく「ボディライン」や「ムダ毛・肌見せケア」へ一気にシフト。美容意識の高いお客様に、雑談から自然に提案できるプレミアム3商品をご紹介します。
+        </p>
+        <div class="topic-products">
+
+          <!-- 商品1: メタスレンディア -->
+          <div class="topic-product-item">
+            <span class="topic-product-num">ITEM 01</span>
+            <div class="topic-product-name">
+              エステプロ・ラボ<br>メタスレンディア
+            </div>
+            <div style="margin:8px 0;"><img src="/img/img1.avif" alt="メタスレンディア" style="width:100%;max-width:320px;border-radius:4px;"></div>
+            <div class="topic-product-feature">🌿 GLP-1系×特許成分「メタボレード」</div>
+            <div class="topic-product-desc">
+              GLP-1（食欲ホルモン）の分泌を穏やかにサポートする植物由来の次世代ボディケアサプリ。特許取得原料「メタボレード」（レモンバーベナ×ハイビスカス由来）を配合し、60日間のヒト臨床試験で体重・体脂肪へのアプローチが確認されたサロン専売品です。
+            </div>
+            <a href="https://www.esthepro-labo.com/products/granmedic/metaslendia/" target="_blank" class="detail-btn-outline" style="margin-top:10px;">商品詳細 →</a>
+          </div>
+
+          <!-- 商品2: IPL&NIR光美容器 -->
+          <div class="topic-product-item">
+            <span class="topic-product-num">ITEM 02</span>
+            <div class="topic-product-name">
+              STELLA BEAUTE<br>IPL&amp;NIR 光美容器 PRO
+            </div>
+            <div style="margin:8px 0;"><img src="/img/img2.webp" alt="IPL&NIR 光美容器 PRO" style="width:100%;max-width:320px;border-radius:4px;"></div>
+            <div class="topic-product-feature">💡 業界初NIR×トリプルパルス×オートクリーン</div>
+            <div class="topic-product-desc">
+              ムダ毛ケア（IPL）に加え、業界初の「NIR（近赤外線）ケアモード」を搭載し、肌の深部からハリ・引き締めもケア。光を3分割する「トリプルパルス」で痛み・熱さを抑えながら家庭用最高峰の照射パワーを実現し、スタンドに置くだけの「オートクリーンシステム」で家族やパートナーとも安心してシェアできます。
+            </div>
+            <a href="https://www.stellabeaute.jp/products/ipl_nir" target="_blank" class="detail-btn-outline" style="margin-top:10px;">商品詳細 →</a>
+          </div>
+
+          <!-- 商品3: ジュエルドライヤー -->
+          <div class="topic-product-item">
+            <span class="topic-product-num">ITEM 03</span>
+            <div class="topic-product-name">
+              STELLA BEAUTE<br>シャインリバースヘアドライヤー ジュエル
+            </div>
+            <div style="margin:8px 0;"><img src="/img/img3.webp" alt="シャインリバースヘアドライヤー ジュエル" style="width:100%;max-width:320px;border-radius:4px;"></div>
+            <div class="topic-product-feature">✨ 史上初LLLT×グラフェン速乾技術</div>
+            <div class="topic-product-desc">
+              ドライヤー史上初「LLLT（低出力レーザー）」搭載で、熱損傷を与えずに頭皮へ光エネルギーを直接届け、うねり・ペタつき・細毛にアプローチ。グラフェン×セラミック×テラヘルツ波の「ハイパー・グロスフロー」技術で髪を熱ダメージから守りながら一瞬で乾かし、2億個のモイストプラズマイオンが摩擦・静電気を抑えてツヤとうるおいを高めます。
+            </div>
+            <a href="https://www.stellabeaute.jp/products/dryer_jewel" target="_blank" class="detail-btn-outline" style="margin-top:10px;">商品詳細 →</a>
+          </div>
+
         </div>
       </div>
+    </div>
 
+    <!-- トピックス 2 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span>TOPICS 02</span>
+        <span>髪と頭皮のUVケア</span>
+      </div>
+      <div class="topic-card-body">
+        <div class="topic-card-title">
+          髪と頭皮のUVケア提案シート
+        </div>
+
+        <!-- UVダメージ3大リスク -->
+        <div style="background:#FFF8DC;border:1.5px solid #FFE566;border-radius:6px;padding:12px 16px;margin-bottom:14px;">
+          <div style="font-size:10px;letter-spacing:2px;font-weight:900;color:#888;margin-bottom:8px;">UV DAMAGE RISKS</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <div style="flex:1;min-width:140px;font-size:11.5px;color:#555;">
+              <span style="font-weight:900;color:#3D3D3D;">① サロンカラーの退色</span><br>
+              UVが髪のメラニンやカラー剤を分解し、お気に入りのカラーがあっという間に赤茶けてしまう
+            </div>
+            <div style="flex:1;min-width:140px;font-size:11.5px;color:#555;">
+              <span style="font-weight:900;color:#3D3D3D;">② ゴワつき・枝毛</span><br>
+              紫外線がケラチンを破壊しキューティクルが剥がれやすくなり、パサつき・広がりの原因に
+            </div>
+            <div style="flex:1;min-width:140px;font-size:11.5px;color:#555;">
+              <span style="font-weight:900;color:#3D3D3D;">③ 頭皮の乾燥・光老化</span><br>
+              分け目やつむじの日焼けで地肌が乾燥・硬化し、将来の薄毛や顔のたるみにも直結
+            </div>
+          </div>
+        </div>
+
+        <div class="topic-products">
+
+          <!-- 商品1: umiumi -->
+          <div class="topic-product-item">
+            <span class="topic-product-num">ITEM 01</span>
+            <div class="topic-product-name">umiumi UVスプレー</div>
+            <div style="margin:8px 0;"><img src="/img/img4.webp" alt="umiumi UVスプレー" style="width:100%;max-width:320px;border-radius:4px;"></div>
+            <div class="topic-product-feature">☀️ 超微粒子ミスト・全身使用可</div>
+            <div class="topic-product-desc">
+              昨年は自社（系列）で1,700本以上を売り上げた大ヒットセラー。超微粒子ミストで白浮きせずベタつきゼロ、朝のスタイリングを崩さずガードできます。髪・頭皮だけでなく顔や体にも使えるマルチUVスプレーです。
+            </div>
+            <div class="point-chips" style="margin-top:6px;">
+              <span class="point-chip">実績 1,700本/年</span>
+              <span class="point-chip">べたつかない</span>
+              <span class="point-chip">全身OK</span>
+            </div>
+            <a href="https://shop.soeffjapan.com/" target="_blank" class="detail-btn-outline" style="margin-top:10px;">ブランドサイト →</a>
+          </div>
+
+          <!-- 商品2: アミーモイストケアクール -->
+          <div class="topic-product-item">
+            <span class="topic-product-num">ITEM 02</span>
+            <div class="topic-product-name">アミー<br>モイストケアクールシャンプー 290ml</div>
+            <div class="card-img-wrap" style="margin:8px 0;"><img src="/img/img5.png" alt="アミーモイストケアクール" style="width:100%;max-width:320px;border-radius:4px;"></div>
+            <div class="topic-product-feature">🔄 リニューアルでUV・退色・ニオイを徹底ケア</div>
+            <div class="topic-product-desc">
+              リニューアルで進化した3つのポイント。<br>
+              ① 紫外線ケア成分（アスコルビルグルコシド＋チアシード由来オイル）を新配合<br>
+              ② カラー後に残る過酸化水素を分解し、色持ちが劇的にアップ<br>
+              ③ フラーレンやケラチンなどの補修成分で、クールなのにきしまない指通りに
+            </div>
+            <div class="point-chips" style="margin-top:6px;">
+              <span class="point-chip">UV成分新配合</span>
+              <span class="point-chip">過酸化水素除去</span>
+              <span class="point-chip">ホワイトティーの香り</span>
+            </div>
+          </div>
+
+          <!-- 商品3: アミーリペアミルク -->
+          <div class="topic-product-item">
+            <span class="topic-product-num">ITEM 03</span>
+            <div class="topic-product-name">アミー<br>リペアミルク</div>
+            <div class="card-img-wrap" style="margin:8px 0;"><img src="/img/img6.png" alt="アミーリペアミルク" style="width:100%;max-width:320px;border-radius:4px;"></div>
+            <div class="topic-product-feature">💧 紫外線でゴワつく髪を瞬時にまとめる保水ミルク</div>
+            <div class="topic-product-desc">
+              紫外線ダメージで硬くなり広がった毛先にすっと浸透し、内側から潤いを閉じ込めてまとまるツヤ髪へ。髪をしっかり保水・疎水化しておくことで、外からの紫外線ダメージを受けにくくする「傷ませないための土台作り」にも最適なアウトバスケアです。
+            </div>
+            <div class="point-chips" style="margin-top:6px;">
+              <span class="point-chip">ゴワつき即リセット</span>
+              <span class="point-chip">インナーUVバリア</span>
+              <span class="point-chip">ベタつかない</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 🎁 キャンペーン案内 -->
+  <!-- ========== キャンペーン ========== -->
   <section class="section" id="campaign">
     <div class="section-header">
       <span class="section-tag">CAMPAIGN</span>
-      <span class="section-title">🎁 キャンペーン案内</span>
-      <span class="section-date">2026 JUNE</span>
+      <h2 class="section-title">キャンペーン情報</h2>
+      <span class="section-date">〜 7月末</span>
     </div>
+
     <div class="cards-grid">
 
-      <!-- 01 -->
+      <!-- キャンペーン1: ガルプロデュース 1+1 -->
       <div class="card">
         <div class="card-numbar">
-          <span>CAMPAIGN · 01</span><span>〜7月末</span>
+          <span>CAMPAIGN 01</span>
+          <span>ガルプロデュース</span>
         </div>
         <div class="card-img-wrap">
-          <img src="/img/img2.png" alt="e:amii 半額セール"
-            onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'card-img-placeholder\'>🔥</span>';">
+          <img src="/img/img7.png"
+               alt="135°スクラブ＆バスシュガー"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="card-img-placeholder" style="display:none;">🛁</div>
         </div>
         <div class="card-body">
-          <span class="card-badge">🔥 在庫一掃 50%OFF</span>
-          <div class="card-title">e:amii 期間限定 半額セール</div>
-          <div class="card-summary">スキンウォッシュ500ml・ジュレ旧01（1000g）が50%OFF！なくなり次第終売。</div>
-          <div class="card-meta"><strong>📅 期間：</strong>6月3日（水）〜 7月31日（金）</div>
-          <a href="https://board.worksmobile.com/main/article/4080000000822715806?searchKind=basic&keyword=amii%E6%9C%9F%E9%96%93%E9%99%90%E5%AE%9A%E5%8D%8A%E9%A1%8D%E3%82%BB%E3%83%BC%E3%83%AB&boardNo=0&t=81672&isSearch=true" target="_blank" class="detail-btn">📄 詳細を見る →</a>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;">
+            <span class="card-badge-red">数量限定</span>
+            <span class="card-badge">1+1キャンペーン</span>
+          </div>
+          <div class="card-title">135°スクラブ＆バスシュガー<br>1個購入 → もう1個プレゼント！</div>
+          <div class="card-summary">
+            数量限定の1+1キャンペーン。1個注文するともう1個がついてくる実質半額セール。
+          </div>
+          <div class="price-highlight">
+            <div class="price-label">実質単価（1個あたり）</div>
+            <span class="price-main">¥2,145</span>
+            <span class="price-normal">通常サロン卸 ¥4,290</span>
+          </div>
+          <div class="card-meta">
+            <strong>対象商品:</strong> 135°スクラブ・135°バスシュガー<br>
+            <strong>上代:</strong> ¥7,150（通常）
+          </div>
         </div>
       </div>
 
-      <!-- 02 -->
+      <!-- キャンペーン2: アミー1Lキャンペーン -->
       <div class="card">
         <div class="card-numbar">
-          <span>CAMPAIGN · 02</span><span>〜7月末</span>
+          <span>CAMPAIGN 02</span>
+          <span>アミー</span>
         </div>
         <div class="card-img-wrap">
-          <img src="/img/img3.png" alt="アミー詰替キャンペーン"
-            onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'card-img-placeholder\'>💧</span>';">
+          <img src="/img/img8.png"
+               alt="アミー詰替キャンペーン"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="card-img-placeholder" style="display:none;">🧴</div>
         </div>
         <div class="card-body">
-          <span class="card-badge">💧 詰替1L 全品10%OFF</span>
-          <div class="card-title">e:amii 詰替（1L）全品 10%OFF</div>
-          <div class="card-summary">モイストケアシリーズ・リペアミルクなど7商品が対象。まとめ仕入れのチャンス！</div>
-          <div class="card-meta"><strong>📅 期間：</strong>2026年6月15日〜7月31日</div>
-          <a href="https://board.worksmobile.com/main/article/4080000000826460694?searchKind=basic&keyword=amii%E6%9C%9F%E9%96%93%E9%99%90%E5%AE%9A%E5%8D%8A%E9%A1%8D%E3%82%BB%E3%83%BC%E3%83%AB&boardNo=0&t=81672&isSearch=true" target="_blank" class="detail-btn">📄 詳細を見る →</a>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;">
+            <span class="card-badge-green">期間限定</span>
+            <span class="card-badge">詰替全品 10% OFF</span>
+          </div>
+          <div class="card-title">アミー 詰替シリーズ<br>全品10%オフ</div>
+          <div class="card-summary">
+            アミー詰替全品が10%オフ。1Lタイプもすべて対象。この機会にまとめてご注文を。
+          </div>
+          <div class="card-meta">
+            <strong>期間:</strong> 2026年6月15日〜7月31日<br>
+            <strong>対象:</strong> モイストケアシャンプー 1000ml 他7品目
+          </div>
         </div>
       </div>
 
-      <!-- 03 -->
+      <!-- キャンペーン3: アミー半額セール -->
       <div class="card">
         <div class="card-numbar">
-          <span>CAMPAIGN · 03</span><span>〜6月末</span>
+          <span>CAMPAIGN 03</span>
+          <span>アミー 半額セール</span>
         </div>
         <div class="card-img-wrap">
-          <img src="/img/img4.jpg" alt="ASEAVE キャンペーン"
-            onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'card-img-placeholder\'>🌿</span>';">
+          <img src="/img/img9.png"
+               alt="アミー半額セール"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="card-img-placeholder" style="display:none;">⚡</div>
         </div>
         <div class="card-body">
-          <span class="card-badge">🌿 ケンジ限定特典あり</span>
-          <div class="card-title">ASEAVE（アシーブ）購入特典キャンペーン</div>
-          <div class="card-summary">90g 10個→12個、45g 10個→11個プレゼント！LABは実質4掛の限定特典も。</div>
-          <div class="card-meta"><strong>📅 期間：</strong>〜2026年6月30日（火）</div>
-          <a href="https://board.worksmobile.com/main/article/4080000000726965690?searchKind=basic&keyword=%E3%82%A2%E3%82%B7%E3%83%BC%E3%83%96&boardNo=0&t=72405&isSearch=true" target="_blank" class="detail-btn">📄 詳細・発注方法を見る →</a>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;">
+            <span class="card-badge-red">終売予定品</span>
+            <span class="card-badge">50% OFF</span>
+          </div>
+          <div class="card-title">スキンウォッシュ 500ml<br>ジュレ 旧01（ナチュラル）1000g</div>
+          <div class="card-summary">
+            今後追加製造なし・終売予定品を半額でご提供。この機会に在庫を確保するラストチャンス。
+          </div>
+          <div class="price-highlight">
+            <div class="price-label">キャンペーン価格</div>
+            <span class="price-main">通常の50%</span>
+          </div>
+          <div class="card-meta">
+            <strong>期間:</strong> 2026年6月3日〜7月末日<br>
+            <strong>備考:</strong> 今後追加製造なし・終売予定
+          </div>
         </div>
       </div>
 
-      <!-- 04 -->
+      <!-- キャンペーン4: ガルプロデュース 10+1 -->
       <div class="card">
         <div class="card-numbar">
-          <span>CAMPAIGN · 04</span><span>数量限定</span>
+          <span>CAMPAIGN 04</span>
+          <span>ガルプロデュース</span>
         </div>
         <div class="card-img-wrap">
-          <img src="/img/img5.png" alt="135°スクラブ＆バスシュガー"
-            onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'card-img-placeholder\'>🎁</span>';">
+          <img src="/img/img10.png"
+               alt="ガルプロデュース10+1"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="card-img-placeholder" style="display:none;">🎯</div>
         </div>
         <div class="card-body">
-          <span class="card-badge">🎁 1+1 在庫限り終了</span>
-          <div class="card-title">135°スクラブ＆バスシュガー 1+1キャンペーン<br><small style="font-weight:400;color:#999;">ガルプロデュース</small></div>
-          <div class="card-summary">1個ご注文でもう1個プレゼント！実質3掛相当（2,145円）でご提供。数量限定・なくなり次第終了。</div>
-          <div class="card-meta"><strong>💴 上代：</strong>7,150円　<strong>通常卸：</strong>4,290円（6掛）</div>
-          <a href="https://board.worksmobile.com/main/article/4080000000830096026?t=49071&boardNo=4080000000005107062&isShowFilesArea=false" target="_blank" class="detail-btn">📄 詳細を見る →</a>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;">
+            <span class="card-badge">10+1キャンペーン</span>
+          </div>
+          <div class="card-title">同一商品 10個購入 →<br>1個プレゼント！</div>
+          <div class="card-summary">
+            対象商品を同一品番で10個ご注文いただくと、1個サービス。ジュエルドライヤーやIPL&amp;NIRなど多数対象。
+          </div>
+          <ul class="products-list" style="margin-top:6px;">
+            <li>ステラボーテ ジュエルドライヤー</li>
+            <li>IPL&amp;NIR 光美容器 PRO</li>
+            <li>ジェームストランスエクソRN</li>
+            <li>HONO / ILイアガン 等</li>
+          </ul>
+          <div class="card-meta">
+            <strong>期間:</strong> 〜7月末まで
+          </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- 05 -->
-      <div class="card">
-        <div class="card-numbar">
-          <span>CAMPAIGN · 05</span><span>〜7月末</span>
-        </div>
-        <div class="card-img-wrap">
-          <img src="/img/img6.png" alt="ガルプロデュース 10+1"
-            onerror="this.style.display='none'; this.parentNode.innerHTML='<span class=\'card-img-placeholder\'>📦</span>';">
-        </div>
-        <div class="card-body">
-          <span class="card-badge">📦 10+1 多数ブランド対象</span>
-          <div class="card-title">ガルプロデュース 10+1キャンペーン<br><small style="font-weight:400;color:#999;">ガルプロデュース</small></div>
-          <div class="card-summary">同一商品10個ご購入で1個サービス！ジェームストランス・ステラボーテ・HONO・IL など多数対象。</div>
-          <div class="card-meta"><strong>📅 期間：</strong>〜2026年7月31日</div>
-          <a href="https://board.worksmobile.com/main/article/4080000000827723122?searchKind=basic&keyword=amii%E6%9C%9F%E9%96%93%E9%99%90%E5%AE%9A%E5%8D%8A%E9%A1%8D%E3%82%BB%E3%83%BC%E3%83%AB&boardNo=0&t=81672&isSearch=true" target="_blank" class="detail-btn">📄 詳細を見る →</a>
-        </div>
+  <!-- ========== 講習 ========== -->
+  <section class="section" id="seminar">
+    <div class="section-header">
+      <span class="section-tag">SEMINAR</span>
+      <h2 class="section-title">講習・セミナー</h2>
+      <span class="section-date">2026.06.29</span>
+    </div>
+
+    <p class="topic-article-lead">
+      今期おすすめの販売トークを動画でまとめたアーカイブセミナー。お試しの声がけからクロージングまで、上位サロンの実践ノウハウを短時間でキャッチアップできます。視聴後すぐに現場で使えるスタッフトーク例も収録。ご都合の良い時間にいつでもご覧いただけます。
+    </p>
+    <div class="seminar-card">
+      <div class="seminar-img">
+        <img src="/img/img11.png"
+             alt="クールシャンプー攻略セミナー"
+             onerror="this.style.display='none';this.closest('.seminar-img').innerHTML='<div style=\'font-size:60px;padding:40px;\'>🎓</div>';">
       </div>
+      <div class="seminar-body">
+        <div>
+          <span class="card-badge-green" style="font-size:10px;">アーカイブ発信！</span>
+        </div>
+        <div style="font-size:16px;font-weight:900;line-height:1.45;color:#3D3D3D;">
+          今からでも間に合う！<br>クールシャンプーの魅力が<br>自然と伝わる攻略セミナー
+        </div>
 
+        <div>
+          <div style="font-size:10px;letter-spacing:2px;font-weight:900;color:#888;margin-bottom:6px;">このセミナーで学べること</div>
+          <div class="seminar-points">
+            <div class="seminar-point">
+              <div class="seminar-point-num">1</div>
+              <span>お試ししやすい空気のつくり方</span>
+            </div>
+            <div class="seminar-point">
+              <div class="seminar-point-num">2</div>
+              <span>3ステップのおすすめ法</span>
+            </div>
+            <div class="seminar-point">
+              <div class="seminar-point-num">3</div>
+              <span>上位サロンのリアルな取り組みを共有</span>
+            </div>
+          </div>
+        </div>
+        <a href="https://youtu.be/zxNvakm8BwE" target="_blank" class="detail-btn">
+          🔗 アーカイブ視聴はこちら
+        </a>
+        <a href="https://drive.google.com/drive/folders/1TeG6J2x70nHoqBq59YVAGyIxPIm7mUP2" target="_blank" class="detail-btn" style="margin-top:8px;">
+          📥 販促物POPダウンロードはこちら
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 新商品 ========== -->
+  <section class="section" id="newproduct">
+    <div class="section-header">
+      <span class="section-tag">NEW ITEM</span>
+      <h2 class="section-title">新商品</h2>
+    </div>
+
+    <div class="coming-soon">
+      <div class="coming-soon-icon">🔄</div>
+      <div class="coming-soon-text">更新準備中...</div>
+      <div class="coming-soon-sub">準備ができ次第こちらに掲載予定です</div>
     </div>
   </section>
 
@@ -557,8 +1554,8 @@
 
 <!-- フッター -->
 <footer class="footer">
-  <p>KENJE GROUP TOPICS　ケンジグループ材料トピックス 2026年6月号</p>
-  <p>発行：商品戦略部　｜　お問い合わせは商品戦略部まで</p>
+  <p>KENJE GROUP &nbsp;|&nbsp; 商品戦略部</p>
+  <p>本資料は社内専用です。取扱いにご注意ください。</p>
 </footer>
 
 </body>
