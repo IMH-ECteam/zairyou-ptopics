@@ -123,7 +123,16 @@ ADMIN_EMAILS=manager@example.com,admin@example.com
 - **セッション時間**: `lib/session.js` の `setExpirationTime('8h')` を変更
 - **特定ドメイン/組織だけに絞る**: `.env` の `ALLOWED_DOMAINS` を設定し、
   `app/api/callback/route.js` の該当チェックのコメントを解除
-- **毎月の号の差し替え**: `public/topics.html` を新しい号に置き換えて push するだけ
+- **毎月の号の差し替え（バックナンバーを残す手順）**:
+  1. 現在の `public/topics.html`（＝先月号）を `public/archive/YYYY-MM.html`
+     （例: `public/archive/2026-07.html`）としてコピー・保存する
+  2. 新しい号のHTMLを `public/topics.html` に上書きする
+  3. `public/archive/index.html` の一覧に新しい号へのリンクを追加し、
+     「最新号」バッジを新しい号へ移す
+  4. push すると、最新号は `/topics.html`、過去号は `/archive/YYYY-MM.html`
+     （一覧は `/archive/index.html`）でどちらもログイン後に閲覧できる
+  - `middleware.js` の `matcher` に `/archive`, `/archive/:path*` を含めているため、
+    バックナンバーも最新号と同じ LINE WORKS ログインで保護される
 - **ログアウト**: `/api/logout` にアクセス
 
 ## セキュリティ補強（任意）

@@ -4,8 +4,9 @@ import { recordView } from './lib/analytics';
 
 // 守る対象のパス（/api/* と /denied は素通り＝ログイン処理用）
 // /admin はアクセス解析ダッシュボード（社員＋任意で管理者メールに限定）
+// /archive 以下はバックナンバー（過去号）。最新号と同じログインが必要。
 export const config = {
-  matcher: ['/', '/topics.html', '/admin', '/admin/:path*'],
+  matcher: ['/', '/topics.html', '/admin', '/admin/:path*', '/archive', '/archive/:path*'],
 };
 
 export async function middleware(req, event) {
