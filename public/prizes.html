@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>商品体験会2026秋冬 抽選会 当選結果｜KENJE GROUP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    background: #EAF8FC;
+    color: #1F4E5C;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
+
+  /* ヘッダー（トピックスと同じトーン） */
+  .header { background: #4FC7E8; border-bottom: 4px solid #1F4E5C; padding: 36px 24px 32px; }
+  .header-inner { max-width: 960px; margin: 0 auto; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .header-label { font-size: 10px; letter-spacing: 4px; font-weight: 700; opacity: .55; text-transform: uppercase; margin-bottom: 6px; }
+  .header-title { font-size: 34px; font-weight: 900; line-height: 1.2; letter-spacing: 1px; }
+  .header-title .en { font-family: 'Barlow Condensed', sans-serif; display: block; font-size: 46px; letter-spacing: 0; }
+  .header-sub { font-size: 13px; margin-top: 8px; opacity: .7; letter-spacing: 1px; }
+  .header-badge { display: inline-block; background: #1F4E5C; color: #4FC7E8; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 800; padding: 7px 18px; border-radius: 24px; letter-spacing: 4px; }
+
+  .toc { background: #1F4E5C; display: flex; flex-wrap: wrap; justify-content: center; }
+  .toc a { text-decoration: none; padding: 13px 18px; font-size: 13px; font-weight: 700; color: rgba(79,199,232,.9); transition: all .2s; letter-spacing: 1px; }
+  .toc a:hover { background: #4FC7E8; color: #1F4E5C; }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 36px 16px 72px; }
+
+  /* ヒーロー */
+  .hero { border: 2.5px solid #1F4E5C; box-shadow: 6px 6px 0 #1F4E5C; border-radius: 10px; overflow: hidden; background: #fff; margin-bottom: 28px; }
+  .hero-caption { padding: 18px 22px 20px; border-top: 2.5px solid #1F4E5C; display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; justify-content: space-between; }
+  .hero-caption p { font-size: 14px; font-weight: 500; }
+  .stats { display: flex; gap: 10px; }
+  .stat { background: #1F4E5C; color: #fff; border-radius: 8px; padding: 8px 16px; text-align: center; min-width: 92px; }
+  .stat b { font-family: 'Barlow Condensed', sans-serif; font-size: 30px; line-height: 1; color: #4FC7E8; display: block; }
+  .stat span { font-size: 10px; letter-spacing: 1px; font-weight: 700; }
+
+  /* 検索 */
+  .search { position: sticky; top: 0; z-index: 10; background: #EAF8FC; padding: 12px 0 14px; margin-bottom: 18px; }
+  .search-box { display: flex; align-items: center; gap: 10px; background: #fff; border: 2.5px solid #1F4E5C; border-radius: 40px; padding: 4px 8px 4px 18px; box-shadow: 4px 4px 0 #1F4E5C; }
+  .search-box svg { flex: none; }
+  .search input { flex: 1; border: none; outline: none; font: inherit; font-size: 15px; padding: 10px 0; background: transparent; color: #1F4E5C; min-width: 0; }
+  .search input::-webkit-search-cancel-button { display: none; }
+  .search-clear { border: none; background: #1F4E5C; color: #fff; border-radius: 20px; font: inherit; font-size: 12px; font-weight: 700; padding: 6px 14px; cursor: pointer; visibility: hidden; }
+  .search-hint { font-size: 11px; opacity: .6; margin: 8px 6px 0; }
+  .no-hit { display: none; text-align: center; padding: 40px 16px; font-weight: 700; background: #fff; border: 2.5px dashed #1F4E5C; border-radius: 10px; margin-bottom: 24px; }
+
+  /* セクション見出し */
+  .section-header { display: flex; align-items: center; gap: 14px; margin: 44px 0 20px; padding-bottom: 12px; border-bottom: 3px solid #1F4E5C; }
+  .section-tag { background: #1F4E5C; color: #4FC7E8; font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 3px; letter-spacing: 4px; white-space: nowrap; }
+  .section-title { font-size: 20px; font-weight: 900; letter-spacing: 1px; }
+
+  /* メーカーカード */
+  .maker { background: #fff; border: 2.5px solid #1F4E5C; border-radius: 10px; box-shadow: 5px 5px 0 #1F4E5C; overflow: hidden; margin-bottom: 26px; scroll-margin-top: 96px; }
+  .maker-numbar { background: #1F4E5C; color: #4FC7E8; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; padding: 5px 14px; letter-spacing: 3px; display: flex; justify-content: space-between; }
+  .maker-body { display: grid; grid-template-columns: 260px 1fr; }
+  .maker-visual { border-right: 2.5px solid #1F4E5C; background: #f6fbfd; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; overflow: hidden; }
+  .maker-visual img { width: 100%; height: auto; position: sticky; top: 90px; }
+  .maker-visual-text { flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 24px 16px; text-align: center;
+    background: repeating-linear-gradient(135deg, #4FC7E8 0 14px, #5fcdea 14px 28px); }
+  .maker-visual-text span { font-size: 24px; font-weight: 900; background: #fff; border: 2.5px solid #1F4E5C; padding: 6px 16px; border-radius: 6px; box-shadow: 3px 3px 0 #1F4E5C; }
+  .maker-visual-text small { font-size: 11px; font-weight: 700; margin-top: 8px; }
+  .maker-main { padding: 18px 20px 20px; }
+  .maker-name { font-size: 22px; font-weight: 900; letter-spacing: 1px; margin-bottom: 12px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+  .maker-brand { font-size: 12px; font-weight: 700; background: #EAF8FC; padding: 2px 10px; border-radius: 3px; }
+
+  .prize { border-top: 1.5px dashed rgba(31,78,92,.3); padding: 12px 0; }
+  .prize:first-of-type { border-top: none; padding-top: 0; }
+  .prize-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .grade { flex: none; width: 46px; height: 46px; border-radius: 50%; border: 2.5px solid #1F4E5C; display: flex; align-items: center; justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 900; line-height: 1; }
+  .grade small { font-family: 'Noto Sans JP', sans-serif; font-size: 9px; font-weight: 900; margin-top: 8px; }
+  .grade-a { background: linear-gradient(135deg, #FFE27A, #F2B705); }
+  .grade-b { background: linear-gradient(135deg, #F1F5F7, #BCCBD2); }
+  .grade-c { background: linear-gradient(135deg, #F6C9A0, #D98E4E); }
+  .prize-title { flex: 1; min-width: 0; }
+  .prize-item { font-size: 15px; font-weight: 900; line-height: 1.45; }
+  .prize-note { font-size: 11px; color: #C2410C; font-weight: 700; }
+  .prize-count { flex: none; font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; }
+  .prize-count small { font-family: 'Noto Sans JP', sans-serif; font-size: 10px; margin-left: 1px; }
+
+  .winners { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+  .winner { background: #EAF8FC; border: 1.5px solid #1F4E5C; border-radius: 6px; padding: 7px 12px; display: flex; flex-direction: column; line-height: 1.35; }
+  .w-name { font-size: 16px; font-weight: 900; }
+  .w-store { font-size: 11px; font-weight: 500; opacity: .8; }
+  .w-code { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 12px; background: #1F4E5C; color: #fff; border-radius: 3px; padding: 0 5px; margin-right: 5px; }
+  .winner.hit { background: #FFF3B0; box-shadow: 3px 3px 0 #1F4E5C; }
+
+  /* ASEAVE */
+  .aseave { background: #fff; border: 2.5px solid #1F4E5C; border-radius: 10px; box-shadow: 5px 5px 0 #1F4E5C; overflow: hidden; scroll-margin-top: 96px; }
+  .aseave .maker-numbar { background: #6B8E23; color: #fff; }
+  .aseave .maker-visual { background: #fff; }
+  .aseave .maker-visual img { padding: 12px; }
+  .aseave .winner { background: #F1F7E6; }
+  .aseave-lead { font-size: 13px; margin-bottom: 12px; }
+
+  /* 抽選会について */
+  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  .about-img { border: 2.5px solid #1F4E5C; border-radius: 10px; overflow: hidden; box-shadow: 5px 5px 0 #1F4E5C; background: #fff; }
+  .about-text { background: #fff; border: 2.5px solid #1F4E5C; border-radius: 10px; padding: 20px 22px; box-shadow: 5px 5px 0 #1F4E5C; font-size: 14px; }
+  .about-text h4 { font-size: 15px; font-weight: 900; margin: 14px 0 6px; }
+  .about-text h4:first-child { margin-top: 0; }
+  .about-text ul { padding-left: 1.2em; }
+  .about-text li { margin-bottom: 4px; }
+  .about-text .small { font-size: 12px; opacity: .8; }
+
+  .footer { text-align: center; font-size: 11px; opacity: .6; padding: 24px 16px 40px; letter-spacing: 1px; }
+  .footer a { color: inherit; }
+
+  @media (max-width: 720px) {
+    .header-title { font-size: 24px; }
+    .header-title .en { font-size: 34px; }
+    .maker-body { grid-template-columns: 1fr; }
+    .maker-visual { border-right: none; border-bottom: 2.5px solid #1F4E5C; max-height: 240px; justify-content: center; }
+    .maker-visual img { position: static; height: 240px; object-fit: cover; }
+    .aseave .maker-visual img { object-fit: contain; }
+    .maker-visual-text { padding: 18px 16px; align-items: center; }
+    .about { grid-template-columns: 1fr; }
+    .winners { grid-template-columns: 1fr 1fr; }
+    .stats { width: 100%; }
+    .stat { flex: 1; }
+  }
+  @media (max-width: 400px) {
+    .winners { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div>
+      <div class="header-label">Product Experience Event 2026 AW</div>
+      <h1 class="header-title"><span class="en">LUCKY DRAW RESULTS</span>商品体験会 抽選会 当選結果</h1>
+      <div class="header-sub">2026年10月1日（木）開催　商品体験会2026秋冬</div>
+    </div>
+    <div><span class="header-badge">KENJE GROUP</span></div>
+  </div>
+</header>
+
+<nav class="toc">
+  <a href="#maker-01">ガルプロデュース</a><a href="#maker-02">ビーコーポレーション</a><a href="#maker-03">コスモ</a><a href="#maker-04">MTG</a><a href="#maker-05">タマリス</a><a href="#maker-06">美KAKU</a><a href="#maker-07">きくや</a><a href="#maker-08">フジシン</a><a href="#maker-09">ガモウ</a>
+  <a href="#aseave">ASEAVE</a>
+  <a href="#about">抽選会について</a>
+  <a href="/topics.html">← トピックス</a>
+</nav>
+
+<main class="container">
+
+  <div class="hero">
+    <img src="img/prizes/hero.jpg" alt="商品体験会 2026秋冬　2026年10月1日（木）">
+    <div class="hero-caption">
+      <p>インスタ投稿とアンケートにご協力いただいたみなさま、ありがとうございました！<br>メーカー賞の当選者を発表します 🎉</p>
+      <div class="stats">
+        <div class="stat"><b>9</b><span>メーカー</span></div>
+        <div class="stat"><b>54</b><span>メーカー賞</span></div>
+        <div class="stat"><b>12</b><span>ASEAVE</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="search">
+    <label class="search-box">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1F4E5C" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7"/><line x1="16" y1="16" x2="21.5" y2="21.5"/></svg>
+      <input id="q" type="search" placeholder="名前・店舗名・店舗番号で検索" autocomplete="off" aria-label="当選者を検索">
+      <button class="search-clear" id="clear" type="button">クリア</button>
+    </label>
+    <div class="search-hint">例：「茅ヶ崎」「6201」「佐藤」</div>
+  </div>
+  <div class="no-hit" id="nohit">該当する当選者が見つかりませんでした</div>
+
+  <div class="section-header">
+    <span class="section-tag">MAKER PRIZE</span>
+    <h2 class="section-title">メーカー賞 当選者</h2>
+  </div>
+  
+    <section class="maker" id="maker-01">
+      <div class="maker-numbar"><span>MAKER 01</span><span>3 WINNERS</span></div>
+      <div class="maker-body">
+        <div class="maker-visual"><img src="img/prizes/enisie.jpg" alt="Enisie（エニシー）" loading="lazy"></div>
+        <div class="maker-main">
+          <h3 class="maker-name">ガルプロデュース<span class="maker-brand">Enisie（エニシー）</span></h3>
+          
+        <div class="prize prize-a">
+          <div class="prize-head">
+            <span class="grade grade-a">A<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">エニシーパック・セラム・ミスト</div>
+              <div class="prize-note">※ 中身は 10/28 の新商品発表後に確定</div>
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="堀舜介 6201 l&#x27;pul by face"><span class="w-name">堀舜介</span><span class="w-store"><span class="w-code">6201</span>L&#x27;pul by face</span></li></ul>
+        </div>
+        <div class="prize prize-b">
+          <div class="prize-head">
+            <span class="grade grade-b">B<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">セラム・ミスト</div>
+              <div class="prize-note">※ 中身は 10/28 の新商品発表後に確定</div>
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="増永吏音 8005 creaイオンモール座間"><span class="w-name">増永吏音</span><span class="w-store"><span class="w-code">8005</span>CREAイオンモール座間</span></li></ul>
+        </div>
+        <div class="prize prize-c">
+          <div class="prize-head">
+            <span class="grade grade-c">C<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">ミスト</div>
+              <div class="prize-note">※ 中身は 10/28 の新商品発表後に確定</div>
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="内堀舞 0818 circus by kenje"><span class="w-name">内堀舞</span><span class="w-store"><span class="w-code">0818</span>circus by KENJE</span></li></ul>
+        </div>
+        </div>
+      </div>
+    </section>
+    <section class="maker" id="maker-02">
+      <div class="maker-numbar"><span>MAKER 02</span><span>10 WINNERS</span></div>
+      <div class="maker-body">
+        <div class="maker-visual"><img src="img/prizes/platinum-plus.jpg" alt="猫ジャック / プラチナムプラス ほか" loading="lazy"></div>
+        <div class="maker-main">
+          <h3 class="maker-name">ビーコーポレーション<span class="maker-brand">猫ジャック / プラチナムプラス ほか</span></h3>
+          
+        <div class="prize prize-a">
+          <div class="prize-head">
+            <span class="grade grade-a">A<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">猫ジャックセット</div>
+              
+            </div>
+            <span class="prize-count">6<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="磯崎真介 5601 style茅ヶ崎 smartsalon"><span class="w-name">磯崎真介</span><span class="w-store"><span class="w-code">5601</span>STYLE茅ヶ崎 SmartSalon</span></li><li class="winner" data-key="和田明日葉 6401 crea茅ヶ崎"><span class="w-name">和田明日葉</span><span class="w-store"><span class="w-code">6401</span>CREA茅ヶ崎</span></li><li class="winner" data-key="清水大誠 4102 miu by kenje"><span class="w-name">清水大誠</span><span class="w-store"><span class="w-code">4102</span>miu by KENJE</span></li><li class="winner" data-key="竜リリアンヒトミ 3801 k:r鶴川"><span class="w-name">竜リリアンヒトミ</span><span class="w-store"><span class="w-code">3801</span>K:R鶴川</span></li><li class="winner" data-key="石川優菜 2912 hareru. smartsalon"><span class="w-name">石川優菜</span><span class="w-store"><span class="w-code">2912</span>HAREru. SmartSalon</span></li><li class="winner" data-key="笹倉直之 3901 style新百合ヶ丘"><span class="w-name">笹倉直之</span><span class="w-store"><span class="w-code">3901</span>STYLE新百合ヶ丘</span></li></ul>
+        </div>
+        <div class="prize prize-b">
+          <div class="prize-head">
+            <span class="grade grade-b">B<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">プラチナムプラスセット</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="大堀波香 0505 crop es湘南辻堂"><span class="w-name">大堀波香</span><span class="w-store"><span class="w-code">0505</span>crop es湘南辻堂</span></li></ul>
+        </div>
+        <div class="prize prize-c">
+          <div class="prize-head">
+            <span class="grade grade-c">C<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">TOUQU パウチセット</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="田中未来 4302 ric by kenje"><span class="w-name">田中未来</span><span class="w-store"><span class="w-code">4302</span>Ric by KENJE</span></li></ul>
+        </div>
+        <div class="prize prize-c">
+          <div class="prize-head">
+            <span class="grade grade-c">C<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">セラムブースターセット（黒箱）</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="藤田沙織 0505 crop es湘南辻堂"><span class="w-name">藤田沙織</span><span class="w-store"><span class="w-code">0505</span>crop es湘南辻堂</span></li></ul>
+        </div>
+        <div class="prize prize-c">
+          <div class="prize-head">
+            <span class="grade grade-c">C<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">VCVA ローション＆セラムセット（白箱）</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="木村洸晟 1409 ciel by kenje"><span class="w-name">木村洸晟</span><span class="w-store"><span class="w-code">1409</span>CIEL by KENJE</span></li></ul>
+        </div>
+        </div>
+      </div>
+    </section>
+    <section class="maker" id="maker-03">
+      <div class="maker-numbar"><span>MAKER 03</span><span>16 WINNERS</span></div>
+      <div class="maker-body">
+        <div class="maker-visual"><img src="img/miraisoap.jpg" alt="MHP / ミライソープ" loading="lazy"></div>
+        <div class="maker-main">
+          <h3 class="maker-name">コスモ<span class="maker-brand">MHP / ミライソープ</span></h3>
+          
+        <div class="prize prize-a">
+          <div class="prize-head">
+            <span class="grade grade-a">A<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">MHP ブロードライバー</div>
+              <div class="prize-note">※ カラーは後日お選びいただきます</div>
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="今井彪河 4101 lia by kenje"><span class="w-name">今井彪河</span><span class="w-store"><span class="w-code">4101</span>Lia by KENJE</span></li></ul>
+        </div>
+        <div class="prize prize-b">
+          <div class="prize-head">
+            <span class="grade grade-b">B<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">ミライソープ 1000ml</div>
+              
+            </div>
+            <span class="prize-count">15<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="老沼優希 5601 style茅ヶ崎 smartsalon"><span class="w-name">老沼優希</span><span class="w-store"><span class="w-code">5601</span>STYLE茅ヶ崎 SmartSalon</span></li><li class="winner" data-key="青山賀月 7906 paaq"><span class="w-name">青山賀月</span><span class="w-store"><span class="w-code">7906</span>PAAQ</span></li><li class="winner" data-key="吉田涼香 5603 liru smartsalon"><span class="w-name">吉田涼香</span><span class="w-store"><span class="w-code">5603</span>Liru SmartSalon</span></li><li class="winner" data-key="北村瑠梨 7301 stella by kenje"><span class="w-name">北村瑠梨</span><span class="w-store"><span class="w-code">7301</span>STELLA by KENJE</span></li><li class="winner" data-key="佐藤理絵 8405 col by kenje"><span class="w-name">佐藤理絵</span><span class="w-store"><span class="w-code">8405</span>CoL by KENJE</span></li><li class="winner" data-key="加藤百音 1502 eto"><span class="w-name">加藤百音</span><span class="w-store"><span class="w-code">1502</span>eto</span></li><li class="winner" data-key="佐藤捺美 6201 l&#x27;pul by face"><span class="w-name">佐藤捺美</span><span class="w-store"><span class="w-code">6201</span>L&#x27;pul by face</span></li><li class="winner" data-key="佐々木洋祐 8102 trico by face。"><span class="w-name">佐々木洋祐</span><span class="w-store"><span class="w-code">8102</span>Trico by FACE。</span></li><li class="winner" data-key="高橋弘行 8101 face。港南台"><span class="w-name">高橋弘行</span><span class="w-store"><span class="w-code">8101</span>FACE。港南台</span></li><li class="winner" data-key="夜久綾菜 8410 arch by kenje"><span class="w-name">夜久綾菜</span><span class="w-store"><span class="w-code">8410</span>arch by KENJE</span></li><li class="winner" data-key="廣井永輝 3901 style新百合ヶ丘"><span class="w-name">廣井永輝</span><span class="w-store"><span class="w-code">3901</span>STYLE新百合ヶ丘</span></li><li class="winner" data-key="樋口莉夏 4302 ric by kenje"><span class="w-name">樋口莉夏</span><span class="w-store"><span class="w-code">4302</span>Ric by KENJE</span></li><li class="winner" data-key="鈴木翔斗 6201 l&#x27;pul by face"><span class="w-name">鈴木翔斗</span><span class="w-store"><span class="w-code">6201</span>L&#x27;pul by face</span></li><li class="winner" data-key="宮里和希 8101 face。港南台"><span class="w-name">宮里和希</span><span class="w-store"><span class="w-code">8101</span>FACE。港南台</span></li><li class="winner" data-key="伊西未夢 5603 liru smartsalon"><span class="w-name">伊西未夢</span><span class="w-store"><span class="w-code">5603</span>Liru SmartSalon</span></li></ul>
+        </div>
+        </div>
+      </div>
+    </section>
+    <section class="maker" id="maker-04">
+      <div class="maker-numbar"><span>MAKER 04</span><span>3 WINNERS</span></div>
+      <div class="maker-body">
+        <div class="maker-visual maker-visual-text"><span>MTG</span><small>ReFa（リファ）</small></div>
+        <div class="maker-main">
+          <h3 class="maker-name">MTG<span class="maker-brand">ReFa（リファ）</span></h3>
+          
+        <div class="prize prize-a">
+          <div class="prize-head">
+            <span class="grade grade-a">A<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">リファリセッター</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="松本明日可 4302 ric by kenje"><span class="w-name">松本明日可</span><span class="w-store"><span class="w-code">4302</span>Ric by KENJE</span></li></ul>
+        </div>
+        <div class="prize prize-b">
+          <div class="prize-head">
+            <span class="grade grade-b">B<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">リファブロウアイロン</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="三尾陽奈 8410 arch by kenje"><span class="w-name">三尾陽奈</span><span class="w-store"><span class="w-code">8410</span>arch by KENJE</span></li></ul>
+        </div>
+        <div class="prize prize-c">
+          <div class="prize-head">
+            <span class="grade grade-c">C<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">リファランドリー</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="及川翔平 2801 kenje横浜 smart salon"><span class="w-name">及川翔平</span><span class="w-store"><span class="w-code">2801</span>KENJE横浜 Smart Salon</span></li></ul>
+        </div>
+        </div>
+      </div>
+    </section>
+    <section class="maker" id="maker-05">
+      <div class="maker-numbar"><span>MAKER 05</span><span>4 WINNERS</span></div>
+      <div class="maker-body">
+        <div class="maker-visual"><img src="img/prizes/alorb.jpg" alt="ALORB / ヘアケミスト" loading="lazy"></div>
+        <div class="maker-main">
+          <h3 class="maker-name">タマリス<span class="maker-brand">ALORB / ヘアケミスト</span></h3>
+          
+        <div class="prize prize-a">
+          <div class="prize-head">
+            <span class="grade grade-a">A<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">アローブ EN-P シャンプー＆トリートメント</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="遠藤聖菜 0818 circus by kenje"><span class="w-name">遠藤聖菜</span><span class="w-store"><span class="w-code">0818</span>circus by KENJE</span></li></ul>
+        </div>
+        <div class="prize prize-b">
+          <div class="prize-head">
+            <span class="grade grade-b">B<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">PLオイル＆PLミルク</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="金子優花 0505 crop es湘南辻堂"><span class="w-name">金子優花</span><span class="w-store"><span class="w-code">0505</span>crop es湘南辻堂</span></li></ul>
+        </div>
+        <div class="prize prize-c">
+          <div class="prize-head">
+            <span class="grade grade-c">C<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">ヘアケミスト スリークキーパー</div>
+              
+            </div>
+            <span class="prize-count">2<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="海野楓 2912 hareru. smartsalon"><span class="w-name">海野楓</span><span class="w-store"><span class="w-code">2912</span>HAREru. SmartSalon</span></li><li class="winner" data-key="川村百々華 0506 sui. crop es"><span class="w-name">川村百々華</span><span class="w-store"><span class="w-code">0506</span>SUI. crop es</span></li></ul>
+        </div>
+        </div>
+      </div>
+    </section>
+    <section class="maker" id="maker-06">
+      <div class="maker-numbar"><span>MAKER 06</span><span>3 WINNERS</span></div>
+      <div class="maker-body">
+        <div class="maker-visual"><img src="img/prizes/ladamer.jpg" alt="LADAMER（ラダメール）" loading="lazy"></div>
+        <div class="maker-main">
+          <h3 class="maker-name">美KAKU<span class="maker-brand">LADAMER（ラダメール）</span></h3>
+          
+        <div class="prize prize-a">
+          <div class="prize-head">
+            <span class="grade grade-a">A<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">ラダメール OLセラム ハイドレーティング</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="汐見悠佑 4101 lia by kenje"><span class="w-name">汐見悠佑</span><span class="w-store"><span class="w-code">4101</span>Lia by KENJE</span></li></ul>
+        </div>
+        <div class="prize prize-b">
+          <div class="prize-head">
+            <span class="grade grade-b">B<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">ラダメール モイスチャートナー</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="中村卓也 5007 elen向ケ丘遊園"><span class="w-name">中村卓也</span><span class="w-store"><span class="w-code">5007</span>ELEN向ケ丘遊園</span></li></ul>
+        </div>
+        <div class="prize prize-c">
+          <div class="prize-head">
+            <span class="grade grade-c">C<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">ラダメール ピーリングパッド</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="勝股久美子 8003 capa秦野"><span class="w-name">勝股久美子</span><span class="w-store"><span class="w-code">8003</span>CAPA秦野</span></li></ul>
+        </div>
+        </div>
+      </div>
+    </section>
+    <section class="maker" id="maker-07">
+      <div class="maker-numbar"><span>MAKER 07</span><span>3 WINNERS</span></div>
+      <div class="maker-body">
+        <div class="maker-visual maker-visual-text"><span>きくや</span><small>武田様 / 成和様</small></div>
+        <div class="maker-main">
+          <h3 class="maker-name">きくや<span class="maker-brand">武田様 / 成和様</span></h3>
+          
+        <div class="prize prize-a">
+          <div class="prize-head">
+            <span class="grade grade-a">A<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">Nobby NBT1100 ヘアクリッパー（武田様）</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="田口来実 7001 kenje東戸塚"><span class="w-name">田口来実</span><span class="w-store"><span class="w-code">7001</span>KENJE東戸塚</span></li></ul>
+        </div>
+        <div class="prize prize-b">
+          <div class="prize-head">
+            <span class="grade grade-b">B<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">ホワイトエックス＋サロンドヒアロ 5点（成和様）</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="大山みさき 8101 face。港南台"><span class="w-name">大山みさき</span><span class="w-store"><span class="w-code">8101</span>FACE。港南台</span></li></ul>
+        </div>
+        <div class="prize prize-c">
+          <div class="prize-head">
+            <span class="grade grade-c">C<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">MDSKINLABO プレミアムケアマスク（武田様）</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="鈴木りおな 5501 creed"><span class="w-name">鈴木りおな</span><span class="w-store"><span class="w-code">5501</span>Creed</span></li></ul>
+        </div>
+        </div>
+      </div>
+    </section>
+    <section class="maker" id="maker-08">
+      <div class="maker-numbar"><span>MAKER 08</span><span>4 WINNERS</span></div>
+      <div class="maker-body">
+        <div class="maker-visual maker-visual-text"><span>フジシン</span><small>シンピュルテ</small></div>
+        <div class="maker-main">
+          <h3 class="maker-name">フジシン<span class="maker-brand">シンピュルテ</span></h3>
+          
+        <div class="prize prize-c">
+          <div class="prize-head">
+            <span class="grade grade-c">C<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">シンピュルテ マルチベネフィットオイル</div>
+              
+            </div>
+            <span class="prize-count">4<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="部谷瑠斗 2902 style藤沢 smartsalon"><span class="w-name">部谷瑠斗</span><span class="w-store"><span class="w-code">2902</span>STYLE藤沢 SmartSalon</span></li><li class="winner" data-key="尾形里桜 0819 style相模大野"><span class="w-name">尾形里桜</span><span class="w-store"><span class="w-code">0819</span>STYLE相模大野</span></li><li class="winner" data-key="牧由貴花 6201 l&#x27;pul by face"><span class="w-name">牧由貴花</span><span class="w-store"><span class="w-code">6201</span>L&#x27;pul by face</span></li><li class="winner" data-key="上川原雄飛 8201 noa by kenje"><span class="w-name">上川原雄飛</span><span class="w-store"><span class="w-code">8201</span>NOA by KENJE</span></li></ul>
+        </div>
+        </div>
+      </div>
+    </section>
+    <section class="maker" id="maker-09">
+      <div class="maker-numbar"><span>MAKER 09</span><span>8 WINNERS</span></div>
+      <div class="maker-body">
+        <div class="maker-visual maker-visual-text"><span>ガモウ</span><small>MUK / OSKIN / 自由が丘クリニック</small></div>
+        <div class="maker-main">
+          <h3 class="maker-name">ガモウ<span class="maker-brand">MUK / OSKIN / 自由が丘クリニック</span></h3>
+          
+        <div class="prize prize-a">
+          <div class="prize-head">
+            <span class="grade grade-a">A<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">MUK ドライヤー</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="川田康司 5903 petal by kenje"><span class="w-name">川田康司</span><span class="w-store"><span class="w-code">5903</span>PETAL by KENJE</span></li></ul>
+        </div>
+        <div class="prize prize-a">
+          <div class="prize-head">
+            <span class="grade grade-a">A<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">MUK 美顔器</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="髙橋月 2912 hareru. smartsalon"><span class="w-name">髙橋月</span><span class="w-store"><span class="w-code">2912</span>HAREru. SmartSalon</span></li></ul>
+        </div>
+        <div class="prize prize-b">
+          <div class="prize-head">
+            <span class="grade grade-b">B<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">自由が丘コンプリートC</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="エトウサヤハ 7501 face。石川町"><span class="w-name">エトウサヤハ</span><span class="w-store"><span class="w-code">7501</span>FACE。石川町</span></li></ul>
+        </div>
+        <div class="prize prize-b">
+          <div class="prize-head">
+            <span class="grade grade-b">B<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">OSKIN シャンプーブラシ</div>
+              
+            </div>
+            <span class="prize-count">2<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="末永美佳 1409 ciel by kenje"><span class="w-name">末永美佳</span><span class="w-store"><span class="w-code">1409</span>CIEL by KENJE</span></li><li class="winner" data-key="河西玲奈 8410 arch by kenje"><span class="w-name">河西玲奈</span><span class="w-store"><span class="w-code">8410</span>arch by KENJE</span></li></ul>
+        </div>
+        <div class="prize prize-b">
+          <div class="prize-head">
+            <span class="grade grade-b">B<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">OSKIN モイストセット</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="飯島桃葉 1502 eto"><span class="w-name">飯島桃葉</span><span class="w-store"><span class="w-code">1502</span>eto</span></li></ul>
+        </div>
+        <div class="prize prize-b">
+          <div class="prize-head">
+            <span class="grade grade-b">B<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">OSKIN ライトセット</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="カネヒラユキ 0506 sui. crop es"><span class="w-name">カネヒラユキ</span><span class="w-store"><span class="w-code">0506</span>SUI. crop es</span></li></ul>
+        </div>
+        <div class="prize prize-b">
+          <div class="prize-head">
+            <span class="grade grade-b">B<small>賞</small></span>
+            <div class="prize-title">
+              <div class="prize-item">OSKIN スタイリングセット</div>
+              
+            </div>
+            <span class="prize-count">1<small>名</small></span>
+          </div>
+          <ul class="winners"><li class="winner" data-key="橋本剛典 0506 sui. crop es"><span class="w-name">橋本剛典</span><span class="w-store"><span class="w-code">0506</span>SUI. crop es</span></li></ul>
+        </div>
+        </div>
+      </div>
+    </section>
+
+  <div class="section-header">
+    <span class="section-tag">SPECIAL</span>
+    <h2 class="section-title">ASEAVE 賞</h2>
+  </div>
+  <section class="aseave maker" id="aseave">
+    <div class="maker-numbar"><span>ASEAVE</span><span>12 WINNERS</span></div>
+    <div class="maker-body">
+      <div class="maker-visual"><img src="img/prizes/aseave.jpg" alt="ASEAVE" loading="lazy"></div>
+      <div class="maker-main">
+        <h3 class="maker-name">ASEAVE<span class="maker-brand">ASEAVE 5個</span></h3>
+        <p class="aseave-lead">アンケートで ASEAVE を12月の主軸に選んでくださった 12 名に、ASEAVE を 5 個ずつお届けします。</p>
+        <ul class="winners"><li class="winner" data-key="堀舜介 6201 l&#x27;pul by face"><span class="w-name">堀舜介</span><span class="w-store"><span class="w-code">6201</span>L&#x27;pul by face</span></li><li class="winner" data-key="鈴木翔斗 6201 l&#x27;pul by face"><span class="w-name">鈴木翔斗</span><span class="w-store"><span class="w-code">6201</span>L&#x27;pul by face</span></li><li class="winner" data-key="牧由貴花 6201 l&#x27;pul by face"><span class="w-name">牧由貴花</span><span class="w-store"><span class="w-code">6201</span>L&#x27;pul by face</span></li><li class="winner" data-key="汐見悠佑 4101 lia by kenje"><span class="w-name">汐見悠佑</span><span class="w-store"><span class="w-code">4101</span>Lia by KENJE</span></li><li class="winner" data-key="今井彪河 4101 lia by kenje"><span class="w-name">今井彪河</span><span class="w-store"><span class="w-code">4101</span>Lia by KENJE</span></li><li class="winner" data-key="佐々木洋祐 8102 trico by face。"><span class="w-name">佐々木洋祐</span><span class="w-store"><span class="w-code">8102</span>Trico by FACE。</span></li><li class="winner" data-key="鈴木りおな 5501 creed"><span class="w-name">鈴木りおな</span><span class="w-store"><span class="w-code">5501</span>Creed</span></li><li class="winner" data-key="及川翔平 2801 kenje横浜 smart salon"><span class="w-name">及川翔平</span><span class="w-store"><span class="w-code">2801</span>KENJE横浜 Smart Salon</span></li><li class="winner" data-key="竜リリアンヒトミ 3801 k:r鶴川"><span class="w-name">竜リリアンヒトミ</span><span class="w-store"><span class="w-code">3801</span>K:R鶴川</span></li><li class="winner" data-key="朝井裕樹 "><span class="w-name">朝井裕樹</span><span class="w-store w-store-none">―</span></li><li class="winner" data-key="伊西未夢 5603 liru smartsalon"><span class="w-name">伊西未夢</span><span class="w-store"><span class="w-code">5603</span>Liru SmartSalon</span></li><li class="winner" data-key="吉田涼香 5603 liru smartsalon"><span class="w-name">吉田涼香</span><span class="w-store"><span class="w-code">5603</span>Liru SmartSalon</span></li></ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-header" id="about">
+    <span class="section-tag">ABOUT</span>
+    <h2 class="section-title">抽選会について</h2>
+  </div>
+  <div class="about">
+    <div class="about-img"><img src="img/prizes/lottery-flyer.jpg" alt="KENJE GROUP 商品体験会2026 抽選会チラシ" loading="lazy"></div>
+    <div class="about-text">
+      <h4>応募条件</h4>
+      <ul>
+        <li><b>01 インスタ投稿</b>　気になったメーカー・ブランドの商品をインスタグラムで発信（@shouhin.kg とメーカー公式アカウントをメンション）</li>
+        <li><b>02 アンケート</b>　体験会のご意見・メーカーさんの臨店講習希望など</li>
+      </ul>
+      <p class="small">①・②どちらも満たした方の中から、アンケートで選んだメーカー・ブランドをもとに割り振りました（おひとり 1 賞）。</p>
+      <h4>景品について</h4>
+      <p class="small">ガルプロデュースの景品は 10/28 の新商品発表後に中身が確定します。コスモ A 賞（MHP ブロードライバー）のカラーは後日お選びいただきます。</p>
+      <h4>今回該当者がいなかった景品</h4>
+      <p class="small">候補の方が全員ほかの景品に当選していたため、次の景品は 12 月の発信企画で活用します。</p>
+      <ul class="small"><li><b>ビーコーポレーション</b>　VCVA ローション＆セラム（ミニ） × 5</li><li><b>コスモ</b>　高千穂照水 10本 × 9</li><li><b>タマリス</b>　ヘアケミスト スリークキーパー × 1</li><li><b>フジシン</b>　シンピュルテ マルチベネフィットオイル × 2</li></ul>
+    </div>
+  </div>
+
+</main>
+
+<footer class="footer">KENJE GROUP　商品体験会2026秋冬　｜　<a href="/topics.html">トピックスへ戻る</a></footer>
+
+<script>
+(function () {
+  var q = document.getElementById('q');
+  var clear = document.getElementById('clear');
+  var nohit = document.getElementById('nohit');
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.maker'));
+  function norm(s) { return s.toLowerCase().replace(/[\s　]+/g, ''); }
+  function run() {
+    var v = norm(q.value);
+    clear.style.visibility = v ? 'visible' : 'hidden';
+    var total = 0;
+    cards.forEach(function (card) {
+      var hitInCard = 0;
+      card.querySelectorAll('.winner').forEach(function (w) {
+        var hit = !v || norm(w.getAttribute('data-key')).indexOf(v) !== -1;
+        w.style.display = hit ? '' : 'none';
+        w.classList.toggle('hit', !!v && hit);
+        if (hit) hitInCard++;
+      });
+      card.querySelectorAll('.prize').forEach(function (p) {
+        var any = Array.prototype.some.call(p.querySelectorAll('.winner'), function (w) { return w.style.display !== 'none'; });
+        p.style.display = any ? '' : 'none';
+      });
+      card.style.display = hitInCard ? '' : 'none';
+      total += hitInCard;
+    });
+    nohit.style.display = v && !total ? 'block' : 'none';
+  }
+  q.addEventListener('input', run);
+  clear.addEventListener('click', function () { q.value = ''; run(); q.focus(); });
+})();
+</script>
+</body>
+</html>
