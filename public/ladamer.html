@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LADAMER まとめ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    background: #EAF8FC;
+    color: #1F4E5C;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ヘッダー */
+  .header {
+    background: #4FC7E8;
+    border-bottom: 4px solid #1F4E5C;
+    padding: 40px 24px 36px;
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .header-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    opacity: 0.55;
+  }
+  .header-title {
+    font-family: 'Barlow Condensed', 'Noto Sans JP', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    line-height: 1.0;
+  }
+  .header-sub { font-size: 13px; margin-top: 8px; opacity: 0.65; letter-spacing: 1px; }
+  .header-badge {
+    display: inline-block;
+    background: #1F4E5C;
+    color: #4FC7E8;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 7px 18px;
+    border-radius: 24px;
+    letter-spacing: 4px;
+  }
+
+  /* TOC */
+  .toc { background: #1F4E5C; display: flex; flex-wrap: wrap; justify-content: center; }
+  .toc a {
+    text-decoration: none;
+    padding: 15px 24px;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(79,199,232,0.9);
+    letter-spacing: 1px;
+  }
+  .toc a:hover { background: #4FC7E8; color: #1F4E5C; }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 44px 16px 72px; }
+  .section { margin-bottom: 56px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 3px solid #1F4E5C;
+  }
+  .section-tag {
+    background: #1F4E5C;
+    color: #4FC7E8;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 5px 12px;
+    border-radius: 3px;
+    letter-spacing: 4px;
+    white-space: nowrap;
+  }
+  .section-title { font-size: 20px; font-weight: 900; letter-spacing: 1px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+
+  .card {
+    background: white;
+    border-radius: 8px;
+    border: 2.5px solid #1F4E5C;
+    box-shadow: 5px 5px 0 #1F4E5C;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .card-title { font-size: 16px; font-weight: 900; line-height: 1.5; }
+  .card p, .card li { font-size: 13px; }
+  .card ul { padding-left: 18px; }
+  .badge {
+    display: inline-block;
+    background: #4FC7E8;
+    color: #1F4E5C;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-right: 4px;
+  }
+  .badge-dark { background: #1F4E5C; color: #4FC7E8; }
+  .note { font-size: 12px; opacity: 0.75; }
+
+  /* 価格表 */
+  .table-wrap { overflow-x: auto; background: white; border: 2.5px solid #1F4E5C; border-radius: 8px; box-shadow: 5px 5px 0 #1F4E5C; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 560px; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid rgba(31,78,92,0.15); }
+  th { background: #1F4E5C; color: #4FC7E8; font-weight: 700; white-space: nowrap; }
+  td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  tr.group td { background: #D5F1F9; font-weight: 700; }
+
+  .highlight {
+    background: #1F4E5C;
+    color: white;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 18px;
+  }
+  .highlight .big { font-family: 'Barlow Condensed', sans-serif; font-size: 44px; font-weight: 900; color: #4FC7E8; line-height: 1; }
+  .highlight p { font-size: 14px; }
+
+  .steps { counter-reset: s; list-style: none; padding: 0 !important; }
+  .steps li { counter-increment: s; position: relative; padding-left: 30px; margin-bottom: 8px; }
+  .steps li::before {
+    content: counter(s);
+    position: absolute; left: 0; top: 1px;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #1F4E5C; color: #4FC7E8;
+    font-size: 11px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .btn {
+    display: inline-block;
+    margin-top: auto;
+    background: #1F4E5C;
+    color: #4FC7E8;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 9px 14px;
+    border-radius: 6px;
+    text-align: center;
+  }
+  .btn:hover { background: #4FC7E8; color: #1F4E5C; }
+  .btn-outline { background: white; color: #1F4E5C; border: 2px solid #1F4E5C; }
+
+  .warn {
+    background: #FFF6E0;
+    border: 2.5px solid #1F4E5C;
+    border-radius: 8px;
+    padding: 18px 20px;
+    font-size: 13px;
+  }
+  .warn strong { display: block; font-size: 15px; margin-bottom: 6px; }
+
+  .footer { text-align: center; font-size: 12px; opacity: 0.6; padding: 24px 16px 40px; }
+
+  @media (max-width: 600px) {
+    .header-title { font-size: 36px; }
+    .toc a { padding: 12px 14px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div>
+      <div class="header-label">KENJE GROUP 商品戦略部</div>
+      <div class="header-title">LADAMER<br>ラダメール まとめ</div>
+      <div class="header-sub">LINE WORKS 掲示板のラダメール関連4記事を1ページに整理</div>
+    </div>
+    <div><span class="header-badge">2026.10.31 時点</span></div>
+  </div>
+</header>
+
+<nav class="toc">
+  <a href="#challenge">1000本チャレンジ</a>
+  <a href="#products">商品・価格</a>
+  <a href="#order">発注方法</a>
+  <a href="#training">講習</a>
+  <a href="#promo">販促</a>
+  <a href="#sources">元記事</a>
+</nav>
+
+<main class="container">
+
+  <!-- 1000本チャレンジ -->
+  <section class="section" id="challenge">
+    <div class="section-header">
+      <span class="section-tag">NOW</span>
+      <h2 class="section-title">1000本販売チャレンジ（開催中）</h2>
+    </div>
+
+    <div class="highlight">
+      <div class="big">1,000 本</div>
+      <p style="margin-top:10px;">期間：<strong>2026年10月〜12月（3ヶ月間）</strong>／KENJE GROUP 全体の目標</p>
+      <p>対象：<strong>LADAMER 水光肌セラム</strong>・<strong>LADAMER 水光肌トナー</strong></p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div><span class="badge badge-dark">表彰</span><span class="badge">韓国招待旅行</span></div>
+        <div class="card-title">5部門の受賞者に「SPECIAL TRIP TO KOREA」</div>
+        <ul>
+          <li>水光肌セラム 販売数 1位</li>
+          <li>水光肌トナー 販売数 1位</li>
+          <li>総合売上 1位</li>
+          <li>総合売上 2位</li>
+          <li>CONTENT AWARD</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div><span class="badge badge-dark">SNS</span><span class="badge">CONTENT AWARD</span></div>
+        <div class="card-title">インスタリールでラダメールを紹介</div>
+        <p>ラダメールが内容を審査し、いちばん魅力的な発信をした人を表彰します。投稿に必ず以下を入れてください。</p>
+        <ul>
+          <li>ハッシュタグ：<strong>#ラダケンジ</strong></li>
+          <li>メンション：<strong>@ladamer_connect</strong>・<strong>@kazuki_ladamer</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div><span class="badge badge-dark">募集終了</span></div>
+        <div class="card-title">SNSコンテンツ制作メンバー（先着5名）</div>
+        <p>ラダメール取扱店舗のスタッフが対象。企画〜撮影〜投稿までを体験し、編集はラダメール側が担当する共同投稿企画です。</p>
+        <p class="note">応募締切 9/27（日）23:30、第1回ミーティング 10/3（土）8:00</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 商品・価格 -->
+  <section class="section" id="products">
+    <div class="section-header">
+      <span class="section-tag">ITEMS</span>
+      <h2 class="section-title">取扱商品・価格・マスタ</h2>
+    </div>
+
+    <p style="font-size:14px;margin-bottom:16px;">韓国のエステ・皮膚科で使われているクリニック専売ブランド（韓国で80万本以上の販売実績）。ディーラーなし、メーカー直のため本部へ発注します。<strong>全品 WEB 発注不可</strong>です。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>マスタ</th><th>商品名</th><th>上代</th><th>サロン価格（6掛）</th></tr>
+        </thead>
+        <tbody>
+          <tr class="group"><td colspan="4">2025年5月導入（価格は税抜）</td></tr>
+          <tr><td>23827</td><td>CGCP ピールパッド</td><td class="num">¥6,000</td><td class="num">¥3,600</td></tr>
+          <tr><td>23828</td><td>CF セラム ハイドレーティング</td><td class="num">¥8,000</td><td class="num">¥4,800</td></tr>
+          <tr class="group"><td colspan="4">2026年 新商品3点・KENJE グループ限定の国内先行販売（価格は税込）</td></tr>
+          <tr><td>25230</td><td>エンリッチド ハイドロ アンプル</td><td class="num">¥14,300</td><td class="num">¥8,580</td></tr>
+          <tr><td>25231</td><td>インテンシブ モイスチャライジング クリーム</td><td class="num">¥11,300</td><td class="num">¥6,780</td></tr>
+          <tr><td>25232</td><td>モイスチャライジング トニング ローション（化粧水）</td><td class="num">¥6,820</td><td class="num">¥4,092</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:10px;">※ 導入時の2品は税抜、新商品3点は税込で掲示板に記載されています。</p>
+
+    <div class="warn" style="margin-top:20px;">
+      <strong>⚠ ピールパッド使用時の注意（ラダメール担当者より）</strong>
+      弱酸性の角質ケア成分が入っているため、使用後は紫外線の影響を受けやすくなります。日差しの強い場所に行くときは
+      「ピーリングパッド → 水洗い → スキンケア → 紫外線ケア（日焼け止めなど）」の順で使うようご案内ください。
+    </div>
+  </section>
+
+  <!-- 発注 -->
+  <section class="section" id="order">
+    <div class="section-header">
+      <span class="section-tag">ORDER</span>
+      <h2 class="section-title">発注方法</h2>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">締切と発送</div>
+        <ul>
+          <li>締切：<strong>毎週日曜日</strong></li>
+          <li>発送：<strong>翌週木曜日</strong>（4ケース以内の場合）</li>
+          <li>在庫状況で発送が遅れる場合あり</li>
+        </ul>
+        <a class="btn" href="https://forms.gle/YVTPhsCtLnNKGUPP7" target="_blank" rel="noopener">📝 通常注文フォーム</a>
+        <a class="btn btn-outline" href="https://docs.google.com/spreadsheets/d/1RkOQQctSYP6pBzmo9bEljlUsYlZIP6vGipbZWEJsTz4/edit?usp=sharing" target="_blank" rel="noopener">📅 発送日確認シート</a>
+      </div>
+      <div class="card">
+        <div class="card-title">ロット・送料</div>
+        <ul>
+          <li><strong>1個から注文OK</strong>（KENJE グループだけの特別対応）</li>
+          <li>送料 ¥600</li>
+          <li>合計 <strong>48個以上で送料無料</strong></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">個人注文の場合</div>
+        <p>給与天引きの個人注文はできません。<strong>必ずサロンで仕入れてから、レジで個人注として会計</strong>してください。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 講習 -->
+  <section class="section" id="training">
+    <div class="section-header">
+      <span class="section-tag">LEARN</span>
+      <h2 class="section-title">講習・動画アーカイブ</h2>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div><span class="badge badge-dark">最新</span><span class="badge">9/28 実施</span></div>
+        <div class="card-title">1000本チャレンジ講習会</div>
+        <p>商品知識の復習、セラム・トナーの理解、スタッフ自身の体験、店販につながる提案方法、タッチアップから販売までの動線づくり、企画説明。</p>
+        <a class="btn" href="https://youtu.be/1NmYOYrX64U" target="_blank" rel="noopener">▶ 動画を見る</a>
+      </div>
+      <div class="card">
+        <div><span class="badge">5/29 実施</span></div>
+        <div class="card-title">新商品3点 ZOOM講習</div>
+        <p>アンプル・クリーム・ローションの新シリーズ講習。</p>
+        <a class="btn" href="https://youtu.be/NC_-v-MDkUo" target="_blank" rel="noopener">▶ 動画を見る</a>
+      </div>
+      <div class="card">
+        <div><span class="badge">導入講習</span></div>
+        <div class="card-title">導入講習 ①・②</div>
+        <p>ピールパッド・セラム導入時の商品講習。</p>
+        <a class="btn" href="https://www.youtube.com/watch?v=80mVfa7RIbI" target="_blank" rel="noopener">▶ ① 6/4 実施</a>
+        <a class="btn btn-outline" href="https://youtu.be/I7_vukip2gI" target="_blank" rel="noopener">▶ ② 6/18 実施</a>
+      </div>
+      <div class="card">
+        <div><span class="badge badge-dark">サロン臨店</span></div>
+        <div class="card-title">臨店講習・体験会の申込み</div>
+        <p>ラダメールの LINE・インスタグラム窓口に以下を送って日程を調整してください。</p>
+        <ol class="steps">
+          <li>サロン名</li>
+          <li>担当者名</li>
+        </ol>
+        <p class="note">LINE 窓口の QR コードは掲示板「ラダメール発注・講習について」に添付されています。</p>
+        <a class="btn btn-outline" href="https://www.instagram.com/ladamer_tokyo/" target="_blank" rel="noopener">Instagram @ladamer_tokyo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 販促 -->
+  <section class="section" id="promo">
+    <div class="section-header">
+      <span class="section-tag">PROMO</span>
+      <h2 class="section-title">販促素材・販促事例</h2>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">販促画像（パウチ・チラシ用）</div>
+        <p>2026年1月から、素材フォルダは<strong>アクセス権の申請制</strong>になりました。「編集者」を選び、メッセージに次の4点を書いてリクエストしてください（記載がないと承認されません／承認は2営業日以内）。</p>
+        <ol class="steps">
+          <li>ケンジグループ</li>
+          <li>サロン名</li>
+          <li>業種</li>
+          <li>地域</li>
+        </ol>
+        <a class="btn" href="https://drive.google.com/drive/folders/1DxSxIWtoZiJFSSJA7_DJXhLAKLdXHJeC?usp=sharing" target="_blank" rel="noopener">📁 LADAMER 素材共用フォルダ</a>
+        <a class="btn btn-outline" href="https://drive.google.com/drive/folders/1bTIRWIzJ4_bMw4jqtjJAVKv8q_1VZ0F0?usp=drive_link" target="_blank" rel="noopener">📁 新商品3点の資料</a>
+      </div>
+      <div class="card">
+        <div><span class="badge badge-dark">成功事例</span></div>
+        <div class="card-title">アイサロンの LINE 配信で5セット即売れ</div>
+        <p>「5日間限定・予約販売」として、ピーリングパッドとセラムのセット（セット購入で送料無料）を LINE 配信。ミニアプリの EC から予約を受け付けました。</p>
+        <p class="note">配信文の全文は掲示板「ラダメール販促画像＆販促事例」のコメント欄にあります。</p>
+      </div>
+      <div class="card">
+        <div class="card-title">掲示板の添付資料</div>
+        <p>「ラダメール発注・講習について」に以下が添付されています。</p>
+        <ul>
+          <li>セラム資料</li>
+          <li>ピーリングパッド資料</li>
+          <li>よくある質問・注意事項</li>
+          <li>導入実績</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 元記事 -->
+  <section class="section" id="sources">
+    <div class="section-header">
+      <span class="section-tag">SOURCE</span>
+      <h2 class="section-title">元の掲示板記事</h2>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">LADAMER × KENJE GROUP 1000本販売チャレンジ企画 ＆ 講習会のご案内</div>
+        <p class="note">2026.9.9 投稿</p>
+      </div>
+      <div class="card">
+        <div class="card-title">【新商品3点】ラダメール発注・講習について</div>
+        <p class="note">2026.5.18 投稿</p>
+        <a class="btn btn-outline" href="https://board.worksmobile.com/main/article/4080000000837030337" target="_blank" rel="noopener">📄 新商品の案内記事</a>
+      </div>
+      <div class="card">
+        <div class="card-title">ラダメール発注・講習について</div>
+        <p class="note">2025.5.26 投稿</p>
+        <a class="btn btn-outline" href="https://board.worksmobile.com/main/article/4080000000628733921" target="_blank" rel="noopener">📄 掲示板で見る</a>
+      </div>
+      <div class="card">
+        <div class="card-title">ラダメール販促画像＆販促事例</div>
+        <p class="note">2025.7.11 投稿</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  ご不明点は 商品戦略部（恵方谷・桑原・長友）まで
+</footer>
+
+</body>
+</html>
