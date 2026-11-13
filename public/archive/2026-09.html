@@ -1,0 +1,1636 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KENJE GROUP TOPICS 2026年9月号</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+    background: #EAF8FC;
+    color: #1F4E5C;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* 背景装飾レイヤー */
+  .bg-deco {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bg-deco svg { position: absolute; opacity: 0.055; }
+
+  /* ヘッダー */
+  .header {
+    background: #4FC7E8;
+    border-bottom: 4px solid #1F4E5C;
+    padding: 40px 24px 36px;
+    position: relative;
+    z-index: 1;
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .header-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #1F4E5C;
+    font-weight: 700;
+    margin-bottom: 6px;
+    opacity: 0.55;
+    text-transform: uppercase;
+  }
+  .header-title {
+    font-family: 'Barlow Condensed', 'Noto Sans JP', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: #1F4E5C;
+    letter-spacing: 0px;
+    line-height: 1.0;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: #1F4E5C;
+    margin-top: 8px;
+    opacity: 0.65;
+    letter-spacing: 1px;
+  }
+  .header-right { text-align: right; }
+  .header-badge {
+    display: inline-block;
+    background: #1F4E5C;
+    color: #4FC7E8;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 7px 18px;
+    border-radius: 24px;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+  .header-vol {
+    font-size: 11px;
+    color: #1F4E5C;
+    opacity: 0.5;
+    letter-spacing: 1px;
+  }
+
+  /* アクセントライン */
+  .accent-bar {
+    background: #1F4E5C;
+    height: 3px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* TOC */
+  .toc {
+    background: #1F4E5C;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+  .toc a {
+    text-decoration: none;
+    padding: 15px 32px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(79,199,232,0.9);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.2s;
+    letter-spacing: 1px;
+  }
+  .toc a:last-child { border-right: none; }
+  .toc a:hover { background: #4FC7E8; color: #1F4E5C; }
+
+  /* コンテナ */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 44px 16px 72px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* セクション */
+  .section { margin-bottom: 60px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 3px solid #1F4E5C;
+  }
+  .section-tag {
+    background: #1F4E5C;
+    color: #4FC7E8;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 5px 12px;
+    border-radius: 3px;
+    letter-spacing: 4px;
+    white-space: nowrap;
+  }
+  .section-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #1F4E5C;
+    letter-spacing: 1px;
+  }
+  .section-date {
+    margin-left: auto;
+    font-size: 10px;
+    color: #1F4E5C;
+    opacity: 0.4;
+    font-weight: 700;
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+
+  /* カードグリッド */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+    gap: 18px;
+  }
+  .cards-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 18px;
+  }
+
+  /* カード */
+  .card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2.5px solid #1F4E5C;
+    box-shadow: 5px 5px 0 #1F4E5C;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 #1F4E5C;
+  }
+
+  /* カードナンバーバー */
+  .card-numbar {
+    background: #1F4E5C;
+    color: #4FC7E8;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    letter-spacing: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* カード画像 */
+  .card-img-wrap {
+    width: 100%;
+    height: 155px;
+    overflow: hidden;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .card-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.3s;
+  }
+  .card:hover .card-img-wrap img { transform: scale(1.04); }
+  .card-img-placeholder {
+    font-size: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+  }
+
+  /* トピックス カード（ワイド） */
+  .card-wide {
+    display: flex;
+    flex-direction: row;
+  }
+  .card-wide .card-img-wrap {
+    width: 200px;
+    min-width: 200px;
+    height: auto;
+  }
+  .card-wide .card-body {
+    flex: 1;
+  }
+
+  /* カード本体 */
+  .card-body {
+    padding: 14px 16px 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .card-badge {
+    display: inline-block;
+    background: #4FC7E8;
+    color: #1F4E5C;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 900;
+    width: fit-content;
+  }
+  .card-badge-red {
+    display: inline-block;
+    background: #FF4B4B;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 900;
+    width: fit-content;
+  }
+  .card-badge-green {
+    display: inline-block;
+    background: #2AA76A;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 900;
+    width: fit-content;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: #1F4E5C;
+    line-height: 1.45;
+  }
+  .card-summary {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.65;
+    flex: 1;
+  }
+  .card-meta {
+    font-size: 11px;
+    color: #888;
+    border-top: 1px solid #eee;
+    padding-top: 8px;
+    margin-top: 2px;
+  }
+  .card-meta strong { color: #555; }
+
+  /* 商品リスト */
+  .products-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+    color: #555;
+  }
+  .products-list li {
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    line-height: 1.4;
+  }
+  .products-list li::before {
+    content: '▸';
+    color: #4FC7E8;
+    background: #1F4E5C;
+    font-size: 9px;
+    padding: 1px 4px;
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* 強調ポイント */
+  .point-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 4px;
+  }
+  .point-chip {
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 2px 9px;
+    font-size: 10.5px;
+    color: #555;
+    font-weight: 600;
+  }
+  .point-chip-highlight {
+    background: #FFECEC;
+    border: 1px solid #F7C9C4;
+    color: #C23616;
+    font-weight: 900;
+  }
+
+
+  /* 詳細ボタン */
+  .detail-btn {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    padding: 9px 0;
+    border-radius: 4px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    background: #1F4E5C;
+    color: #4FC7E8;
+    letter-spacing: 1px;
+    transition: all 0.18s;
+    border: 2px solid #1F4E5C;
+  }
+  .detail-btn:hover {
+    background: #4FC7E8;
+    color: #1F4E5C;
+  }
+  .detail-btn-outline {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    padding: 8px 0;
+    border-radius: 4px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    background: transparent;
+    color: #1F4E5C;
+    letter-spacing: 1px;
+    transition: all 0.18s;
+    border: 2px solid #1F4E5C;
+  }
+  .detail-btn-outline:hover {
+    background: #1F4E5C;
+    color: #4FC7E8;
+  }
+
+  /* キャンペーン価格ハイライト */
+  .price-highlight {
+    background: #E3F6FB;
+    border: 1.5px solid #4FC7E8;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin-top: 6px;
+    font-size: 12px;
+  }
+  .price-highlight .price-label {
+    font-size: 10px;
+    color: #888;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+  }
+  .price-highlight .price-main {
+    font-size: 16px;
+    font-weight: 900;
+    color: #E53935;
+  }
+  .price-highlight .price-normal {
+    font-size: 11px;
+    color: #999;
+    text-decoration: line-through;
+    margin-left: 6px;
+  }
+
+  /* セミナーカード */
+  .seminar-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2.5px solid #1F4E5C;
+    box-shadow: 5px 5px 0 #1F4E5C;
+    display: grid;
+    grid-template-columns: 1fr;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .seminar-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 #1F4E5C;
+  }
+  .seminar-img {
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    overflow: hidden;
+  }
+  .seminar-img img {
+    width: 100%; height: auto; max-height: 100%; object-fit: contain; background: #ffffff;
+  }
+  .seminar-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+  }
+  .seminar-date-box {
+    background: #1F4E5C;
+    color: #4FC7E8;
+    border-radius: 5px;
+    padding: 10px 14px;
+    font-weight: 900;
+  }
+  .seminar-date-main {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+  .seminar-date-sub {
+    font-size: 12px;
+    margin-top: 4px;
+    opacity: 0.85;
+  }
+  .seminar-points {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .seminar-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    color: #555;
+  }
+  .seminar-point-num {
+    background: #4FC7E8;
+    color: #1F4E5C;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* 準備中プレースホルダー */
+  .coming-soon {
+    background: white;
+    border-radius: 8px;
+    border: 2.5px dashed #ccc;
+    padding: 48px 24px;
+    text-align: center;
+    color: #aaa;
+  }
+  .coming-soon-icon { font-size: 40px; margin-bottom: 12px; }
+  .coming-soon-text {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #bbb;
+  }
+  .coming-soon-sub {
+    font-size: 11px;
+    margin-top: 6px;
+    color: #ccc;
+    letter-spacing: 1px;
+  }
+
+  /* トピックスビッグカード */
+  .topic-card {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2.5px solid #1F4E5C;
+    box-shadow: 5px 5px 0 #1F4E5C;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .topic-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 #1F4E5C;
+  }
+  .topic-card-header {
+    background: #1F4E5C;
+    color: #4FC7E8;
+    padding: 12px 18px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .topic-card-body {
+    padding: 18px;
+  }
+  .topic-card-title {
+    font-size: 17px;
+    font-weight: 900;
+    color: #1F4E5C;
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+  .topic-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .topic-product-item {
+    border: 1.5px solid #e8e8e8;
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .topic-product-num {
+    background: #4FC7E8;
+    color: #1F4E5C;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 2px 8px;
+    border-radius: 3px;
+    width: fit-content;
+    letter-spacing: 2px;
+  }
+  .topic-product-name {
+    font-size: 12px;
+    font-weight: 900;
+    color: #1F4E5C;
+    line-height: 1.4;
+  }
+  .topic-product-desc {
+    font-size: 11px;
+    color: #777;
+    line-height: 1.55;
+    flex: 1;
+  }
+  .topic-product-feature {
+    font-size: 10.5px;
+    background: #E3F6FB;
+    border-radius: 3px;
+    padding: 3px 8px;
+    color: #14607A;
+    font-weight: 700;
+    width: fit-content;
+  }
+
+  /* スタッフトークボックス */
+  .talk-box {
+    background: #f9f9f9;
+    border-left: 4px solid #4FC7E8;
+    border-radius: 0 5px 5px 0;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 11.5px;
+    color: #555;
+    line-height: 1.65;
+    font-style: italic;
+  }
+  .talk-box-label {
+    font-size: 9.5px;
+    letter-spacing: 2px;
+    font-weight: 900;
+    color: #888;
+    margin-bottom: 4px;
+    font-style: normal;
+  }
+
+  /* フッター */
+  .footer {
+    background: #1F4E5C;
+    color: #4FC7E8;
+    text-align: center;
+    padding: 30px 24px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+  }
+  .footer p + p { margin-top: 5px; opacity: 0.45; font-size: 11px; }
+
+  @media (max-width: 640px) {
+    .header-title { font-size: 32px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .cards-grid-2 { grid-template-columns: 1fr; }
+    .toc a { padding: 13px 18px; font-size: 12px; }
+    .seminar-card { grid-template-columns: 1fr; }
+    .topic-products { grid-template-columns: 1fr; }
+    .card-wide { flex-direction: column; }
+    .card-wide .card-img-wrap { width: 100%; height: 155px; }
+  }
+
+  /* ===== BLOG READING STYLE: トピックス ===== */
+  .topic-card {
+    background: #fff;
+    border-radius: 4px 4px 0 0;
+    border: none;
+    box-shadow: none;
+    border-left: 5px solid #4FC7E8;
+    overflow: visible;
+    margin-bottom: 32px;
+  }
+  .topic-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .topic-card-header {
+    background: #1F4E5C;
+    color: #4FC7E8;
+    padding: 14px 22px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: flex-start;
+    border-radius: 0;
+  }
+  .topic-card-header span:first-child {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #4FC7E8;
+  }
+  .topic-card-header span:last-child {
+    font-size: 15px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: normal;
+    text-transform: none;
+    font-family: inherit;
+  }
+  .topic-card-body {
+    padding: 0;
+    background: #fff;
+  }
+  .topic-card-title {
+    font-size: 19px;
+    font-weight: 900;
+    color: #1F4E5C;
+    line-height: 1.4;
+    margin: 0;
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .topic-article-lead {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.8;
+    padding: 16px 22px;
+    background: #F3FCFE;
+    border-bottom: 1px solid #BFE7F0;
+    margin: 0 !important;
+  }
+  .topic-products {
+    display: block !important;
+  }
+  .topic-product-item {
+    border: none !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #efefef !important;
+    padding: 24px 22px !important;
+    display: block !important;
+    gap: 0 !important;
+  }
+  .topic-product-item:last-child {
+    border-bottom: none !important;
+  }
+  .topic-product-num {
+    font-size: 10px;
+    padding: 3px 12px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    display: inline-block;
+    letter-spacing: 3px;
+  }
+  .topic-product-name {
+    font-size: 16px;
+    font-weight: 900;
+    color: #1F4E5C;
+    line-height: 1.4;
+    margin-bottom: 14px;
+  }
+  .topic-product-item img {
+    width: 100% !important;
+    max-width: 400px !important;
+    max-height: 280px !important;
+    object-fit: contain !important;
+    border-radius: 8px !important;
+    margin: 0 0 14px 0 !important;
+    display: block !important;
+    background: #ffffff !important;
+  }
+  .topic-product-feature {
+    font-size: 11.5px;
+    padding: 4px 12px;
+    margin-bottom: 12px;
+    display: inline-block;
+    border: 1px solid #BFE7F0;
+    background: #E3F6FB;
+    border-radius: 3px;
+    color: #14607A;
+    font-weight: 700;
+  }
+  .topic-product-desc {
+    font-size: 13px !important;
+    color: #555 !important;
+    line-height: 1.78 !important;
+    margin-bottom: 16px !important;
+    flex: none !important;
+  }
+  .talk-box {
+    font-size: 12.5px;
+    line-height: 1.72;
+    padding: 14px 18px;
+    border-left-width: 5px;
+    margin-top: 0;
+    margin-bottom: 14px;
+    background: #f9f9f9;
+    border-radius: 0 6px 6px 0;
+  }
+  .talk-box-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    margin-bottom: 7px;
+    color: #aaa;
+    font-weight: 900;
+    font-style: normal;
+  }
+  .card-img-wrap {
+    height: auto !important;
+    min-height: 120px;
+    max-height: 220px;
+    overflow: hidden;
+  }
+  .card-img-wrap img {
+    height: auto !important;
+    object-fit: contain !important;
+    background: #fff;
+  }
+  @media (max-width: 640px) {
+    .topic-card-title { font-size: 16px; padding: 14px 16px 12px; }
+    .topic-article-lead { padding: 14px 16px; }
+    .topic-product-item { padding: 18px 16px !important; }
+    .topic-product-name { font-size: 15px; }
+    .card-wide .card-img-wrap { height: auto !important; }
+  }
+  /* ===== END BLOG STYLE ===== */
+
+
+  /* ===== LAYOUT TIDY OVERRIDES ===== */
+  :root {
+    --ink: #1F4E5C;
+    --muted: #666666;
+    --paper: #ffffff;
+    --soft: #EAF8FC;
+    --line: #BFE7F0;
+    --yellow: #4FC7E8;
+  }
+
+  body {
+    background: linear-gradient(180deg, #E3F6FB 0%, #F3FCFE 42%, #ffffff 100%);
+    color: var(--ink);
+  }
+
+  .bg-deco svg { opacity: 0.035; }
+
+  .header {
+    padding: 34px 24px 30px;
+    border-bottom: 1px solid rgba(31, 78, 92, 0.16);
+    box-shadow: 0 8px 22px rgba(31, 78, 92, 0.08);
+  }
+
+  .header-inner,
+  .container {
+    max-width: 1120px;
+  }
+
+  .header-title {
+    font-size: clamp(34px, 5vw, 56px);
+  }
+
+  .header-sub {
+    max-width: 560px;
+    line-height: 1.6;
+  }
+
+  .header-badge,
+  .section-tag,
+  .topic-product-num {
+    border-radius: 999px;
+  }
+
+  .toc {
+    gap: 6px;
+    padding: 8px 12px;
+    box-shadow: 0 8px 20px rgba(31, 78, 92, 0.08);
+  }
+
+  .toc a {
+    border: 0;
+    border-radius: 999px;
+    padding: 10px 18px;
+    color: #D6F3FB;
+  }
+
+  .container {
+    padding: 46px 20px 76px;
+  }
+
+  .section {
+    margin-bottom: 52px;
+  }
+
+  .section-header {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid var(--line);
+    border-left: 6px solid var(--yellow);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 24px rgba(31, 78, 92, 0.06);
+  }
+
+  .section-title {
+    font-size: 22px;
+  }
+
+  .cards-grid,
+  .cards-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .card,
+  .seminar-card,
+  .topic-card {
+    border: 1px solid rgba(31, 78, 92, 0.18);
+    border-radius: 8px;
+    box-shadow: 0 10px 24px rgba(31, 78, 92, 0.09);
+  }
+
+  .card:hover,
+  .seminar-card:hover,
+  .topic-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px rgba(31, 78, 92, 0.12);
+  }
+
+  .card-numbar,
+  .topic-card-header {
+    letter-spacing: 2px;
+  }
+
+  .card-img-wrap {
+    min-height: 170px;
+    max-height: 240px;
+    background: #ffffff;
+  }
+
+  .card-img-wrap img {
+    width: 100%;
+    height: 100% !important;
+    object-fit: contain !important;
+    padding: 10px;
+  }
+
+  .card-body {
+    padding: 18px;
+    gap: 10px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .card-summary,
+  .card-meta {
+    font-size: 12px;
+  }
+
+  .topic-card {
+    overflow: hidden;
+    border-left: 0;
+    margin-bottom: 24px;
+  }
+
+  .topic-card-header {
+    padding: 12px 18px;
+    justify-content: space-between;
+  }
+
+  .topic-card-header span:last-child {
+    color: var(--yellow);
+    font-size: 12px;
+  }
+
+  .topic-card-title {
+    font-size: 20px;
+    padding: 18px 22px 12px;
+  }
+
+  .topic-article-lead {
+    padding: 14px 22px;
+    border-bottom-color: var(--line);
+  }
+
+  .topic-products {
+    display: grid !important;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 18px 22px 22px;
+  }
+
+  .topic-product-item {
+    display: flex !important;
+    flex-direction: column;
+    min-width: 0;
+    border: 1px solid var(--line) !important;
+    border-radius: 8px !important;
+    padding: 16px !important;
+    background: #F5FCFE;
+  }
+
+  .topic-product-item img {
+    max-width: none !important;
+    width: 100% !important;
+    height: 190px !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    margin: 0 0 12px !important;
+    padding: 10px;
+    border: 1px solid #eeeeee;
+  }
+
+  .topic-product-name {
+    font-size: 15px;
+    min-height: 3.1em;
+    margin-bottom: 10px;
+  }
+
+  .topic-product-feature {
+    width: auto;
+    line-height: 1.5;
+  }
+
+  .topic-product-desc {
+    font-size: 12px !important;
+    line-height: 1.7 !important;
+  }
+
+  .talk-box {
+    margin-top: auto;
+    margin-bottom: 12px;
+    background: #ffffff;
+    border: 1px solid #BFE7F0;
+    border-left: 5px solid var(--yellow);
+  }
+
+  .detail-btn-outline {
+    align-self: flex-start;
+  }
+
+  /* UVダメージ/お悩みハイライトボックス */
+  .risk-box {
+    background: #E3F6FB;
+    border: 1.5px solid #4FC7E8;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 0 22px 18px;
+  }
+  .risk-box-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 900;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  .risk-box-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .risk-box-grid > div {
+    flex: 1;
+    min-width: 220px;
+    font-size: 12px;
+    color: #555;
+    line-height: 1.7;
+  }
+  .risk-box-grid > div strong {
+    display: block;
+    font-weight: 900;
+    color: #1F4E5C;
+    margin-bottom: 4px;
+    font-size: 12.5px;
+  }
+  @media (max-width: 640px) {
+    .risk-box { margin: 0 16px 16px; }
+  }
+
+  /* お悩みキーワード強調タグ */
+  .concern-tag {
+    display: inline-block;
+    background: #FFECEC;
+    color: #C23616;
+    border: 1px solid #F7C9C4;
+    border-radius: 20px;
+    padding: 2px 12px;
+    font-size: 12.5px;
+    font-weight: 900;
+    margin: 0 2px;
+    letter-spacing: 0.5px;
+  }
+
+  /* 文中フレーズ強調マーカー */
+  .hl-mark {
+    background: linear-gradient(transparent 60%, #FFECEC 60%);
+    font-weight: 900;
+    color: #C23616;
+    padding: 0 1px;
+  }
+
+  /* 提案ヒントライン（⇒） */
+  .hint-line {
+    font-size: 12px;
+    color: #1F4E5C;
+    background: #F5FCFE;
+    border-left: 3px solid #4FC7E8;
+    padding: 7px 10px;
+    border-radius: 0 5px 5px 0;
+    margin: 6px 0 12px;
+    line-height: 1.65;
+    font-weight: 600;
+  }
+
+  /* 実績報告バナー見出し */
+  .report-banner {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 900;
+    color: #1F4E5C;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+  .report-banner .wing {
+    color: #4FC7E8;
+    font-weight: 700;
+    margin: 0 6px;
+  }
+
+  /* 体験・販売会 実施報告の詳細リスト */
+  .report-detail-list {
+    background: #F5FCFE;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .report-detail-list div {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.6;
+  }
+  .report-detail-list strong {
+    color: #1F4E5C;
+    font-weight: 900;
+  }
+
+  /* Before/After 実績画像（横長のため高さ制限を解除） */
+  .topic-product-item img.wide-proof-img {
+    height: auto !important;
+    max-height: 340px !important;
+  }
+
+  /* 体験会実績ミニ統計 */
+  .mini-stats-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 900;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  .mini-stats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .mini-stat {
+    flex: 1;
+    min-width: 88px;
+    text-align: center;
+    background: #F5FCFE;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 9px 6px;
+  }
+  .mini-stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: #1F4E5C;
+  }
+  .mini-stat-num small {
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .mini-stat-lbl {
+    font-size: 9.5px;
+    color: #777;
+    margin-top: 2px;
+  }
+
+
+  @media (max-width: 640px) {
+    .header {
+      padding: 28px 18px 24px;
+    }
+
+    .header-inner {
+      align-items: flex-start;
+    }
+
+    .header-right {
+      text-align: left;
+    }
+
+    .toc {
+      justify-content: flex-start;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+    }
+
+    .toc a {
+      white-space: nowrap;
+    }
+
+    .container {
+      padding: 30px 14px 56px;
+    }
+
+    .section-header {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .section-date {
+      margin-left: 0;
+    }
+
+    .topic-card-header {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .topic-products {
+      grid-template-columns: 1fr;
+      padding: 14px;
+    }
+
+    .topic-product-item {
+      padding: 14px !important;
+    }
+
+    .topic-product-name {
+      min-height: 0;
+    }
+  }
+  /* ===== END LAYOUT TIDY OVERRIDES ===== */
+
+</style>
+</head>
+<body>
+
+<!-- 背景の美容アイコン装飾 -->
+<div class="bg-deco">
+  <svg width="180" height="160" style="top:2%;left:1%;" viewBox="0 0 180 160">
+    <ellipse cx="80" cy="70" rx="60" ry="45" fill="#1F4E5C"/>
+    <rect x="65" y="110" width="18" height="40" rx="8" fill="#1F4E5C"/>
+    <rect x="130" y="55" width="50" height="16" rx="8" fill="#1F4E5C"/>
+    <circle cx="70" cy="68" r="18" fill="#1E9AC2"/>
+    <circle cx="70" cy="68" r="10" fill="#1F4E5C"/>
+    <line x1="142" y1="40" x2="155" y2="30" stroke="#1F4E5C" stroke-width="6" stroke-linecap="round"/>
+    <line x1="155" y1="63" x2="170" y2="63" stroke="#1F4E5C" stroke-width="6" stroke-linecap="round"/>
+    <line x1="142" y1="85" x2="155" y2="95" stroke="#1F4E5C" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+  <svg width="90" height="160" style="top:8%;right:4%;" viewBox="0 0 90 160">
+    <rect x="20" y="55" width="50" height="90" rx="14" fill="#1F4E5C"/>
+    <rect x="28" y="30" width="34" height="30" rx="6" fill="#1F4E5C"/>
+    <rect x="34" y="14" width="22" height="20" rx="5" fill="#1F4E5C"/>
+    <rect x="38" y="5" width="14" height="12" rx="4" fill="#1F4E5C"/>
+    <rect x="28" y="80" width="34" height="5" rx="2" fill="#1E9AC2"/>
+    <rect x="28" y="92" width="24" height="4" rx="2" fill="#1E9AC2"/>
+  </svg>
+  <svg width="130" height="130" style="bottom:18%;left:3%;" viewBox="0 0 100 100">
+    <circle cx="22" cy="28" r="14" fill="none" stroke="#1F4E5C" stroke-width="6"/>
+    <circle cx="22" cy="72" r="14" fill="none" stroke="#1F4E5C" stroke-width="6"/>
+    <line x1="33" y1="33" x2="85" y2="85" stroke="#1F4E5C" stroke-width="6" stroke-linecap="round"/>
+    <line x1="33" y1="67" x2="85" y2="15" stroke="#1F4E5C" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="22" cy="28" r="5" fill="#1E9AC2"/>
+    <circle cx="22" cy="72" r="5" fill="#1E9AC2"/>
+  </svg>
+  <svg width="160" height="75" style="bottom:12%;right:5%;" viewBox="0 0 160 50">
+    <rect x="0" y="0" width="160" height="18" rx="6" fill="#1F4E5C"/>
+    <rect x="12" y="14" width="8" height="30" rx="4" fill="#1F4E5C"/>
+    <rect x="28" y="14" width="8" height="30" rx="4" fill="#1F4E5C"/>
+    <rect x="44" y="14" width="8" height="30" rx="4" fill="#1F4E5C"/>
+    <rect x="60" y="14" width="8" height="30" rx="4" fill="#1F4E5C"/>
+    <rect x="76" y="14" width="8" height="30" rx="4" fill="#1F4E5C"/>
+    <rect x="92" y="14" width="8" height="30" rx="4" fill="#1F4E5C"/>
+    <rect x="108" y="14" width="8" height="30" rx="4" fill="#1F4E5C"/>
+    <rect x="124" y="14" width="8" height="30" rx="4" fill="#1F4E5C"/>
+    <rect x="140" y="14" width="8" height="30" rx="4" fill="#1F4E5C"/>
+  </svg>
+  <svg width="80" height="130" style="top:42%;left:0.5%;" viewBox="0 0 70 110">
+    <ellipse cx="35" cy="82" rx="22" ry="26" fill="#1F4E5C"/>
+    <rect x="23" y="38" width="24" height="30" rx="4" fill="#1F4E5C"/>
+    <ellipse cx="35" cy="38" rx="12" ry="6" fill="#1F4E5C"/>
+    <rect x="30" y="24" width="10" height="17" rx="3" fill="#1F4E5C"/>
+    <rect x="14" y="72" width="42" height="5" rx="2" fill="#1E9AC2"/>
+    <rect x="18" y="83" width="30" height="4" rx="2" fill="#1E9AC2"/>
+  </svg>
+  <svg width="70" height="70" style="top:35%;right:1.5%;" viewBox="0 0 60 60">
+    <polygon points="30,5 34,24 53,24 38,36 43,55 30,43 17,55 22,36 7,24 26,24" fill="#1F4E5C"/>
+  </svg>
+  <svg width="60" height="120" style="top:62%;left:2%;" viewBox="0 0 40 100">
+    <rect x="14" y="0" width="12" height="60" rx="4" fill="#1F4E5C"/>
+    <ellipse cx="20" cy="75" rx="14" ry="20" fill="#1F4E5C"/>
+    <ellipse cx="20" cy="68" rx="9" ry="6" fill="#1E9AC2"/>
+  </svg>
+  <svg width="30" height="30" style="top:55%;right:8%;" viewBox="0 0 30 30">
+    <line x1="15" y1="2" x2="15" y2="28" stroke="#1F4E5C" stroke-width="3" stroke-linecap="round"/>
+    <line x1="2" y1="15" x2="28" y2="15" stroke="#1F4E5C" stroke-width="3" stroke-linecap="round"/>
+    <line x1="5" y1="5" x2="25" y2="25" stroke="#1F4E5C" stroke-width="2" stroke-linecap="round"/>
+    <line x1="25" y1="5" x2="5" y2="25" stroke="#1F4E5C" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+  <svg width="25" height="25" style="top:25%;left:12%;" viewBox="0 0 30 30">
+    <line x1="15" y1="2" x2="15" y2="28" stroke="#1F4E5C" stroke-width="3" stroke-linecap="round"/>
+    <line x1="2" y1="15" x2="28" y2="15" stroke="#1F4E5C" stroke-width="3" stroke-linecap="round"/>
+    <line x1="5" y1="5" x2="25" y2="25" stroke="#1F4E5C" stroke-width="2" stroke-linecap="round"/>
+    <line x1="25" y1="5" x2="5" y2="25" stroke="#1F4E5C" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+  <svg width="20" height="20" style="bottom:35%;right:15%;" viewBox="0 0 30 30">
+    <line x1="15" y1="2" x2="15" y2="28" stroke="#1F4E5C" stroke-width="3" stroke-linecap="round"/>
+    <line x1="2" y1="15" x2="28" y2="15" stroke="#1F4E5C" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+</div>
+
+<!-- ヘッダー -->
+<header class="header">
+  <div class="header-inner">
+    <div>
+      <p class="header-label">KENJE GROUP · 商品戦略部</p>
+      <h1 class="header-title">材料トピックス</h1>
+      <p class="header-sub">美容室スタッフのための最新商品＆キャンペーン情報</p>
+    </div>
+    <div class="header-right">
+      <p class="header-badge">2026.09</p>
+      <p class="header-vol">2026年9月号</p>
+    </div>
+  </div>
+</header>
+<div class="accent-bar"></div>
+
+<!-- ナビゲーション -->
+<nav class="toc">
+  <a href="#topics">📰 トピックス</a>
+  <a href="#campaign">🎁 キャンペーン</a>
+  <a href="#seminar">🎓 講習</a>
+  <a href="#newproduct">✨ 新商品</a>
+  <a href="/prizes.html">🎉 抽選会 当選結果</a>
+  <a href="/archive/index.html">🗂 バックナンバー</a>
+</nav>
+
+<div class="container">
+
+  <!-- ========== トピックス ========== -->
+  <section class="section" id="topics">
+    <div class="section-header">
+      <span class="section-tag">TOPICS</span>
+      <h2 class="section-title">トピックス</h2>
+      <span class="section-date">2026.09</span>
+    </div>
+
+    <!-- トピックス 1 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span>TOPICS 01</span>
+        <span>「その他」マスタ利用実態アンケートのお願い</span>
+      </div>
+      <div class="topic-card-body">
+        <div class="topic-card-title">
+          今後のEC展開・売上データ分析の精度アップに向けて
+        </div>
+        <p class="topic-article-lead">
+          今後のEC展開および商品売上データの詳細な分析に向け、「その他」マスタの廃止を進めています。一方で、現場のマスタ検索のしづらさや不備により「その他」を使わざるを得ない場面があるかと思います。どんなケース・タイミングで「その他」を使っているか実態を把握し、より使いやすいマスタへ整備したいと考えていますので、アンケートへのご協力をお願いいたします。
+        </p>
+
+        <div class="topic-products">
+          <div class="topic-product-item">
+            <span class="topic-product-num">SURVEY</span>
+            <img src="/img/survey-banner.jpg" alt="「その他」のマスタ使用アンケート">
+            <div class="topic-product-feature">📋 現場のリアルな「その他」利用シーンを教えてください</div>
+            <div class="topic-product-desc">
+              「どんなケース・タイミングで『その他』を使っているか」の実態を把握し、より使いやすいマスタへ整備していきます。皆さまの店舗での使用状況を教えてください。
+            </div>
+            <a href="https://jp1-form.worksmobile.com/forms/5ae2423db6193d0f9aa83b8be4cb0fc0/response?by=urlshorter&amp;revId=48&amp;tenantId=10393485" target="_blank" class="detail-btn">📝 アンケートに回答する →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- トピックス 2 -->
+    <div class="topic-card">
+      <div class="topic-card-header">
+        <span>TOPICS 02</span>
+        <span>材料管理マニュアル「A-cloud版」を公開</span>
+      </div>
+      <div class="topic-card-body">
+        <div class="topic-card-title">
+          材料管理についてYouTube公開！
+        </div>
+        <p class="topic-article-lead">
+          A-cloud上での材料管理（発注・在庫確認など）の使い方をまとめたマニュアルを公開しました。操作方法を確認したいときは、まず動画・資料をチェックしてみてください。
+        </p>
+
+        <div class="topic-products">
+          <div class="topic-product-item">
+            <span class="topic-product-num">MANUAL</span>
+            <img src="/img/manual-banner.png" alt="材料管理マニュアル掲示板">
+            <div class="topic-product-feature">🎬 動画でわかるA-cloud材料管理マニュアル</div>
+            <div class="topic-product-desc">
+              発注・在庫確認など、日々の材料管理をA-cloud上で行う手順を動画でご案内しています。掲示板の資料とあわせてご活用ください。
+            </div>
+            <a href="https://www.youtube.com/watch?v=6qLk_BYfBS4" target="_blank" class="detail-btn">▶️ マニュアル動画を見る →</a>
+            <a href="https://board.worksmobile.com/main/article/4080000000863141715?t=52099&amp;boardNo=4010000005033597003&amp;isShowFilesArea=false" target="_blank" class="detail-btn-outline">📄 掲示板の詳細はこちら →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== キャンペーン ========== -->
+  <section class="section" id="campaign">
+    <div class="section-header">
+      <span class="section-tag">CAMPAIGN</span>
+      <h2 class="section-title">キャンペーン情報</h2>
+      <span class="section-date">2026.09</span>
+    </div>
+
+    <div class="coming-soon">
+      <div class="coming-soon-icon">🔄</div>
+      <div class="coming-soon-text">更新準備中...</div>
+      <div class="coming-soon-sub">準備ができ次第こちらに掲載予定です</div>
+    </div>
+  </section>
+
+  <!-- ========== 講習 ========== -->
+  <section class="section" id="seminar">
+    <div class="section-header">
+      <span class="section-tag">SEMINAR</span>
+      <h2 class="section-title">講習・セミナー</h2>
+      <span class="section-date">2026.09</span>
+    </div>
+
+    <div class="cards-grid-2" style="margin-bottom:18px;">
+
+      <!-- セミナー1: エレメア コームストレイナー -->
+      <div class="seminar-card">
+        <div class="seminar-img">
+          <img src="/img/comb-strainer.jpg" alt="コームストレイナー" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div style="display:none;font-size:60px;padding:40px;">💇</div>
+        </div>
+        <div class="seminar-body">
+          <div class="seminar-date-box">
+            <div class="seminar-date-main">9.24 THU</div>
+            <div class="seminar-date-sub">8:00〜 ／ オンライン開催</div>
+          </div>
+          <div style="font-size:16px;font-weight:900;line-height:1.45;color:#1F4E5C;">
+            挟まないからダメージレス。<br>KENJEオリジナル「コームストレイナー」<br>商品説明会
+          </div>
+          <div>
+            <div style="font-size:10px;letter-spacing:2px;font-weight:900;color:#888;margin-bottom:6px;">このセミナーで学べること</div>
+            <div class="seminar-points">
+              <div class="seminar-point">
+                <div class="seminar-point-num">1</div>
+                <span>挟まずに仕上げる「コームストレイナー」の使い方とダメージレスの秘密</span>
+              </div>
+              <div class="seminar-point">
+                <div class="seminar-point-num">2</div>
+                <span>ストレート・レイヤー・ニュアンスパーマなど幅広いスタイルへの活用法</span>
+              </div>
+              <div class="seminar-point">
+                <div class="seminar-point-num">3</div>
+                <span>サロン価格・販売スケジュールなど、10月中旬発売に向けた最新情報</span>
+              </div>
+            </div>
+          </div>
+          <div class="point-chips">
+            <span class="point-chip">上代12,000円</span>
+            <span class="point-chip point-chip-highlight">サロン価格5,800円（4.8掛）</span>
+            <span class="point-chip">通常品より1,400円お得</span>
+          </div>
+          <a href="https://works.do/GO28KD3" target="_blank" class="detail-btn">🔗 お申込みはこちら（〜9/17(木)23:30締切）</a>
+        </div>
+      </div>
+
+      <!-- セミナー2: ミライソーププロジェクト -->
+      <div class="seminar-card">
+        <div class="seminar-img">
+          <img src="/img/miraisoap.jpg" alt="ミライソープ" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div style="display:none;font-size:60px;padding:40px;">🧼</div>
+        </div>
+        <div class="seminar-body">
+          <div class="seminar-date-box">
+            <div class="seminar-date-main">9.16 WED</div>
+            <div class="seminar-date-sub">18:00〜 ／ 2Fアカデミー</div>
+          </div>
+          <div style="font-size:16px;font-weight:900;line-height:1.45;color:#1F4E5C;">
+            美容師の手荒れをなくし、お客様にさらに喜んでもらう<br>「ミライソーププロジェクト」講習会
+          </div>
+          <div>
+            <div style="font-size:10px;letter-spacing:2px;font-weight:900;color:#888;margin-bottom:6px;">このセミナーで学べること</div>
+            <div class="seminar-points">
+              <div class="seminar-point">
+                <div class="seminar-point-num">1</div>
+                <span>手荒れを防ぎながら、頭皮の皮脂汚れやオイル・ワックスを素髪に戻すしくみ</span>
+              </div>
+              <div class="seminar-point">
+                <div class="seminar-point-num">2</div>
+                <span>水素・炭酸による、トリートメントの浸透力アップ効果</span>
+              </div>
+              <div class="seminar-point">
+                <div class="seminar-point-num">3</div>
+                <span>サロン価格・専用ボトルなど、導入に必要な情報</span>
+              </div>
+            </div>
+          </div>
+          <div class="point-chips">
+            <span class="point-chip">ミライソープ 1000ml：2,880円（税抜）</span>
+            <span class="point-chip">専用ボトル：900円（税抜）</span>
+            <span class="point-chip">全サロン参加推奨</span>
+          </div>
+          <a href="https://board.worksmobile.com/main/article/4080000000856357285?t=48590&amp;boardNo=4010000005033597003&amp;isShowFilesArea=false" target="_blank" class="detail-btn">📄 詳細はLINE WORKS掲示板から</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== 新商品 ========== -->
+  <section class="section" id="newproduct">
+    <div class="section-header">
+      <span class="section-tag">NEW ITEM</span>
+      <h2 class="section-title">新商品<br>販促POPダウンロード可能！<br>掲示板check！</h2>
+      <span class="section-date">2026.09</span>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- 新商品1: WELLA SEBASTIAN -->
+      <div class="card">
+        <div class="card-numbar">
+          <span>NEW 01</span>
+          <span>SEBASTIAN</span>
+        </div>
+        <div class="card-img-wrap">
+          <img src="/img/wella-sebastian.jpg" alt="WELLA PROFESSIONAL SEBASTIAN PROFESSIONAL" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="card-img-placeholder" style="display:none;">💧</div>
+        </div>
+        <div class="card-body">
+          <div style="display:flex;gap:5px;flex-wrap:wrap;">
+            <span class="card-badge">新商品</span>
+            <span class="card-badge-green">ツヤ・まとまり・補修</span>
+          </div>
+          <div class="card-title">WELLA PROFESSIONAL SEBASTIAN PROFESSIONAL<br>ダークオイル／ノーブレーカー 3商品</div>
+          <div class="card-summary">
+            軽やかなツヤやまとまりを求める方、パサつき・広がりが気になる方、ダメージをケアしながらスタイリングしたい方におすすめのスタイリング＆ヘアケアライン。カウンセリング時のお声がけや店販提案の参考にご活用ください。
+          </div>
+          <ul class="products-list">
+            <li>ダークオイル スムース＆シャインオイル 100mL　上代4,950円／サロン2,475円（税込）</li>
+            <li>ダークオイル シルキーヘアスプレー 200mL　上代3,300円／サロン1,650円（税込）</li>
+            <li>ノーブレーカー ボンディングミスト 100mL　上代4,950円／サロン2,475円（税込）</li>
+          </ul>
+          <div class="card-meta">
+            <strong>取扱ディーラー:</strong> ガモウ<br>
+            <strong>マスタ:</strong> 33441〜33444
+          </div>
+          <a href="https://board.worksmobile.com/main/article/4080000000857170717?ogToken=23921.2f7be0474f5545e1aa37f77a6ec3c425" target="_blank" class="detail-btn">📄 詳細を見る →</a>
+        </div>
+      </div>
+
+      <!-- 新商品2: 1DK scalp clay -->
+      <div class="card">
+        <div class="card-numbar">
+          <span>NEW 02</span>
+          <span>1DK</span>
+        </div>
+        <div class="card-img-wrap">
+          <img src="/img/1dk-scalp-clay.jpg" alt="1DK scalp clay" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="card-img-placeholder" style="display:none;">🌿</div>
+        </div>
+        <div class="card-body">
+          <div style="display:flex;gap:5px;flex-wrap:wrap;">
+            <span class="card-badge">新商品</span>
+            <span class="card-badge-green">頭皮クレンジング</span>
+          </div>
+          <div class="card-title">1DK scalp clay 200g</div>
+          <div class="card-summary">
+            天然由来成分100％の頭皮クレンジング。2種のクレイが、普段のシャンプーでは落としきれない皮脂・汚れ・スタイリング剤の残留をやさしくオフ。天然温泉水でうるおいを守りながら頭皮をすっきり整えます。頭皮のベタつき・ニオイ、スタイリング剤の残留が気になるお客様におすすめです。
+          </div>
+          <div class="card-meta">
+            <strong>サロン価格:</strong> ¥2,376（税込）／ <strong>上代:</strong> ¥3,960（税込）<br>
+            <strong>商品コード:</strong> 20496（店販）／50496（業務用）　<strong>取扱ディーラー:</strong> コスモ
+          </div>
+          <a href="https://board.worksmobile.com/main/article/4080000000853279760?ogToken=23921.44f58e71a47846c49c1b8dadedd9d41a" target="_blank" class="detail-btn">📄 詳細を見る →</a>
+        </div>
+      </div>
+
+      <!-- 新商品3: MILBON CAPTURE THE MOMENT -->
+      <div class="card">
+        <div class="card-numbar">
+          <span>NEW 03</span>
+          <span>MILBON</span>
+        </div>
+        <div class="card-img-wrap">
+          <img src="/img/capture-the-moment.jpg" alt="MILBON CAPTURE THE MOMENT" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+          <div class="card-img-placeholder" style="display:none;">💈</div>
+        </div>
+        <div class="card-body">
+          <div style="display:flex;gap:5px;flex-wrap:wrap;">
+            <span class="card-badge">新商品</span>
+            <span class="card-badge-green">メンズスタイリング全7種</span>
+          </div>
+          <div class="card-title">MILBON CAPTURE THE MOMENT<br>メンズスタイリングシリーズ</div>
+          <div class="card-summary">
+            なりたい質感で選べる、メンズスタイリング全7アイテム。9月12日(土)新発売。束感・ツヤ・毛流れ・ドライ感など、お客様のお好みに合わせた店販提案にぜひご活用ください。
+          </div>
+          <ul class="products-list">
+            <li>グリップジェル／ハードグリース／ソフトグリース</li>
+            <li>ナチュラルクリーム／ハードワックス／ラフワックス／ドライクリーム</li>
+          </ul>
+          <div class="card-meta">
+            <strong>価格:</strong> 上代2,530円／サロン1,645円（税込・全7アイテム共通）<br>
+            <strong>発売日:</strong> 9月12日(土)　<strong>取扱ディーラー:</strong> ガモウ／マスタ 33434〜33440
+          </div>
+          <a href="https://board.worksmobile.com/main/article/4080000000862316334?ogToken=23921.46cee90411564eacbf15347f143b482f" target="_blank" class="detail-btn">📄 詳細を見る →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- フッター -->
+<footer class="footer">
+  <p>KENJE GROUP &nbsp;|&nbsp; 商品戦略部</p>
+  <p>本資料は社内専用です。取扱いにご注意ください。</p>
+</footer>
+
+</body>
+</html>
