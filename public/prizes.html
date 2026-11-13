@@ -34,6 +34,11 @@
   .container { max-width: 960px; margin: 0 auto; padding: 36px 16px 72px; }
 
   /* ヒーロー */
+  /* 景品の受け取り案内 */
+  .pickup-notice { display: flex; align-items: center; gap: 16px; background: #C23616; color: #fff; border: 2.5px solid #1F4E5C; border-radius: 10px; box-shadow: 6px 6px 0 #1F4E5C; padding: 18px 22px; margin-bottom: 26px; font-size: 18px; line-height: 1.6; }
+  .pickup-notice b { font-size: 22px; font-weight: 900; }
+  .pickup-icon { flex: none; font-size: 40px; line-height: 1; }
+  @media (max-width: 720px) { .pickup-notice { font-size: 15px; padding: 14px 16px; gap: 12px; } .pickup-notice b { font-size: 18px; } .pickup-icon { font-size: 32px; } }
   .hero { border: 2.5px solid #1F4E5C; box-shadow: 6px 6px 0 #1F4E5C; border-radius: 10px; overflow: hidden; background: #fff; margin-bottom: 28px; }
   .hero-caption { padding: 18px 22px 20px; border-top: 2.5px solid #1F4E5C; display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; justify-content: space-between; }
   .hero-caption p { font-size: 14px; font-weight: 500; }
@@ -152,6 +157,11 @@
 </nav>
 
 <main class="container">
+
+  <div class="pickup-notice">
+    <span class="pickup-icon">📦</span>
+    <div><b>景品は本部に保管しております。</b><br>本部3Fまで受け取りにきてください。</div>
+  </div>
 
   <div class="hero">
     <img src="img/prizes/hero.jpg" alt="商品体験会 2026秋冬　2026年10月1日（木）">
