@@ -1256,10 +1256,13 @@
     .card-img-wrap.card-img-contain { height: 260px; }
   }
   /* 12月 単価UP商品 */
-  .upsell-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; padding: 18px 22px 24px; }
+  .upsell-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; padding: 18px 22px 24px; }
   .upsell-item { border: 2px solid #4A3B12; border-radius: 10px; overflow: hidden; background: #fff; display: flex; flex-direction: column; box-shadow: 4px 4px 0 #4A3B12; }
   .upsell-visual { aspect-ratio: 1 / 1; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 2px solid #4A3B12; overflow: hidden; }
   .upsell-visual img { width: 100%; height: 100%; object-fit: cover; }
+  .upsell-visual-dark { background: #2a211a; }
+  .upsell-visual-dark img { object-fit: contain; }
+  #new-dr-suisoyoku { scroll-margin-top: 16px; }
   .upsell-visual-text { flex-direction: column; background: repeating-linear-gradient(135deg, #FFC93C 0 14px, #FFD45E 14px 28px); }
   .upsell-visual-text span { font-family: 'Barlow Condensed', sans-serif; font-size: 40px; font-weight: 900; color: #4A3B12; line-height: 1; background: #fff; padding: 8px 16px; border: 2px solid #4A3B12; border-radius: 6px; box-shadow: 3px 3px 0 #4A3B12; }
   .upsell-visual-text small { margin-top: 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 3px; color: #4A3B12; }
@@ -1459,7 +1462,7 @@
           12月は「単価UP」のチャンス！高単価アイテムで売上を伸ばそう
         </div>
         <p class="topic-article-lead">
-          年末は、自分へのごほうびやギフトで高単価の美容機器が選ばれやすい時期です。12月の商戦に向けて、ぜひ提案したい4商品をピックアップしました。体験会で実際に触れた感想も添えて、お客様にご案内してみてください。
+          年末は、自分へのごほうびやギフトで高単価の美容機器が選ばれやすい時期です。12月の商戦に向けて、ぜひ提案したい5商品をピックアップしました。体験会で実際に触れた感想も添えて、お客様にご案内してみてください。
         </p>
 
         <div class="upsell-grid">
@@ -1493,6 +1496,14 @@
               <div class="upsell-name">MHPブロードライバー</div>
               <div class="upsell-price">¥42,000</div>
               <a href="https://holisticcures.shop/products/detail/156" target="_blank" class="detail-btn-outline">🔗 公式サイト →</a>
+            </div>
+          </div>
+          <div class="upsell-item">
+            <div class="upsell-visual upsell-visual-dark"><img src="/img/2026-11/dr-suisoyoku-upsell.jpg" alt="Dr.水素浴＋"></div>
+            <div class="upsell-body">
+              <div class="upsell-name">Dr.水素浴＋</div>
+              <div class="upsell-price">¥230,000</div>
+              <a href="#new-dr-suisoyoku" class="detail-btn-outline">📄 詳細を見る ↓</a>
             </div>
           </div>
         </div>
@@ -1856,7 +1867,7 @@
     <div class="cards-grid">
 
       <!-- 新商品1: Dr.水素浴＋ -->
-      <div class="card">
+      <div class="card" id="new-dr-suisoyoku">
         <div class="card-numbar">
           <span>NEW 01</span>
           <span>STRI</span>
