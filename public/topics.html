@@ -1255,6 +1255,58 @@
     .card-img-wrap.card-img-poster { height: 440px; }
     .card-img-wrap.card-img-contain { height: 260px; }
   }
+  /* 12月 単価UP商品 */
+  .upsell-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; padding: 18px 22px 24px; }
+  .upsell-item { border: 2px solid #4A3B12; border-radius: 10px; overflow: hidden; background: #fff; display: flex; flex-direction: column; box-shadow: 4px 4px 0 #4A3B12; }
+  .upsell-visual { aspect-ratio: 1 / 1; background: #fff; display: flex; align-items: center; justify-content: center; border-bottom: 2px solid #4A3B12; overflow: hidden; }
+  .upsell-visual img { width: 100%; height: 100%; object-fit: cover; }
+  .upsell-visual-text { flex-direction: column; background: repeating-linear-gradient(135deg, #FFC93C 0 14px, #FFD45E 14px 28px); }
+  .upsell-visual-text span { font-family: 'Barlow Condensed', sans-serif; font-size: 40px; font-weight: 900; color: #4A3B12; line-height: 1; background: #fff; padding: 8px 16px; border: 2px solid #4A3B12; border-radius: 6px; box-shadow: 3px 3px 0 #4A3B12; }
+  .upsell-visual-text small { margin-top: 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 3px; color: #4A3B12; }
+  .upsell-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .upsell-name { font-size: 15px; font-weight: 900; color: #4A3B12; }
+  .upsell-price { font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 900; color: #C23616; line-height: 1.1; margin-bottom: 4px; }
+  .upsell-body .detail-btn-outline { margin-top: auto; }
+  /* 体験会アンケート：グラフ */
+  .survey-stats { display: flex; gap: 10px; padding: 18px 22px 4px; flex-wrap: wrap; }
+  .survey-stat { flex: 1; min-width: 90px; background: #4A3B12; color: #fff; border-radius: 8px; padding: 10px 12px; text-align: center; }
+  .survey-stat b { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 34px; line-height: 1; color: #FFC93C; }
+  .survey-stat b small { font-family: 'Noto Sans JP', sans-serif; font-size: 12px; margin-left: 2px; }
+  .survey-stat span { font-size: 11px; font-weight: 700; }
+  .chart-box { margin: 16px 22px 0; padding: 16px 18px; border: 1.5px solid #F5DFA0; border-radius: 10px; background: #FFFCF2; }
+  .chart-title { font-size: 15px; font-weight: 900; color: #4A3B12; }
+  .chart-note { font-size: 11px; color: #777; margin: 2px 0 12px; }
+  .bar-chart { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .bar-chart li { display: grid; grid-template-columns: minmax(150px, 34%) 1fr 64px; align-items: center; gap: 10px; }
+  .bar-label { font-size: 13px; font-weight: 700; color: #4A3B12; line-height: 1.3; }
+  .bar-label b { display: inline-block; min-width: 22px; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; color: #D9A400; }
+  .bar-label small { display: block; font-size: 10px; font-weight: 500; color: #888; margin-left: 22px; }
+  .bar-chart-pct .bar-label small { margin-left: 0; }
+  .bar-track { height: 16px; background: #FFF0C2; border-radius: 4px; overflow: hidden; }
+  .bar-fill { display: block; height: 100%; background: #E8C77A; border-radius: 4px; }
+  .bar-fill.is-top { background: #D9A400; }
+  .bar-value { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; color: #4A3B12; text-align: right; line-height: 1.1; }
+  .bar-value small { display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 10px; font-weight: 500; color: #888; }
+  .survey-points { display: grid; gap: 8px; margin: 16px 22px 0; }
+  .survey-point { font-size: 13px; line-height: 1.6; padding: 10px 14px; background: #fff; border-left: 4px solid #FFC93C; border-radius: 4px; }
+  .survey-point b { display: block; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 2px; font-size: 12px; color: #D9A400; }
+  .survey-tip { margin: 14px 22px 0; padding: 12px 14px; background: #FFF4D1; border-radius: 8px; font-size: 13px; font-weight: 700; color: #4A3B12; }
+  .survey-source { margin: 10px 22px 22px; font-size: 10px; color: #999; }
+  /* キャンペーン導入文 */
+  .campaign-lead { background: #fff; border: 2.5px solid #4A3B12; border-radius: 10px; box-shadow: 5px 5px 0 #4A3B12; padding: 18px 20px; margin-bottom: 22px; }
+  .campaign-lead-title { font-size: 18px; font-weight: 900; color: #4A3B12; margin-bottom: 6px; }
+  .campaign-lead p { font-size: 14px; line-height: 1.8; color: #555; }
+  .campaign-lead-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .campaign-lead-chips span { font-size: 11px; font-weight: 700; background: #FFC93C; color: #4A3B12; padding: 4px 10px; border-radius: 20px; }
+  @media (max-width: 640px) {
+    .upsell-grid { grid-template-columns: 1fr 1fr; padding: 14px; gap: 10px; }
+    .upsell-visual-text span { font-size: 28px; }
+    .upsell-price { font-size: 24px; }
+    .survey-stats, .chart-box, .survey-points, .survey-tip, .survey-source { margin-left: 14px; margin-right: 14px; }
+    .survey-stats { padding: 14px 14px 0; margin: 0; }
+    .bar-chart li { grid-template-columns: 1fr 56px; }
+    .bar-chart .bar-label { grid-column: 1 / -1; }
+  }
 </style>
 </head>
 <body>
@@ -1396,6 +1448,115 @@
         </div>
       </div>
     </div>
+    <!-- トピックス 2：12月 単価UP商品 -->
+    <div class="topic-card" id="upsell">
+      <div class="topic-card-header">
+        <span>TOPICS 02</span>
+        <span>12月の商戦に！単価UP商品ピックアップ</span>
+      </div>
+      <div class="topic-card-body">
+        <div class="topic-card-title">
+          12月は「単価UP」のチャンス！高単価アイテムで売上を伸ばそう
+        </div>
+        <p class="topic-article-lead">
+          年末は、自分へのごほうびやギフトで高単価の美容機器が選ばれやすい時期です。12月の商戦に向けて、ぜひ提案したい4商品をピックアップしました。体験会で実際に触れた感想も添えて、お客様にご案内してみてください。
+        </p>
+
+        <div class="upsell-grid">
+          <div class="upsell-item">
+            <div class="upsell-visual upsell-visual-text"><span>marbb</span><small>HOME</small></div>
+            <div class="upsell-body">
+              <div class="upsell-name">marbb HOME</div>
+              <div class="upsell-price">¥518,000</div>
+              <a href="https://marbb.com/marbbhome-lp/" target="_blank" class="detail-btn-outline">🔗 公式サイト →</a>
+            </div>
+          </div>
+          <div class="upsell-item">
+            <div class="upsell-visual"><img src="/img/2026-11/jewel-dryer.jpg" alt="ジュエルドライヤー"></div>
+            <div class="upsell-body">
+              <div class="upsell-name">ジュエルドライヤー</div>
+              <div class="upsell-price">¥45,000</div>
+              <a href="https://www.stellabeaute.jp/products/dryer_jewel" target="_blank" class="detail-btn-outline">🔗 公式サイト →</a>
+            </div>
+          </div>
+          <div class="upsell-item">
+            <div class="upsell-visual upsell-visual-text"><span>JEWEL</span><small>HAIR IRON</small></div>
+            <div class="upsell-body">
+              <div class="upsell-name">ジュエルアイロン</div>
+              <div class="upsell-price">¥31,819</div>
+              <a href="https://www.stellabeaute.jp/products/hairiron_jewel" target="_blank" class="detail-btn-outline">🔗 公式サイト →</a>
+            </div>
+          </div>
+          <div class="upsell-item">
+            <div class="upsell-visual upsell-visual-text"><span>MHP</span><small>BLOW DRIVER</small></div>
+            <div class="upsell-body">
+              <div class="upsell-name">MHPブロードライバー</div>
+              <div class="upsell-price">¥42,000</div>
+              <a href="https://holisticcures.shop/products/detail/156" target="_blank" class="detail-btn-outline">🔗 公式サイト →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- トピックス 3：商品体験会 好評だった商品 -->
+    <div class="topic-card" id="survey">
+      <div class="topic-card-header">
+        <span>TOPICS 03</span>
+        <span>商品体験会 アンケート結果</span>
+      </div>
+      <div class="topic-card-body">
+        <div class="topic-card-title">
+          体験会で好評だった商品は？12月の主軸ランキング
+        </div>
+        <p class="topic-article-lead">
+          10月1日(木)の商品体験会で、当日アンケートにご回答いただいた58名（34店舗）の結果をまとめました。「12月の主軸として売り出したい商品」はLOAが1位、e:amiiが2位・3位に。12月の店販提案の参考にしてください。
+        </p>
+
+        <div class="survey-stats">
+          <div class="survey-stat"><b>58<small>名</small></b><span>有効回答</span></div>
+          <div class="survey-stat"><b>34<small>店舗</small></b><span>回答店舗</span></div>
+          <div class="survey-stat"><b>43<small>票</small></b><span>1位 LOA</span></div>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-title">12月の主軸として売り出したい商品 TOP10</div>
+          <div class="chart-note">延べ票数（複数選択可）とその商品を選んだ店舗数</div>
+          <ol class="bar-chart">
+            <li><span class="bar-label"><b>1</b>LOA<small>ガモウ</small></span><span class="bar-track"><span class="bar-fill is-top" style="width:100%"></span></span><span class="bar-value">43票<small>28店</small></span></li>
+            <li><span class="bar-label"><b>2</b>e:amii リペアミルク<small>メーカー直</small></span><span class="bar-track"><span class="bar-fill is-top" style="width:74.4%"></span></span><span class="bar-value">32票<small>24店</small></span></li>
+            <li><span class="bar-label"><b>3</b>e:amii 詰め替え<small>メーカー直</small></span><span class="bar-track"><span class="bar-fill is-top" style="width:58.1%"></span></span><span class="bar-value">25票<small>19店</small></span></li>
+            <li><span class="bar-label"><b>4</b>リズム（ユルネ・グローパック）<small>ガルプロ</small></span><span class="bar-track"><span class="bar-fill" style="width:46.5%"></span></span><span class="bar-value">20票<small>18店</small></span></li>
+            <li><span class="bar-label"><b>4</b>六穀豊穣<small>ビプロス</small></span><span class="bar-track"><span class="bar-fill" style="width:46.5%"></span></span><span class="bar-value">20票<small>15店</small></span></li>
+            <li><span class="bar-label"><b>6</b>キララ（ジュエルアイロン等）<small>ガルプロ</small></span><span class="bar-track"><span class="bar-fill" style="width:44.2%"></span></span><span class="bar-value">19票<small>16店</small></span></li>
+            <li><span class="bar-label"><b>6</b>BJC（ラッシュアディクト・V3）<small>ビーコーポ</small></span><span class="bar-track"><span class="bar-fill" style="width:44.2%"></span></span><span class="bar-value">19票<small>16店</small></span></li>
+            <li><span class="bar-label"><b>8</b>ヘアケミスト<small>タマリス</small></span><span class="bar-track"><span class="bar-fill" style="width:41.9%"></span></span><span class="bar-value">18票<small>13店</small></span></li>
+            <li><span class="bar-label"><b>8</b>ReFa ハートコームアイロン<small>MTG</small></span><span class="bar-track"><span class="bar-fill" style="width:41.9%"></span></span><span class="bar-value">18票<small>14店</small></span></li>
+            <li><span class="bar-label"><b>10</b>ホリスティックキュアーズ<small>コスモ</small></span><span class="bar-track"><span class="bar-fill" style="width:39.5%"></span></span><span class="bar-value">17票<small>12店</small></span></li>
+          </ol>
+        </div>
+
+        <div class="chart-box">
+          <div class="chart-title">店販に「苦手意識あり」の割合（入社年数別）</div>
+          <div class="chart-note">全体では57%（33名／58名）。若手ほど苦手意識が強く、10年目を境に大きく下がります</div>
+          <ol class="bar-chart bar-chart-pct">
+            <li><span class="bar-label">1〜3年目</span><span class="bar-track"><span class="bar-fill is-top" style="width:94%"></span></span><span class="bar-value">94%<small>15/16名</small></span></li>
+            <li><span class="bar-label">4〜9年目</span><span class="bar-track"><span class="bar-fill is-top" style="width:73%"></span></span><span class="bar-value">73%<small>16/22名</small></span></li>
+            <li><span class="bar-label">10〜19年目</span><span class="bar-track"><span class="bar-fill" style="width:13%"></span></span><span class="bar-value">13%<small>1/8名</small></span></li>
+            <li><span class="bar-label">20年目以上</span><span class="bar-track"><span class="bar-fill" style="width:8%"></span></span><span class="bar-value">8%<small>1/12名</small></span></li>
+          </ol>
+        </div>
+
+        <div class="survey-points">
+          <div class="survey-point"><b>POINT 1</b>12月の主軸はLOA（43票・28店舗）とe:amii リペアミルク（32票・24店舗）が2強。</div>
+          <div class="survey-point"><b>POINT 2</b>苦手と感じる理由は「押し売り感が出る」（13名）と「良さの伝え方・説明」（11名）が上位。</div>
+          <div class="survey-point"><b>POINT 3</b>「全スタッフに直接説明してほしい」はMTG（ReFa）が23件で最多。アイロン・ドライヤーなど機器系は実演講習の要望が強めです。</div>
+        </div>
+        <p class="survey-tip">💡 苦手の壁は「押し売り感」と「伝え方」。まずは体験会で自分が試した感想を、そのままお客様に伝えるところから始めてみましょう。</p>
+        <p class="survey-source">出典：2026年秋冬 商品体験会 当日スタッフアンケート（n=58）</p>
+      </div>
+    </div>
+
   </section>
 
   <!-- ========== キャンペーン ========== -->
@@ -1405,6 +1566,20 @@
       <h2 class="section-title">キャンペーン情報</h2>
       <span class="section-date">2026.11</span>
     </div>
+    <div class="campaign-lead">
+      <div class="campaign-lead-title">🔥 キャンペーンを活用して、12月の結果につなげよう！</div>
+      <p>
+        11月〜12月は、仕入れがお得になる添付・割引や、売った分だけチャンスが広がるコンテスト・店別対抗戦が盛りだくさん。年末の店販は、キャンペーンをきっかけにお客様へ提案しやすいタイミングです。チームで目標を決めて、ぜひフル活用しましょう！
+      </p>
+      <div class="campaign-lead-chips">
+        <span>ASEAVE 年末キャンペーン（〜12月末）</span>
+        <span>e:amii 年末キャンペーン（〜12/31）</span>
+        <span>コームストレイナー SNS投稿（〜12/31）</span>
+        <span>ジャンパーニュ コンテスト（購入〜11/30）</span>
+        <span>LADAMER 1000本チャレンジ（〜12月）</span>
+      </div>
+    </div>
+
 
     <div class="cards-grid-2">
 
