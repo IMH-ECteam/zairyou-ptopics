@@ -1,10 +1,15 @@
 import { NextResponse } from 'next/server';
 import { createSession } from '../../../lib/session';
 
-// id_token のペイロード部だけを取り出す（署名はTLS経由のバックチャネル取得で担保）
+// id_token のペイロード部だけを取り出す（署名はTLS経由のバックチャネル取得で担保）。
+// id_token は UTF-8 なので、atob のバイト列を TextDecoder で正しくデコードする
+// （そうしないと日本語の氏名が文字化けする）。
 function decodeJwtPayload(jwt) {
   const part = jwt.split('.')[1];
-  const json = atob(part.replace(/-/g, '+').replace(/_/g, '/'));
+  const b64 = part.replace(/-/g, '+').replace(/_/g, '/');
+  const binary = atob(b64);
+  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+  const json = new TextDecoder('utf-8').decode(bytes);
   return JSON.parse(json);
 }
 
