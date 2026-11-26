@@ -1,0 +1,931 @@
+<title>今日の段取り盤</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: 上に「今・次・リスク」の帯、その下に根拠資料を1カラム（広い画面では2カラム）で積む操作盤 */
+:root{
+  --bg:#f4f6f7; --surface:#ffffff; --surface-2:#eef1f3; --line:#d5dce1; --fg:#17232b; --muted:#5a6a74;
+  --accent:#1d6f7a; --accent-ink:#ffffff; --accent-soft:#d9eef0;
+  --crit:#c2362b; --crit-soft:#fbe3e0; --warn:#b26a00; --warn-soft:#fdf0d9; --info:#2f5fb3; --info-soft:#e2eaf8; --ok:#2e7d4f; --ok-soft:#dff2e6;
+  --gray:#8a979f; --gray-soft:#e7ebee; --free:#2e7d4f;
+  --font-body:"IBM Plex Sans JP","Hiragino Sans","Yu Gothic UI",system-ui,sans-serif;
+  --font-num:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1519; --surface:#172026; --surface-2:#1e2930; --line:#2d3b44; --fg:#e4ebef; --muted:#9aabb5;
+  --accent:#4fb3bf; --accent-ink:#0b1417; --accent-soft:#1b3a3f;
+  --crit:#ff6f61; --crit-soft:#3d1f1c; --warn:#f0a840; --warn-soft:#3a2c14; --info:#7ea6f0; --info-soft:#1d2a44; --ok:#5fc48a; --ok-soft:#173326;
+  --gray:#7d8c95; --gray-soft:#26323a; --free:#5fc48a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1519; --surface:#172026; --surface-2:#1e2930; --line:#2d3b44; --fg:#e4ebef; --muted:#9aabb5;
+  --accent:#4fb3bf; --accent-ink:#0b1417; --accent-soft:#1b3a3f;
+  --crit:#ff6f61; --crit-soft:#3d1f1c; --warn:#f0a840; --warn-soft:#3a2c14; --info:#7ea6f0; --info-soft:#1d2a44; --ok:#5fc48a; --ok-soft:#173326;
+  --gray:#7d8c95; --gray-soft:#26323a; --free:#5fc48a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:14px;line-height:1.6;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 48px}
+a{color:var(--accent)} a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+h1{font-size:19px;margin:0;letter-spacing:.02em;text-wrap:balance}
+h2{font-size:15px;margin:0;text-wrap:balance}
+h3{font-size:13px;margin:0;color:var(--muted);font-weight:500}
+.num{font-family:var(--font-num);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)} .small{font-size:12px}
+header.top{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:2px 10px;font-size:12px;white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--gray);flex:none}
+.dot.ok{background:var(--ok)} .dot.err{background:var(--crit)} .dot.run{background:var(--info);animation:pulse 1s infinite} .dot.stale{background:var(--warn)}
+@keyframes pulse{50%{opacity:.3}} @media (prefers-reduced-motion:reduce){.dot.run{animation:none}}
+button{font:inherit;font-size:13px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:5px 12px;cursor:pointer}
+button:hover:not(:disabled){border-color:var(--accent)}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button.danger{border-color:var(--crit);color:var(--crit)}
+button:disabled{opacity:.5;cursor:not-allowed}
+button.sm{font-size:12px;padding:2px 8px}
+.band{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.band{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.kicker{font-size:11px;letter-spacing:.12em;color:var(--muted);font-weight:700}
+.big{font-size:18px;font-weight:700;line-height:1.4;margin:4px 0;overflow-wrap:anywhere}
+.state-crit{border-color:var(--crit);box-shadow:inset 4px 0 0 var(--crit)}
+.state-warn{box-shadow:inset 4px 0 0 var(--warn)}
+.risk{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.risk li{list-style:none} .risk ul{margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.pill{display:inline-block;font-size:11px;font-weight:700;border-radius:4px;padding:0 6px;margin-right:6px;white-space:nowrap}
+.pill.crit{background:var(--crit-soft);color:var(--crit)} .pill.warn{background:var(--warn-soft);color:var(--warn)} .pill.info{background:var(--info-soft);color:var(--info)} .pill.ok{background:var(--ok-soft);color:var(--ok)} .pill.gray{background:var(--gray-soft);color:var(--muted)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:980px){.grid2{grid-template-columns:1fr}}
+section.card{display:flex;flex-direction:column;gap:12px}
+.sec-head{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;justify-content:space-between}
+.svgbox{overflow-x:auto;min-width:0}
+svg text{font-family:var(--font-body)}
+.note{background:var(--surface-2);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--muted)}
+.note.err{background:var(--crit-soft);color:var(--fg)}
+.note.warn{background:var(--warn-soft);color:var(--fg)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+td,th{padding:4px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:12px}
+td.r,th.r{text-align:right}
+.tblwrap{overflow-x:auto}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar-row{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr);gap:4px 10px;align-items:center}
+@media (max-width:520px){.bar-row{grid-template-columns:1fr}}
+.bar-name{font-size:12px;overflow-wrap:anywhere;line-height:1.35}
+.bar-track{display:flex;align-items:center;gap:6px;min-width:0}
+.bar-stack{display:flex;height:14px;border-radius:3px;overflow:hidden;flex:none;max-width:calc(100% - 3.5em)}
+.bar-stack span{display:block;height:100%}
+.bar-val{font-size:12px;white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.list{display:flex;flex-direction:column}
+.row{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .main{min-width:0;flex:1 1 16em;overflow-wrap:anywhere}
+.row .acts{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.confirm{flex-basis:100%;background:var(--warn-soft);border-radius:8px;padding:8px 10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px}
+.confirm.crit{background:var(--crit-soft)}
+details>summary{cursor:pointer;color:var(--muted);font-size:13px;padding:4px 0}
+textarea{width:100%;min-height:9em;font:inherit;font-size:13px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg);padding:8px}
+input[type=date],input[type=text]{font:inherit;font-size:13px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--fg);padding:3px 6px}
+.hist{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;align-items:end}
+.hcol{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
+.hbar-area{height:90px;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.hbar{width:70%;background:var(--crit);border-radius:3px 3px 0 0;min-height:1px}
+.hgap{width:100%;height:90px;border:1px dashed var(--gray);border-radius:4px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:10px;color:var(--muted);background:repeating-linear-gradient(135deg,transparent 0 6px,var(--gray-soft) 6px 8px);line-height:1.3;padding:2px}
+.hlab{font-size:11px;color:var(--muted);text-align:center;line-height:1.3}
+.audit li{list-style:none;display:flex;gap:8px;align-items:baseline;padding:3px 0}
+.audit ul{margin:0;padding:0}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:13px;max-width:min(92vw,560px);z-index:20}
+.toast.err{background:var(--crit);color:#fff}
+.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:2px 12px;font-size:13px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;overflow-wrap:anywhere}
+.linkrow{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:13px}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>今日の段取り盤</h1>
+      <div class="muted small" id="today-line">読み込み中…</div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+      <button class="primary" id="btn-refresh" type="button">今すぐ更新</button>
+    </div>
+  </header>
+  <div class="chips" id="sync-chips" aria-label="ソースごとの同期状態"></div>
+  <div id="page-note"></div>
+
+  <div class="band" id="band">
+    <div class="card" id="c-now"><div class="kicker">今</div><div class="big muted">読み込み中…</div></div>
+    <div class="card" id="c-next"><div class="kicker">次</div><div class="big muted">読み込み中…</div></div>
+    <div class="card" id="c-risk"><div class="kicker">リスク</div><div class="big muted">読み込み中…</div></div>
+  </div>
+
+  <div class="grid2">
+    <section class="card" id="sec-schedule">
+      <div class="sec-head"><h2>今日の予定（本人のカレンダーのみ）</h2><span class="small muted" id="sched-meta"></span></div>
+      <div id="sched-allday"></div>
+      <div class="svgbox" id="tl"></div>
+      <div id="conflicts"></div>
+    </section>
+    <section class="card" id="sec-tasks">
+      <div class="sec-head"><h2>タスク（Asana・自分の担当・未完了）</h2><span class="small muted" id="task-meta"></span></div>
+      <div id="task-charts"></div>
+      <div id="task-list"></div>
+    </section>
+  </div>
+
+  <div class="grid2">
+    <section class="card" id="sec-mail">
+      <div class="sec-head"><h2>対応待ちメール</h2><span class="small muted" id="mail-meta"></span></div>
+      <div id="mail-body"></div>
+    </section>
+    <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+      <section class="card" id="sec-ref">
+        <div class="sec-head"><h2>参考：他の人の予定</h2><span class="small muted">本人の衝突・空き時間・件数には含めません</span></div>
+        <div id="ref-body"></div>
+      </section>
+      <section class="card" id="sec-hist">
+        <div class="sec-head"><h2>期限切れタスク数の推移（7日）</h2><span class="small muted">欠けた日は0で描かず「欠け・未同期」</span></div>
+        <div id="hist-body"></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <section class="card" id="sec-auto">
+      <div class="sec-head"><h2>自動更新</h2><span class="small muted">更新は読み取り専用。書き込みはボタン操作時のみ</span></div>
+      <div id="auto-body"></div>
+    </section>
+    <section class="card" id="sec-audit">
+      <div class="sec-head"><h2>自己監査（この表示の確定前チェック）</h2><span class="small muted" id="audit-meta"></span></div>
+      <div id="audit-body" class="audit"></div>
+    </section>
+  </div>
+</div>
+<div id="toast" class="toast" hidden></div>
+
+<script>
+"use strict";
+/* ---------- 基本ユーティリティ ---------- */
+const TZ = "Asia/Tokyo";
+const $ = (q) => document.querySelector(q);
+function h(tag, attrs, ...kids) {
+  const el = document.createElement(tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) {
+    if (v == null || v === false) continue;
+    if (k === "class") el.className = v;
+    else if (k === "text") el.textContent = v;
+    else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+    else if (k === "style") el.setAttribute("style", v);
+    else el.setAttribute(k, v === true ? "" : String(v));
+  }
+  for (const c of kids.flat()) { if (c == null || c === false) continue; el.append(c instanceof Node ? c : String(c)); }
+  return el;
+}
+const SVGNS = "http://www.w3.org/2000/svg";
+function s(tag, attrs, ...kids) {
+  const el = document.createElementNS(SVGNS, tag);
+  if (attrs) for (const [k, v] of Object.entries(attrs)) { if (v == null) continue; if (k === "text") el.textContent = v; else el.setAttribute(k, String(v)); }
+  for (const c of kids.flat()) if (c) el.append(c);
+  return el;
+}
+function safeUrl(u) { return (typeof u === "string" && /^https:\/\//.test(u)) ? u : null; }
+function link(url, text, cls) { const u = safeUrl(url); return u ? h("a", { href: u, target: "_blank", rel: "noopener", class: cls, text }) : h("span", { text }); }
+const partsFmt = new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", weekday: "short", hourCycle: "h23" });
+function jst(d) { const p = {}; for (const x of partsFmt.formatToParts(d)) p[x.type] = x.value; return { date: `${p.year}-${p.month}-${p.day}`, h: +p.hour, m: +p.minute, wd: p.weekday }; }
+const todayStr = (now = new Date()) => jst(now).date;
+function addDays(ds, n) { const d = new Date(ds + "T00:00:00+09:00"); d.setUTCDate(d.getUTCDate() + n); return jst(d).date; }
+function dow(ds) { return new Date(ds + "T12:00:00+09:00").getUTCDay(); }
+function toDate(iso) { if (!iso) return null; if (/^\d{4}-\d{2}-\d{2}$/.test(iso)) return new Date(iso + "T00:00:00+09:00"); return new Date(/[zZ]$|[+-]\d\d:?\d\d$/.test(iso) ? iso : iso + "+09:00"); }
+function minOfDay(d, ds) { const j = jst(d); const base = j.h * 60 + j.m; if (j.date === ds) return base; return j.date < ds ? 0 : 24 * 60; }
+const pad = (n) => String(n).padStart(2, "0");
+const hm = (d) => { const j = jst(d); return `${pad(j.h)}:${pad(j.m)}`; };
+const mmdd = (ds) => ds ? `${+ds.slice(5, 7)}/${+ds.slice(8, 10)}` : "";
+const WD = ["日", "月", "火", "水", "木", "金", "土"];
+function fmtStamp(iso) { if (!iso) return "—"; const d = new Date(iso); if (isNaN(d)) return "—"; const j = jst(d); return `${mmdd(j.date)} ${pad(j.h)}:${pad(j.m)}`; }
+function dur(min) { min = Math.max(0, Math.round(min)); if (min < 60) return `${min}分`; const hh = Math.floor(min / 60), mm = min % 60; return mm ? `${hh}時間${mm}分` : `${hh}時間`; }
+function ageMin(iso) { const t = Date.parse(iso || ""); return isNaN(t) ? Infinity : (Date.now() - t) / 60000; }
+function pct(a, b) { return b ? (a / b * 100).toFixed(1) : "—"; }
+function toast(msg, kind) { const t = $("#toast"); t.textContent = msg; t.className = "toast" + (kind === "err" ? " err" : ""); t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => { t.hidden = true; }, kind === "err" ? 9000 : 4500); }
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+/* ---------- 状態 ---------- */
+const SRC = {
+  calendar: { label: "予定（本人）", server: "Google Calendar" },
+  asana: { label: "タスク", server: "Asana" },
+  gmail: { label: "メール", server: "Gmail" },
+  drive: { label: "資料", server: "Google Drive" },
+  reference: { label: "参考の予定", server: "Google Calendar" },
+};
+const S = { db: null, mcp: null, sample: null, sources: {}, config: {}, automation: null, runstate: null, runs: [], drafts: {}, daily: {}, trigger: null, triggerErr: null, busy: new Set(), M: null, audit: [], pending: {}, draftEdits: {}, dbErr: null, boot: "loading" };
+const staleMin = () => Number(S.config.staleMinutes) > 0 ? Number(S.config.staleMinutes) : 30;
+
+/* ---------- コネクタ呼び出し ---------- */
+function errText(e, server) {
+  const c = e && e.code, sv = (e && e.server) || server || "";
+  switch (c) {
+    case "server_not_connected": return `${sv}が未接続です（claude.ai の設定 → コネクタで接続してください）`;
+    case "needs_reauth": return `${sv}の認証が切れています（claude.ai の設定 → コネクタで再接続してください）`;
+    case "not_in_manifest": return `${sv}はこのページで許可されていません（アーティファクトの権限から許可できます）`;
+    case "approval_required": return `${sv}の利用許可が必要です（もう一度ボタンを押すと許可を求めます）`;
+    case "selection_required": return `${sv}が複数あり、どれを使うか未選択です`;
+    case "blocked_by_policy": return `${sv}のこの操作は組織のポリシーで止められています`;
+    case "server_unavailable": return `${sv}が一時的に応答しません`;
+    case "tool_error": return `${sv}がエラーを返しました：${String(e.message || "").slice(0, 200)}`;
+    case "not_granted": case "capability_disabled": case "capability_removed": return "この表示環境ではコネクタを呼べません（claude.ai で開いてください）";
+    default: return `${sv} ${c || "error"}：${String((e && e.message) || e || "").slice(0, 200)}`;
+  }
+}
+async function call(server, tool, input, write) {
+  if (!S.mcp) throw { code: "not_granted", server, message: "mcp unavailable" };
+  try {
+    const r = await S.mcp.callTool(server, tool, input, write ? { cache: false } : { cache: { refresh: true } });
+    return r.payload;
+  } catch (e) {
+    if (!write && e && e.retryable) { await sleep(Math.min(e.retryAfterMs || 1500 + Math.random() * 1000, 8000)); const r = await S.mcp.callTool(server, tool, input, { cache: { refresh: true } }); return r.payload; }
+    throw e;
+  }
+}
+
+/* ---------- 取得（読み取りのみ） ---------- */
+function parseWhen(v) { if (!v) return null; if (typeof v === "object") { if (v.dateTime) return { iso: v.dateTime, allDay: false }; if (v.date) return { iso: v.date, allDay: true }; return null; } if (typeof v === "string") return { iso: v, allDay: /^\d{4}-\d{2}-\d{2}$/.test(v) }; return null; }
+function normEvent(e, origin) {
+  const st = parseWhen(e.start ?? e.startTime), en = parseWhen(e.end ?? e.endTime);
+  const atts = Array.isArray(e.attendees) ? e.attendees : [];
+  const me = atts.find((a) => a && a.self);
+  const video = e.hangoutLink || (e.conferenceData && Array.isArray(e.conferenceData.entryPoints) && (e.conferenceData.entryPoints.find((p) => p.entryPointType === "video") || {}).uri);
+  return {
+    id: String(e.id ?? e.eventId ?? ""), title: String(e.summary ?? e.title ?? ""),
+    allDay: !!(st && st.allDay) || !!e.allDay, start: st ? st.iso : null, end: en ? en.iso : null,
+    guests: atts.filter((a) => a && !a.self && !a.resource).length,
+    organizerSelf: e.organizer ? !!e.organizer.self : true, selfResponse: me ? me.responseStatus || null : null,
+    transparent: e.transparency === "transparent" || e.availability === "AVAILABILITY_FREE",
+    link: safeUrl(e.htmlLink || e.viewUrl), meet: safeUrl(video),
+    attachments: (Array.isArray(e.attachments) ? e.attachments : []).map((a) => ({ title: String(a.title || "添付資料"), url: safeUrl(a.fileUrl || a.url) })).filter((a) => a.url),
+    status: e.status || null, origin,
+  };
+}
+async function listEvents(calendarId, startDs, endDs) {
+  const out = []; let pageToken;
+  for (let i = 0; i < 5; i++) {
+    const input = { startTime: `${startDs}T00:00:00`, endTime: `${endDs}T00:00:00`, orderBy: "startTime", pageSize: 250 };
+    if (calendarId) input.calendarId = calendarId; if (pageToken) input.pageToken = pageToken;
+    const p = await call("Google Calendar", "list_events", input) || {};
+    out.push(...(p.events || p.items || (Array.isArray(p) ? p : [])));
+    pageToken = p.nextPageToken; if (!pageToken) break;
+  }
+  return out;
+}
+async function fetchCalendar() {
+  const t = todayStr();
+  const raw = await listEvents(null, t, addDays(t, 7));
+  return { date: t, calendarId: "primary", events: raw.map((e) => normEvent(e, "self")).filter((e) => e.status !== "cancelled") };
+}
+async function fetchReference() {
+  const t = todayStr(); const ids = Array.isArray(S.config.refCalendars) ? S.config.refCalendars.filter(Boolean) : [];
+  const events = [], errors = [];
+  for (const id of ids) {
+    try { (await listEvents(id, t, addDays(t, 1))).forEach((e) => { const n = normEvent(e, "ref"); n.calendar = id; if (n.status !== "cancelled") events.push(n); }); }
+    catch (e) { errors.push(`${id}: ${errText(e, "Google Calendar")}`); }
+  }
+  if (ids.length && errors.length === ids.length) throw { code: "tool_error", server: "Google Calendar", message: errors.join(" / ") };
+  return { date: t, calendars: ids, events, partialErrors: errors };
+}
+function normTask(t) {
+  const m = /\/project\/(\d+)\//.exec(t.permalink_url || ""); const projs = Array.isArray(t.projects) ? t.projects : [];
+  const home = (m && projs.find((p) => String(p.gid) === m[1])) || projs[0] || null;
+  return { gid: String(t.gid), name: String(t.name ?? ""), due_on: t.due_on || null, due_at: t.due_at || null, url: safeUrl(t.permalink_url), project: home ? { gid: String(home.gid), name: String(home.name || "") } : null, projectCount: projs.length };
+}
+async function fetchAsana() {
+  const all = []; let offset;
+  for (let i = 0; i < 10; i++) {
+    const input = { completed_since: "now", limit: 100, opt_fields: "name,due_on,due_at,completed,permalink_url,projects.name" };
+    if (offset) input.offset = offset;
+    const p = await call("Asana", "get_my_tasks", input) || {};
+    all.push(...(p.data || [])); offset = p.next_page && p.next_page.offset; if (!offset) break;
+  }
+  return { tasks: all.filter((t) => !t.completed).map(normTask) };
+}
+const AUTO_SENDER = /(no-?reply|noreply|notifications?[-@]|notify|mailer-daemon|info@chat-work|newsletter|magazine|@account\.|googleaistudio|gemini-notes)/i;
+function extractDeadline(text) {
+  if (!/締切|〆切|締め切り|期限|までに|期日|deadline|due\b/i.test(text)) return null;
+  const now = jst(new Date()); const y = +now.date.slice(0, 4), cm = +now.date.slice(5, 7);
+  const m = /(\d{1,2})\s*月\s*(\d{1,2})\s*日/.exec(text) || /(?<![\d.])(\d{1,2})\/(\d{1,2})(?![\d])/.exec(text);
+  if (!m) return "";
+  const mo = +m[1], d = +m[2]; if (mo < 1 || mo > 12 || d < 1 || d > 31) return "";
+  const yy = mo < cm - 6 ? y + 1 : y; return `${yy}-${pad(mo)}-${pad(d)}`;
+}
+function classify(t, me) {
+  const subj = t.subject || "", text = subj + " " + (t.snippet || ""), from = (t.from || "").toLowerCase();
+  if (me && from === me) return { categories: [], deadline: null, reason: "最新が自分の送信" };
+  const cats = []; const auto = AUTO_SENDER.test(from);
+  if (/calendar-notification@google\.com/.test(from) || /^(招待|更新された招待|Invitation|Updated invitation)\s*[:：]/i.test(subj)) cats.push("invite");
+  if (/承認|稟議|決裁|ご判断|確認依頼|ご確認(を)?お願い|ご検討|契約書/.test(text) && (!auto || /cloudsign/.test(from))) cats.push("approval");
+  const dl = extractDeadline(text); if (dl !== null && !auto) cats.push("deadline");
+  const toMe = !!me && (t.to || []).some((a) => String(a).toLowerCase() === me);
+  if (!auto && toMe && /[?？]|でしょうか|いただけ|ご返信|ご回答|お願い(いた)?します|ご教示|ご連絡ください|ご依頼|ご相談/.test(text)) cats.push("reply");
+  return { categories: [...new Set(cats)], deadline: dl || null, reason: cats.length ? "ルール判定（件名・冒頭の語句）" : "該当語句なし" };
+}
+function normThread(t) {
+  const ms = Array.isArray(t.messages) ? t.messages : []; const last = ms[ms.length - 1] || {};
+  return { id: String(t.id), lastMsgId: String(last.id || ""), subject: String(last.subject || ""), from: String(last.sender || ""), to: (last.toRecipients || []).map(String), cc: (last.ccRecipients || []).map(String), date: last.date || null, url: safeUrl(t.viewUrl || last.viewUrl), count: t.messageCount || ms.length, snippet: String(last.snippet || "").slice(0, 280) };
+}
+async function fetchGmail(prev) {
+  const q = "in:inbox newer_than:7d -category:promotions -category:social -category:forums";
+  const p = await call("Gmail", "search_threads", { query: q, pageSize: 50, view: "THREAD_VIEW_SUMMARY" }) || {};
+  const me = String(S.config.me || "").toLowerCase();
+  const prevMap = new Map(((prev && prev.threads) || []).map((x) => [x.id, x]));
+  const threads = (p.threads || []).map(normThread).map((t) => {
+    const old = prevMap.get(t.id);
+    if (old && old.method === "claude" && old.lastMsgId === t.lastMsgId) return { ...t, subject: t.subject || old.subject, categories: old.categories || [], deadline: old.deadline || null, reason: old.reason || "", method: "claude", summary: old.summary || "" };
+    return { ...t, ...classify(t, me), method: "rule" };
+  });
+  return { query: q, scanned: threads.length, threads };
+}
+function driveKeyword(title) {
+  const w = String(title || "").replace(/[【】\[\]（）()「」『』<>＜＞:：|｜\/・,、。!！?？#＃]/g, " ").split(/\s+/).filter((x) => x.length >= 2 && !/^(定例|会議|MTG|mtg|打合せ|打ち合わせ|ミーティング)$/.test(x));
+  return w.sort((a, b) => b.length - a.length)[0] || null;
+}
+async function fetchDrive(cal) {
+  const since = new Date(Date.now() - 7 * 864e5).toISOString().replace(/\.\d+Z$/, "Z");
+  const rp = await call("Google Drive", "search_files", { query: `viewedByMeTime > '${since}'`, orderBy: "viewedByMeTime desc", pageSize: 6, excludeContentSnippets: true }) || {};
+  const mapF = (f) => ({ id: String(f.id), title: String(f.title || ""), url: safeUrl(f.viewUrl), modified: f.modifiedTime || null });
+  const recent = (rp.files || []).map(mapF);
+  const byEvent = {}; const now = Date.now();
+  const evs = ((cal && cal.events) || []).filter((e) => !e.allDay && e.end && toDate(e.end).getTime() > now).slice(0, 6);
+  for (const e of evs) {
+    const kw = driveKeyword(e.title); if (!kw) continue;
+    try { const r = await call("Google Drive", "search_files", { query: `title contains '${kw.replace(/\\/g, "\\\\").replace(/'/g, "\\'")}'`, orderBy: "modifiedTime desc", pageSize: 3, excludeContentSnippets: true }) || {}; byEvent[e.id] = { keyword: kw, files: (r.files || []).map(mapF) }; }
+    catch (_) { byEvent[e.id] = { keyword: kw, files: [], error: true }; }
+  }
+  return { recent, byEvent };
+}
+
+/* ---------- 保存と更新 ---------- */
+async function saveDoc(path, data) { if (!S.db) return false; try { await S.db.doc(path).set(data); return true; } catch (e) { S.dbErr = e && e.code || "save_failed"; return false; } }
+async function saveSource(key, patch) { S.sources[key] = { ...(S.sources[key] || {}), ...patch }; await saveDoc("sources/" + key, S.sources[key]); }
+async function refresh(keys, reason) {
+  if (!S.mcp) { toast("この表示環境ではコネクタを呼べないため更新できません", "err"); return; }
+  keys = keys.filter((k) => !S.busy.has(k)); if (!keys.length) return;
+  keys.forEach((k) => S.busy.add(k)); renderChips();
+  const one = async (k, before) => {
+    if (before) await before.catch(() => {});
+    const at = new Date().toISOString();
+    try {
+      let data;
+      if (k === "calendar") data = await fetchCalendar();
+      else if (k === "reference") data = await fetchReference();
+      else if (k === "asana") data = await fetchAsana();
+      else if (k === "gmail") data = await fetchGmail(S.sources.gmail && S.sources.gmail.data);
+      else if (k === "drive") data = await fetchDrive(S.sources.calendar && S.sources.calendar.data);
+      await saveSource(k, { status: "ok", data, lastAttempt: at, lastSuccess: at, error: null, errorCode: null, by: reason });
+    } catch (e) {
+      await saveSource(k, { status: "error", lastAttempt: at, error: errText(e, SRC[k].server), errorCode: (e && e.code) || null, by: reason });
+    } finally { S.busy.delete(k); renderChips(); }
+  };
+  const calP = keys.includes("calendar") ? one("calendar") : null;
+  await Promise.all([calP, ...keys.filter((k) => k !== "calendar").map((k) => one(k, k === "drive" ? calP : null))]);
+  renderAll(); await saveDaily();
+}
+
+/* ---------- 計算 ---------- */
+const BUCKETS = [
+  { key: "overdue", label: "期限切れ", color: "var(--crit)" },
+  { key: "today", label: "今日", color: "var(--warn)" },
+  { key: "week", label: "今週", color: "var(--info)" },
+  { key: "other", label: "それ以外", color: "var(--gray)" },
+];
+const MAILCAT = { reply: { label: "返信が必要", pill: "info" }, approval: { label: "承認・判断", pill: "warn" }, deadline: { label: "〆切あり", pill: "crit" }, invite: { label: "会議招待", pill: "ok" } };
+function dueKey(t) { if (t.due_at) return jst(new Date(t.due_at)).date; return t.due_on || null; }
+function compute(now = new Date()) {
+  const t = todayStr(now); const audit = []; const fixes = { labels: 0 };
+  const weekEnd = addDays(t, (7 - dow(t)) % 7);
+  /* カレンダー（本人） */
+  const cs = S.sources.calendar; const cal = { available: !!(cs && cs.data), src: cs };
+  let evs = (cs && cs.data && Array.isArray(cs.data.events)) ? cs.data.events : [];
+  const foreign = evs.filter((e) => e.origin !== "self"); evs = evs.filter((e) => e.origin === "self");
+  audit.push(foreign.length ? { st: "fixed", text: `本人の予定に他カレンダー由来が ${foreign.length} 件混入 → 除外して確定` } : { st: cal.available ? "ok" : "na", text: cal.available ? "本人の予定に他人の予定の混入なし（全件が primary カレンダー由来）" : "本人の予定：未取得のため混入チェック対象なし" });
+  evs = evs.map((e) => { if (!e.title.trim()) { fixes.labels++; return { ...e, title: "（タイトルなし）" }; } return e; });
+  const active = evs.filter((e) => e.selfResponse !== "declined" && e.start && e.end);
+  const dayStart = toDate(t), dayEnd = toDate(addDays(t, 1));
+  const timed = active.filter((e) => !e.allDay).map((e) => ({ ...e, s: toDate(e.start), e2: toDate(e.end) })).filter((e) => e.s < dayEnd && e.e2 > dayStart).sort((a, b) => a.s - b.s || a.e2 - b.e2);
+  const allDay = active.filter((e) => e.allDay && e.start <= t && (e.end > t));
+  const busy = timed.filter((e) => !e.transparent);
+  const conflicts = [];
+  for (let i = 0; i < busy.length; i++) for (let j = i + 1; j < busy.length; j++) {
+    const a = busy[i], b = busy[j]; if (b.s >= a.e2) continue;
+    const os = new Date(Math.max(a.s, b.s)), oe = new Date(Math.min(a.e2, b.e2)); if (oe > os) conflicts.push({ a, b, os, oe, key: [a.id, b.id].sort().join("|"), min: (oe - os) / 60000 });
+  }
+  const ws = (S.config.workStart || "09:00").split(":").map(Number), we = (S.config.workEnd || "19:00").split(":").map(Number);
+  const W0 = ws[0] * 60 + (ws[1] || 0), W1 = we[0] * 60 + (we[1] || 0);
+  const iv = busy.map((e) => [Math.max(W0, minOfDay(e.s, t)), Math.min(W1, minOfDay(e.e2, t))]).filter(([a, b]) => b > a).sort((a, b) => a[0] - b[0]);
+  const merged = []; for (const x of iv) { const l = merged[merged.length - 1]; if (l && x[0] <= l[1]) l[1] = Math.max(l[1], x[1]); else merged.push([...x]); }
+  const free = []; let cur = W0; for (const [a, b] of merged) { if (a - cur >= 15) free.push([cur, a]); cur = Math.max(cur, b); } if (W1 - cur >= 15) free.push([cur, W1]);
+  const nowEvents = timed.filter((e) => e.s <= now && now < e.e2);
+  const upcoming = active.filter((e) => !e.allDay).map((e) => ({ ...e, s: toDate(e.start), e2: toDate(e.end) })).filter((e) => e.s > now).sort((a, b) => a.s - b.s);
+  Object.assign(cal, { timed, allDay, busy, conflicts, free, W0, W1, nowEvents, next: upcoming[0] || null, nextSameStart: upcoming.filter((e) => upcoming[0] && +e.s === +upcoming[0].s) });
+  /* タスク */
+  const as = S.sources.asana; const tk = { available: !!(as && as.data), src: as };
+  let tasks = (as && as.data && Array.isArray(as.data.tasks)) ? as.data.tasks : [];
+  tasks = tasks.map((x) => { if (!x.name.trim()) { fixes.labels++; return { ...x, name: "（無題のタスク）" }; } return x; });
+  const byB = { overdue: [], today: [], week: [], other: [] };
+  for (const x of tasks) { const d = dueKey(x); const b = !d ? "other" : d < t ? "overdue" : d === t ? "today" : d <= weekEnd ? "week" : "other"; byB[b].push({ ...x, due: d }); }
+  byB.overdue.sort((a, b) => a.due.localeCompare(b.due)); byB.today.sort((a, b) => a.name.localeCompare(b.name)); byB.week.sort((a, b) => a.due.localeCompare(b.due)); byB.other.sort((a, b) => (a.due || "9999").localeCompare(b.due || "9999"));
+  const counts = Object.fromEntries(BUCKETS.map((b) => [b.key, byB[b.key].length]));
+  const sum = BUCKETS.reduce((n, b) => n + counts[b.key], 0);
+  const noDue = byB.other.filter((x) => !x.due).length;
+  const projMap = new Map();
+  for (const b of BUCKETS) for (const x of byB[b.key]) { const k = x.project ? x.project.gid : "_none"; if (!projMap.has(k)) projMap.set(k, { name: x.project ? (x.project.name || "（名称なしプロジェクト）") : "プロジェクトなし", c: { overdue: 0, today: 0, week: 0, other: 0 }, total: 0 }); const p = projMap.get(k); p.c[b.key]++; p.total++; }
+  let projs = [...projMap.values()].sort((a, b) => b.total - a.total || a.name.localeCompare(b.name));
+  if (projs.length > 8) { const rest = projs.slice(7); const o = { name: `その他 ${rest.length} プロジェクト`, c: { overdue: 0, today: 0, week: 0, other: 0 }, total: 0 }; for (const p of rest) { for (const k in o.c) o.c[k] += p.c[k]; o.total += p.total; } projs = projs.slice(0, 7).concat(o); }
+  const projSum = projs.reduce((n, p) => n + p.total, 0);
+  Object.assign(tk, { tasks, byB, counts, sum, total: tasks.length, noDue, projs, projSum, weekEnd });
+  if (tk.available) {
+    audit.push(sum === tasks.length ? { st: "ok", text: `区分合計 ${sum} = 総数 ${tasks.length}（期限切れ/今日/今週/それ以外）` } : { st: "bad", text: `区分合計 ${sum} ≠ 総数 ${tasks.length}` });
+    audit.push(projSum === tasks.length ? { st: "ok", text: `プロジェクト別合計 ${projSum} = 総数 ${tasks.length}（主プロジェクト1つに割当）` } : { st: "bad", text: `プロジェクト別合計 ${projSum} ≠ 総数 ${tasks.length}` });
+  } else audit.push({ st: "na", text: "タスク：未取得のため合計チェック対象なし" });
+  /* メール */
+  const gs = S.sources.gmail; const ml = { available: !!(gs && gs.data), src: gs };
+  const threads = ((gs && gs.data && gs.data.threads) || []).map((x) => { if (!x.subject.trim()) { fixes.labels++; return { ...x, subject: "（件名なし）" }; } return x; });
+  const act = threads.filter((x) => Array.isArray(x.categories) && x.categories.length).sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+  const catCounts = Object.fromEntries(Object.keys(MAILCAT).map((k) => [k, act.filter((x) => x.categories.includes(k)).length]));
+  Object.assign(ml, { act, catCounts, scanned: threads.length, claudeN: act.filter((x) => x.method === "claude").length });
+  /* 参考 */
+  const rs = S.sources.reference; const refEvents = ((rs && rs.data && rs.data.events) || []).filter((e) => e.origin === "ref");
+  /* リスク（最大2件） */
+  const risks = [];
+  for (const c of conflicts) risks.push({ lv: "crit", tag: "衝突", text: `${hm(c.os)}–${hm(c.oe)} に「${c.a.title}」と「${c.b.title}」が重なっています（${dur(c.min)}）`, url: c.b.link || c.a.link, urlText: "予定を開く" });
+  for (const x of act.filter((m) => m.deadline && m.deadline <= t)) risks.push({ lv: x.deadline < t ? "crit" : "warn", tag: x.deadline < t ? "メール〆切超過" : "メール〆切今日", text: `「${x.subject}」 〆切 ${mmdd(x.deadline)}`, url: x.url, urlText: "メールを開く" });
+  if (byB.today.length) risks.push({ lv: "warn", tag: "今日〆切", text: `「${byB.today[0].name}」${byB.today.length > 1 ? ` ほか ${byB.today.length - 1} 件` : ""}`, url: byB.today[0].url, urlText: "Asanaで開く" });
+  if (byB.overdue.length) risks.push({ lv: "crit", tag: "期限切れ", text: `${byB.overdue.length} 件。最も古いもの：「${byB.overdue[0].name}」（${mmdd(byB.overdue[0].due)}）`, url: byB.overdue[0].url, urlText: "Asanaで開く" });
+  /* 同期エラー・ラベル */
+  const errs = Object.keys(SRC).filter((k) => S.sources[k] && S.sources[k].status === "error");
+  audit.push(errs.length ? { st: "warn", text: `同期エラーあり：${errs.map((k) => SRC[k].label).join("、")}（前回データを保持して表示）` } : { st: "ok", text: "直近の取得で同期エラーなし" });
+  audit.push(fixes.labels ? { st: "fixed", text: `名前が空の項目 ${fixes.labels} 件に代替ラベルを付与` } : { st: "ok", text: "元データのラベル欠けなし" });
+  audit.push({ st: "ok", text: `参考枠の予定 ${refEvents.length} 件は本人の件数・衝突・空き時間の計算から除外` });
+  return { t, now, cal, tk, ml, refEvents, refSrc: rs, risks: risks.slice(0, 2), riskTotal: risks.length, audit };
+}
+
+/* ---------- 描画：ヘッダ・同期 ---------- */
+function srcState(k) {
+  const x = S.sources[k];
+  if (S.busy.has(k)) return { cls: "run", text: "更新中" };
+  if (!x || !x.lastAttempt) return { cls: "", text: "未取得" };
+  if (x.status === "error") return { cls: "err", text: x.lastSuccess ? `失敗・前回 ${fmtStamp(x.lastSuccess)}` : "失敗・未取得" };
+  return { cls: ageMin(x.lastSuccess) > staleMin() ? "stale" : "ok", text: `同期 ${fmtStamp(x.lastSuccess)}` };
+}
+function renderChips() {
+  const box = $("#sync-chips"); box.textContent = "";
+  for (const k of Object.keys(SRC)) { const st = srcState(k); const x = S.sources[k]; box.append(h("span", { class: "chip", title: x && x.error ? x.error : "" }, h("span", { class: "dot " + st.cls }), `${SRC[k].label}：${st.text}`)); }
+  $("#btn-refresh").disabled = !S.mcp || S.busy.size > 0; $("#btn-refresh").textContent = S.busy.size ? "更新中…" : "今すぐ更新";
+}
+function renderPageNote() {
+  const box = $("#page-note"); box.textContent = "";
+  const msgs = [];
+  if (S.boot === "nodb") msgs.push(["warn", "保存領域に接続できないため、前回データと同期時刻を保持できません。claude.ai 上で開いてください。"]);
+  if (S.boot !== "loading" && !S.mcp) msgs.push(["warn", "この表示環境ではコネクタを呼べないため、自動更新が保存したデータを表示しています（その場での更新・操作は不可）。"]);
+  const errs = Object.keys(SRC).filter((k) => S.sources[k] && S.sources[k].status === "error");
+  for (const k of errs) msgs.push(["err", `${SRC[k].label}：${S.sources[k].error}${S.sources[k].lastSuccess ? `。表示は最終成功 ${fmtStamp(S.sources[k].lastSuccess)} のデータです。` : "。成功したデータはまだありません。"}`]);
+  if (S.dbErr) msgs.push(["warn", `保存に失敗しました（${S.dbErr}）。表示中のデータは次回開いたときに残らない可能性があります。`]);
+  for (const [k, m] of msgs) box.append(h("div", { class: "note " + k, style: "margin-bottom:6px" }, m));
+}
+
+/* ---------- 描画：今・次・リスク ---------- */
+function eventLinks(e, M) {
+  const row = h("div", { class: "linkrow" });
+  if (e.link) row.append(link(e.link, "予定を開く"));
+  if (e.meet) row.append(link(e.meet, "会議に参加"));
+  for (const a of e.attachments || []) row.append(link(a.url, "📎 " + a.title));
+  const d = S.sources.drive && S.sources.drive.data && S.sources.drive.data.byEvent && S.sources.drive.data.byEvent[e.id];
+  if (d && d.files.length) for (const f of d.files) row.append(link(f.url, "Drive: " + f.title));
+  if (!row.childNodes.length) row.append(h("span", { class: "muted", text: d ? `資料リンク：該当なし（Drive で「${d.keyword}」を検索済み）` : "資料リンク：未取得" }));
+  return row;
+}
+function renderBand(M) {
+  const cNow = $("#c-now"), cNext = $("#c-next"), cRisk = $("#c-risk");
+  [cNow, cNext, cRisk].forEach((c) => { c.textContent = ""; c.className = "card"; });
+  cNow.append(h("div", { class: "kicker", text: "今" })); cNext.append(h("div", { class: "kicker", text: "次" })); cRisk.append(h("div", { class: "kicker", text: "リスク（今日・最大2件）" }));
+  const calNA = !M.cal.available;
+  if (calNA) {
+    const why = (S.sources.calendar && S.sources.calendar.error) || "Googleカレンダーのデータがまだありません";
+    for (const c of [cNow, cNext]) { c.append(h("div", { class: "big muted", text: "未取得" }), h("div", { class: "small muted", text: why })); c.classList.add("state-warn"); }
+  } else {
+    if (M.cal.nowEvents.length) {
+      for (const e of M.cal.nowEvents) { cNow.append(h("div", { class: "big", text: e.title }), h("div", { class: "num", text: `${hm(e.s)}–${hm(e.e2)}　残り ${dur((e.e2 - M.now) / 60000)}` }), eventLinks(e, M)); }
+      if (M.cal.nowEvents.length > 1) { cNow.classList.add("state-crit"); cNow.append(h("div", { class: "small" }, h("span", { class: "pill crit", text: "重複中" }), `${M.cal.nowEvents.length} 件が同時進行`)); }
+    } else {
+      const nx = M.cal.next && M.cal.next.s < toDate(addDays(M.t, 1)) ? M.cal.next : null;
+      cNow.append(h("div", { class: "big", text: "進行中の予定なし" }), h("div", { class: "small muted num", text: nx ? `次の予定まで ${dur((nx.s - M.now) / 60000)} 空いています` : "今日はこの後の予定がありません" }));
+    }
+    const nx = M.cal.next;
+    if (nx) {
+      const sameDay = jst(nx.s).date === M.t;
+      cNext.append(h("div", { class: "big", text: nx.title }), h("div", { class: "num", text: `${sameDay ? "" : mmdd(jst(nx.s).date) + "（" + WD[dow(jst(nx.s).date)] + "）"}${hm(nx.s)}–${hm(nx.e2)}　開始まで ${dur((nx.s - M.now) / 60000)}` }), eventLinks(nx, M));
+      if (M.cal.nextSameStart.length > 1) cNext.append(h("div", { class: "small" }, h("span", { class: "pill crit", text: "同時刻" }), `ほかに ${M.cal.nextSameStart.length - 1} 件が同じ時刻に開始`));
+    } else cNext.append(h("div", { class: "big", text: "7日以内に予定なし" }));
+    if (S.sources.calendar.status === "error") [cNow, cNext].forEach((c) => c.append(h("div", { class: "small", style: "color:var(--crit)", text: `前回データ（${fmtStamp(S.sources.calendar.lastSuccess)}）で表示中` })));
+  }
+  if (M.risks.length) {
+    const ul = h("ul");
+    for (const r of M.risks) ul.append(h("li", null, h("div", null, h("span", { class: "pill " + r.lv, text: r.tag }), r.text), r.url ? link(r.url, "根拠：" + r.urlText, "small") : h("span", { class: "small muted", text: "根拠リンクなし" })));
+    cRisk.append(h("div", { class: "risk" }, ul));
+    if (M.riskTotal > 2) cRisk.append(h("div", { class: "small muted", text: `ほか ${M.riskTotal - 2} 件は下の根拠資料に` }));
+    cRisk.classList.add(M.risks.some((r) => r.lv === "crit") ? "state-crit" : "state-warn");
+  } else {
+    const parts = [];
+    if (!M.cal.available) parts.push("予定は未取得のため衝突を判定できません");
+    if (!M.tk.available) parts.push("タスクは未取得");
+    cRisk.append(h("div", { class: "big", text: parts.length ? "判定できる範囲でリスクなし" : "今日のリスクなし" }), parts.length ? h("div", { class: "small muted", text: parts.join("。") }) : null);
+  }
+}
+
+/* ---------- 描画：予定タイムライン ---------- */
+function textW(str, px) { let w = 0; for (const ch of str) w += ch.charCodeAt(0) > 0x2e80 ? px : px * 0.58; return w; }
+function wrapText(str, maxW, px, maxLines) {
+  const lines = []; let cur = "";
+  for (const ch of str) { if (textW(cur + ch, px) > maxW && cur) { lines.push(cur); cur = ch; } else cur += ch; }
+  if (cur) lines.push(cur);
+  if (lines.length > maxLines) { const keep = lines.slice(0, maxLines); let last = keep[maxLines - 1]; while (last && textW(last + "…", px) > maxW) last = last.slice(0, -1); keep[maxLines - 1] = last + "…"; return { lines: keep, cut: true }; }
+  return { lines, cut: false };
+}
+function renderSchedule(M) {
+  const tl = $("#tl"), ad = $("#sched-allday"), cf = $("#conflicts"); tl.textContent = ""; ad.textContent = ""; cf.textContent = "";
+  const meta = $("#sched-meta");
+  if (!M.cal.available) { meta.textContent = ""; tl.append(h("div", { class: "note warn", text: `未取得：${(S.sources.calendar && S.sources.calendar.error) || "Googleカレンダーからまだ取得していません"}。予定の件数・空き時間・衝突は表示しません（0件とは扱いません）。` })); S.tlLabelCheck = null; return; }
+  const c = M.cal; meta.textContent = `時間指定 ${c.timed.length} 件・終日 ${c.allDay.length} 件・衝突 ${c.conflicts.length} 件`;
+  if (c.allDay.length) ad.append(h("div", { class: "chips" }, c.allDay.map((e) => h("span", { class: "chip" }, h("span", { class: "pill gray", text: "終日" }), link(e.link, e.title)))));
+  if (!c.timed.length) { tl.append(h("div", { class: "note", text: `今日の時間指定の予定は 0 件です（取得済み・${fmtStamp(S.sources.calendar.lastSuccess)}）。勤務時間 ${pad(Math.floor(c.W0 / 60))}:${pad(c.W0 % 60)}–${pad(Math.floor(c.W1 / 60))}:${pad(c.W1 % 60)} はすべて空きです。` })); S.tlLabelCheck = { want: 0, got: 0 }; return; }
+  const W = Math.max(300, tl.clientWidth || 600); const t = M.t;
+  let sh = Math.floor(c.W0 / 60), eh = Math.ceil(c.W1 / 60);
+  for (const e of c.timed) { sh = Math.min(sh, Math.floor(minOfDay(e.s, t) / 60)); eh = Math.max(eh, Math.ceil(minOfDay(e.e2, t) / 60)); }
+  sh = Math.max(0, sh); eh = Math.min(24, Math.max(eh, sh + 1));
+  const pxm = 0.85, top = 10, y = (min) => top + (min - sh * 60) * pxm;
+  const axisW = 40, laneX = axisW + 4, laneW = Math.min(96, Math.max(54, W * 0.2)), labX = laneX + laneW + 18, labW = W - labX - 4;
+  /* 重なりはレーンを分ける */
+  const lanesEnd = []; const placed = c.timed.map((e) => { const a = minOfDay(e.s, t), b = minOfDay(e.e2, t); let L = lanesEnd.findIndex((end) => end <= a); if (L < 0) { L = lanesEnd.length; lanesEnd.push(b); } else lanesEnd[L] = b; return { e, a, b, L }; });
+  const nL = Math.max(1, lanesEnd.length);
+  const conflictIds = new Set(c.conflicts.flatMap((x) => [x.a.id, x.b.id]));
+  const g = s("g"), gl = s("g");
+  for (let hh = sh; hh <= eh; hh++) { g.append(s("line", { x1: axisW, x2: W - 2, y1: y(hh * 60), y2: y(hh * 60), stroke: "var(--line)", "stroke-width": 1 })); g.append(s("text", { x: axisW - 6, y: y(hh * 60) + 4, "text-anchor": "end", "font-size": 11, fill: "var(--muted)", text: `${hh}:00` })); }
+  g.append(s("rect", { x: laneX, y: y(c.W0), width: laneW, height: Math.max(0, (c.W1 - c.W0) * pxm), fill: "var(--surface-2)" }));
+  for (const [a, b] of c.free) g.append(s("rect", { x: laneX + 2, y: y(a) + 1, width: laneW - 4, height: Math.max(1, (b - a) * pxm - 2), fill: "none", stroke: "var(--free)", "stroke-dasharray": "3 3", rx: 3 }));
+  for (const p of placed) {
+    const conf = conflictIds.has(p.e.id) && !p.e.transparent; const x = laneX + p.L * (laneW / nL) + 1, w = laneW / nL - 2;
+    g.append(s("rect", { x, y: y(p.a), width: Math.max(2, w), height: Math.max(3, (p.b - p.a) * pxm), rx: 3, fill: p.e.transparent ? "var(--surface)" : conf ? "var(--crit)" : "var(--accent)", stroke: p.e.transparent ? "var(--accent)" : "none", "stroke-dasharray": p.e.transparent ? "2 2" : null }));
+  }
+  for (const x of c.conflicts) g.append(s("rect", { x: laneX - 3, y: y(minOfDay(x.os, t)), width: laneW + 6, height: Math.max(2, x.min * pxm), fill: "none", stroke: "var(--crit)", "stroke-width": 2, rx: 2 }));
+  if (jst(M.now).date === t) { const nm = minOfDay(M.now, t); if (nm >= sh * 60 && nm <= eh * 60) { g.append(s("line", { x1: axisW, x2: labX - 6, y1: y(nm), y2: y(nm), stroke: "var(--crit)", "stroke-width": 1.5 })); g.append(s("circle", { cx: axisW, cy: y(nm), r: 3, fill: "var(--crit)" })); } }
+  /* ラベルは帯の外（右列）に逃がす */
+  const items = placed.map((p) => ({ kind: "ev", y0: y(p.a) + Math.min(6, (p.b - p.a) * pxm / 2), barX: laneX + laneW, p })).concat(c.free.map(([a, b]) => ({ kind: "free", y0: y(a) + Math.min(6, (b - a) * pxm / 2), barX: laneX + laneW, a, b }))).sort((u, v) => u.y0 - v.y0);
+  let floor = 0, labels = 0;
+  for (const it of items) {
+    const lines = []; let color = "var(--fg)", head = "";
+    if (it.kind === "ev") { const e = it.p.e; const conf = conflictIds.has(e.id) && !e.transparent; head = `${hm(e.s)}–${hm(e.e2)}${conf ? "  ⚠ 重なり" : ""}${e.transparent ? "（予定なし扱い）" : ""}`; color = conf ? "var(--crit)" : "var(--fg)"; const wr = wrapText(e.title, labW, 12.5, 3); lines.push(...wr.lines); it.full = e.title; }
+    else { head = `空き ${it.b - it.a}分`; lines.push(`${pad(Math.floor(it.a / 60))}:${pad(it.a % 60)}–${pad(Math.floor(it.b / 60))}:${pad(it.b % 60)}`); color = "var(--free)"; }
+    const hgt = 15 + lines.length * 15; const ly = Math.max(it.y0, floor + 4); floor = ly + hgt;
+    gl.append(s("polyline", { points: `${it.barX + 1},${it.y0} ${labX - 8},${ly + 6} ${labX - 3},${ly + 6}`, fill: "none", stroke: it.kind === "ev" ? "var(--muted)" : "var(--free)", "stroke-width": 1, opacity: 0.7 }));
+    const tx = s("text", { x: labX, y: ly + 10, "font-size": 12, fill: color, "data-label": "1" }); tx.append(s("tspan", { "font-weight": 700, text: head }));
+    lines.forEach((ln, i) => tx.append(s("tspan", { x: labX, dy: 15, "font-size": 12.5, fill: it.kind === "ev" ? "var(--fg)" : "var(--muted)", "font-weight": 400, text: ln })));
+    if (it.full) tx.append(s("title", { text: it.full }));
+    gl.append(tx); labels++;
+  }
+  const H = Math.max(y(eh * 60) + 12, floor + 10);
+  const svg = s("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "今日の予定の時間軸図" }, g, gl);
+  tl.append(svg, h("div", { class: "legend", style: "margin-top:6px" }, h("span", null, h("span", { class: "sw", style: "background:var(--accent)" }), "予定"), h("span", null, h("span", { class: "sw", style: "background:var(--crit)" }), "重なり（衝突）"), h("span", null, h("span", { class: "sw", style: "border:1px dashed var(--free)" }), `空き（勤務時間 ${pad(Math.floor(c.W0 / 60))}:${pad(c.W0 % 60)}–${pad(Math.floor(c.W1 / 60))}:${pad(c.W1 % 60)} 内・15分以上）`), h("span", null, h("span", { class: "sw", style: "background:var(--crit);height:2px" }), "現在時刻")));
+  S.tlLabelCheck = { want: items.length, got: labels };
+  /* 衝突と移動候補 */
+  if (c.conflicts.length) {
+    cf.append(h("h3", { text: `衝突 ${c.conflicts.length} 件と移動候補` }));
+    const calOk = S.sources.calendar.status === "ok";
+    for (const x of c.conflicts) {
+      const mover = x.b; const len = Math.round((mover.e2 - mover.s) / 60000); const nowM = jst(M.now).date === t ? minOfDay(M.now, t) : 0;
+      const cands = c.free.filter(([a, b]) => b - Math.max(a, nowM) >= len).slice(0, 3).map(([a]) => Math.max(a, Math.ceil(nowM / 15) * 15)).filter((a, i, arr) => arr.indexOf(a) === i);
+      const box = h("div", { class: "row" }, h("div", { class: "main" }, h("span", { class: "pill crit", text: "衝突" }), `${hm(x.os)}–${hm(x.oe)}：`, link(x.a.link, x.a.title), " × ", link(x.b.link, x.b.title), h("div", { class: "small muted", text: `移動候補は「${mover.title}」（${len}分）を今日の空き時間に入れる案です。空き時間は本人のカレンダーのみで計算。` })));
+      const acts = h("div", { class: "acts" });
+      if (!cands.length) acts.append(h("span", { class: "small muted", text: "今日の勤務時間内に同じ長さの空きなし" }));
+      for (const a of cands) acts.append(h("button", { class: "sm", type: "button", disabled: !calOk || !S.mcp, title: !calOk ? "カレンダー連携が失敗中のため移動できません" : "", onclick: () => confirmMove(box, mover, a, len) }, `${pad(Math.floor(a / 60))}:${pad(a % 60)} へ移動…`));
+      box.append(acts); cf.append(box);
+    }
+  }
+}
+function confirmMove(box, ev, startMin, len) {
+  box.querySelectorAll(".confirm").forEach((n) => n.remove());
+  const t = todayStr(); const st = `${t}T${pad(Math.floor(startMin / 60))}:${pad(startMin % 60)}:00`; const em = startMin + len; const en = `${t}T${pad(Math.floor(em / 60))}:${pad(em % 60)}:00`;
+  const warn = [];
+  if (ev.guests > 0) warn.push(`ゲスト ${ev.guests} 名に変更通知が送られます。`);
+  if (!ev.organizerSelf) warn.push("あなたは主催者ではないため、移動が拒否されるか自分の表示だけが変わる可能性があります。");
+  const cbox = h("div", { class: "confirm" + (warn.length ? " crit" : "") }, h("div", { style: "flex-basis:100%" }, `「${ev.title}」を ${st.slice(11, 16)}–${en.slice(11, 16)} に移動します。`, warn.length ? h("strong", { text: " " + warn.join(" ") }) : " ゲストはいないため通知は発生しません。"));
+  const go = h("button", { class: warn.length ? "danger" : "primary", type: "button", text: warn.length ? "通知が出ることを了承して移動" : "移動する" });
+  go.onclick = async () => {
+    go.disabled = true; go.textContent = "実行中…";
+    try {
+      await call("Google Calendar", "update_event", { eventId: ev.id, startTime: st, endTime: en }, true);
+      await refresh(["calendar"], "操作後の確認");
+      const after = ((S.sources.calendar.data || {}).events || []).find((e) => e.id === ev.id);
+      if (S.sources.calendar.status === "ok" && after && toDate(after.start).getTime() === toDate(st).getTime()) toast(`「${ev.title}」を ${st.slice(11, 16)} に移動しました（再取得で確認済み）`);
+      else toast("移動の結果を確認できませんでした。Googleカレンダーで状態を確かめてください", "err");
+    } catch (e) { toast("移動できませんでした：" + errText(e, "Google Calendar"), "err"); go.disabled = false; go.textContent = "もう一度試す"; }
+  };
+  cbox.append(go, h("button", { type: "button", text: "やめる", onclick: () => cbox.remove() })); box.append(cbox);
+}
+
+/* ---------- 描画：タスク ---------- */
+function renderTasks(M) {
+  const ch = $("#task-charts"), ls = $("#task-list"), meta = $("#task-meta"); ch.textContent = ""; ls.textContent = "";
+  if (!M.tk.available) { meta.textContent = ""; ch.append(h("div", { class: "note warn", text: `未取得：${(S.sources.asana && S.sources.asana.error) || "Asana からまだ取得していません"}` })); S.donutLabelCheck = null; return; }
+  const k = M.tk; meta.textContent = `総数 ${k.total} 件（今週＝${mmdd(M.t)}〜${mmdd(k.weekEnd)}）`;
+  /* ドーナツ：ラベルは右列に逃がす */
+  const W = Math.max(300, Math.min(ch.clientWidth || 420, 460)); const r = 66, ir = 42, cx = r + 8, cy = r + 22; const labX = cx + r + 40;
+  const svg = s("svg", { width: W, height: cy * 2 - 10, viewBox: `0 0 ${W} ${cy * 2 - 10}`, role: "img", "aria-label": "タスク区分のドーナツ図" });
+  let ang = -Math.PI / 2; const labs = [];
+  const arc = (a0, a1) => { const big = a1 - a0 > Math.PI ? 1 : 0; const p = (rad, a) => `${cx + rad * Math.cos(a)},${cy + rad * Math.sin(a)}`; return `M${p(r, a0)} A${r},${r} 0 ${big} 1 ${p(r, a1)} L${p(ir, a1)} A${ir},${ir} 0 ${big} 0 ${p(ir, a0)} Z`; };
+  if (k.total === 0) svg.append(s("circle", { cx, cy, r: (r + ir) / 2, fill: "none", stroke: "var(--gray-soft)", "stroke-width": r - ir }));
+  for (const b of BUCKETS) {
+    const n = k.counts[b.key]; if (!n) { labs.push({ b, n, mid: null }); continue; }
+    const a1 = ang + (n / k.total) * Math.PI * 2; const full = n === k.total;
+    svg.append(full ? s("circle", { cx, cy, r: (r + ir) / 2, fill: "none", stroke: b.color, "stroke-width": r - ir }) : s("path", { d: arc(ang, a1 - 0.0001), fill: b.color, stroke: "var(--surface)", "stroke-width": 1.5 }));
+    labs.push({ b, n, mid: (ang + a1) / 2 }); ang = a1;
+  }
+  svg.append(s("text", { x: cx, y: cy + 2, "text-anchor": "middle", "font-size": 20, "font-weight": 700, fill: "var(--fg)", class: "num", text: String(k.total) }), s("text", { x: cx, y: cy + 18, "text-anchor": "middle", "font-size": 10.5, fill: "var(--muted)", text: "総数" }));
+  let ly = 14, nLab = 0;
+  for (const L of labs) {
+    const y0 = ly; ly += 34;
+    if (L.mid != null && Math.cos(L.mid) > 0.15) { const px = cx + (r + 3) * Math.cos(L.mid), py = cy + (r + 3) * Math.sin(L.mid); svg.append(s("polyline", { points: `${px},${py} ${labX - 18},${y0 + 6} ${labX - 14},${y0 + 6}`, fill: "none", stroke: "var(--muted)", "stroke-width": 1 })); }
+    svg.append(s("rect", { x: labX - 12, y: y0 + 1, width: 9, height: 9, rx: 2, fill: L.b.color }));
+    const tx = s("text", { x: labX, y: y0 + 10, "font-size": 12.5, fill: "var(--fg)" });
+    tx.append(s("tspan", { "font-weight": 700, fill: L.b.color === "var(--gray)" ? "var(--muted)" : L.b.color, text: `${L.b.label} ` }), s("tspan", { class: "num", text: `${L.n}件` }));
+    tx.append(s("tspan", { x: labX, dy: 15, "font-size": 11, fill: "var(--muted)", text: `${L.n}/${k.total} = ${pct(L.n, k.total)}%（計算値）` }));
+    svg.append(tx); nLab++;
+  }
+  S.donutLabelCheck = { want: BUCKETS.length, got: nLab };
+  const ok = k.sum === k.total;
+  ch.append(h("div", { class: "svgbox" }, svg), h("div", { class: "small " + (ok ? "muted" : ""), style: ok ? "" : "color:var(--crit)" }, `区分の合計 ${BUCKETS.map((b) => k.counts[b.key]).join(" + ")} = ${k.sum} ／ 総数 ${k.total} ${ok ? "→ 一致" : "→ 不一致"}。「それ以外」には期限なし ${k.noDue} 件を含みます。`));
+  /* プロジェクト別積み上げ棒 */
+  const max = Math.max(1, ...k.projs.map((p) => p.total));
+  const bars = h("div", { class: "bars" });
+  for (const p of k.projs) {
+    const st = h("div", { class: "bar-stack", style: `width:calc((100% - 3.5em) * ${p.total / max})` });
+    for (const b of BUCKETS) if (p.c[b.key]) st.append(h("span", { style: `width:${p.c[b.key] / p.total * 100}%;background:${b.color}`, title: `${b.label} ${p.c[b.key]}件` }));
+    bars.append(h("div", { class: "bar-row" }, h("div", { class: "bar-name", text: p.name }), h("div", { class: "bar-track" }, st, h("span", { class: "bar-val num", text: `${p.total}件` + (p.c.overdue ? `（切れ${p.c.overdue}）` : "") }))));
+  }
+  ch.append(h("h3", { text: "プロジェクト別（主プロジェクトで1回だけ数える）" }), h("div", { class: "legend" }, BUCKETS.map((b) => h("span", null, h("span", { class: "sw", style: `background:${b.color}` }), b.label))), bars,
+    h("div", { class: "small " + (k.projSum === k.total ? "muted" : ""), text: `プロジェクト別の合計 ${k.projSum} ／ 総数 ${k.total} ${k.projSum === k.total ? "→ 一致" : "→ 不一致"}。複数プロジェクトに入っているタスクは、Asana のリンク先（ホーム）プロジェクトで数えています。` }));
+  /* 一覧と操作 */
+  for (const b of BUCKETS) {
+    const arr = k.byB[b.key]; const list = h("div", { class: "list" });
+    for (const x of arr) list.append(taskRow(x, b.key));
+    const sumText = `${b.label}（${arr.length}件）`;
+    if (b.key === "other" || (b.key === "overdue" && arr.length > 8)) ls.append(h("details", null, h("summary", { text: sumText + " を表示" }), list));
+    else ls.append(h("h3", { text: sumText, style: "margin-top:6px" }), arr.length ? list : h("div", { class: "small muted", text: "なし" }));
+  }
+}
+function taskRow(x, bk) {
+  const row = h("div", { class: "row" });
+  const due = x.due ? `${mmdd(x.due)}（${WD[dow(x.due)]}）` : "期限なし";
+  row.append(h("div", { class: "main" }, link(x.url, x.name), h("div", { class: "small muted" }, h("span", { class: "num", style: bk === "overdue" ? "color:var(--crit)" : "", text: due }), x.project ? ` ・ ${x.project.name}` : "")));
+  const dis = !S.mcp || S.sources.asana.status !== "ok";
+  const acts = h("div", { class: "acts" },
+    h("button", { class: "sm", type: "button", disabled: dis, onclick: () => confirmTask(row, x, "complete") }, "完了…"),
+    h("button", { class: "sm", type: "button", disabled: dis, onclick: () => confirmTask(row, x, "due") }, "期限変更…"));
+  row.append(acts); return row;
+}
+function confirmTask(row, x, mode) {
+  row.querySelectorAll(".confirm").forEach((n) => n.remove());
+  const box = h("div", { class: "confirm" });
+  let input = null;
+  if (mode === "complete") box.append(h("span", { text: `「${x.name}」を Asana で完了にします。` }));
+  else { input = h("input", { type: "date", id: "due-" + x.gid, value: x.due || todayStr(), "aria-label": "新しい期限" }); box.append(h("span", { text: "新しい期限：" }), input); }
+  const go = h("button", { class: "primary", type: "button", text: mode === "complete" ? "完了にする" : "期限を変更" });
+  go.onclick = async () => {
+    const nd = input ? input.value : null; if (input && !/^\d{4}-\d{2}-\d{2}$/.test(nd)) { toast("日付を選んでください", "err"); return; }
+    go.disabled = true; go.textContent = "実行中…";
+    try {
+      const p = await call("Asana", "update_tasks", { tasks: [mode === "complete" ? { task: x.gid, completed: true } : { task: x.gid, due_on: nd }] }, true) || {};
+      if (Array.isArray(p.failed) && p.failed.length) throw { code: "tool_error", server: "Asana", message: JSON.stringify(p.failed[0].errors || p.failed[0]).slice(0, 200) };
+      await refresh(["asana"], "操作後の確認");
+      const after = ((S.sources.asana.data || {}).tasks || []).find((t) => t.gid === x.gid);
+      const verified = S.sources.asana.status === "ok" && (mode === "complete" ? !after : after && dueKey(after) === nd);
+      if (verified) toast(mode === "complete" ? `「${x.name}」を完了にしました（再取得で確認済み）` : `「${x.name}」の期限を ${mmdd(nd)} に変更しました（再取得で確認済み）`);
+      else toast("Asana への反映を確認できませんでした。Asana で状態を確かめてください", "err");
+    } catch (e) { toast("実行できませんでした：" + errText(e, "Asana"), "err"); go.disabled = false; go.textContent = "もう一度試す"; }
+  };
+  box.append(go, h("button", { type: "button", text: "やめる", onclick: () => box.remove() })); row.append(box);
+}
+
+/* ---------- 描画：メール ---------- */
+function renderMail(M) {
+  const b = $("#mail-body"), meta = $("#mail-meta"); b.textContent = "";
+  if (!M.ml.available) { meta.textContent = ""; b.append(h("div", { class: "note warn", text: `未取得：${(S.sources.gmail && S.sources.gmail.error) || "Gmail からまだ取得していません"}` })); return; }
+  const m = M.ml; meta.textContent = `直近7日の受信箱 ${m.scanned} スレッドから ${m.act.length} 件を抽出`;
+  b.append(h("div", { class: "chips" }, Object.entries(MAILCAT).map(([k, c]) => h("span", { class: "chip" }, h("span", { class: "pill " + c.pill, text: c.label }), h("span", { class: "num", text: `${m.catCounts[k]}件` })))),
+    h("div", { class: "small muted", text: `1通が複数区分に入ることがあるため、区分の件数の合計は抽出件数（${m.act.length}件）と一致しないことがあります。判定：Claude ${m.claudeN} 件／ルール（暫定）${m.act.length - m.claudeN} 件。メールの送信は行いません。` }));
+  const list = h("div", { class: "list" });
+  if (!m.act.length) list.append(h("div", { class: "small muted", text: "対応が必要と判定したメールはありません" }));
+  for (const x of m.act) list.append(mailRow(x));
+  b.append(list);
+}
+function mailRow(x) {
+  const row = h("div", { class: "row" });
+  const d = x.date ? fmtStamp(x.date) : "";
+  row.append(h("div", { class: "main" }, h("div", null, x.categories.map((c) => h("span", { class: "pill " + (MAILCAT[c] || { pill: "gray" }).pill, text: (MAILCAT[c] || { label: c }).label })), link(x.url, x.subject)),
+    h("div", { class: "small muted" }, `${x.from}　${d}`, x.deadline ? h("span", { style: "color:var(--crit)", text: `　〆切 ${mmdd(x.deadline)}` }) : "", `　判定：${x.method === "claude" ? "Claude" : "ルール（暫定）"}`), x.summary ? h("div", { class: "small", text: x.summary }) : null));
+  const dr = S.drafts[x.id];
+  if (dr) row.append(draftBox(x, dr));
+  else if (x.categories.includes("reply") || x.categories.includes("approval")) row.append(h("div", { class: "acts" }, h("button", { class: "sm", type: "button", disabled: !S.sample || !S.mcp, title: !S.sample ? "この表示環境では Claude に下書きを頼めません" : "", onclick: (ev) => genDraft(ev.currentTarget, x) }, "下書き候補を作る")));
+  return row;
+}
+function draftBox(x, dr) {
+  const box = h("div", { style: "flex-basis:100%;display:flex;flex-direction:column;gap:6px;margin-top:4px" });
+  if (dr.status === "approved") { box.append(h("div", { class: "small" }, h("span", { class: "pill ok", text: "承認済み" }), "Gmail の下書きに保存済み（未送信）　", link(dr.draftUrl, "下書きを開く"))); return box; }
+  if (dr.status === "rejected") { box.append(h("div", { class: "small muted" }, h("span", { class: "pill gray", text: "却下" }), `下書き候補を却下しました（${fmtStamp(dr.decidedAt)}）`)); return box; }
+  const ta = h("textarea", { id: "draft-" + x.id, "aria-label": "下書き候補の本文" }); ta.value = S.draftEdits[x.id] != null ? S.draftEdits[x.id] : String(dr.body || ""); ta.addEventListener("input", () => { S.draftEdits[x.id] = ta.value; });
+  box.append(h("div", { class: "small" }, h("span", { class: "pill info", text: "下書き候補" }), `宛先：${(dr.to || []).join(", ")}${dr.cc && dr.cc.length ? "／CC：" + dr.cc.join(", ") : ""}　件名：${dr.subject || ""}　（${dr.createdBy === "scheduled" ? "朝の自動更新で作成" : "このページで作成"}）`), ta);
+  const acts = h("div", { class: "acts" });
+  const ok = h("button", { class: "primary sm", type: "button", disabled: !S.mcp, text: "承認して Gmail の下書きに保存" });
+  const ng = h("button", { class: "sm", type: "button", text: "却下" });
+  ok.onclick = () => {
+    acts.querySelectorAll(".confirm").forEach((n) => n.remove());
+    const c = h("div", { class: "confirm" }, h("span", { text: "Gmail に下書きとして保存します。送信はしません。" }));
+    const go = h("button", { class: "primary sm", type: "button", text: "保存する" });
+    go.onclick = async () => {
+      go.disabled = true; go.textContent = "保存中…";
+      try {
+        const input = { to: dr.to || [], subject: dr.subject || "", body: ta.value }; if (dr.cc && dr.cc.length) input.cc = dr.cc; if (dr.replyToMessageId) input.replyToMessageId = dr.replyToMessageId;
+        const p = await call("Gmail", "create_draft", input, true) || {};
+        if (!p.id) throw { code: "tool_error", server: "Gmail", message: "下書きIDが返りませんでした" };
+        const nd = { ...dr, body: ta.value, status: "approved", draftId: String(p.id), draftUrl: safeUrl(p.viewUrl), decidedAt: new Date().toISOString() };
+        S.drafts[x.id] = nd; const saved = await saveDoc("drafts/" + x.id, nd);
+        toast(saved ? "Gmail に下書きを保存しました（未送信）" : "Gmail に下書きを保存しました（未送信）。ただしこのページの記録の保存に失敗しました"); renderAll();
+      } catch (e) { toast("下書きを保存できませんでした：" + errText(e, "Gmail"), "err"); go.disabled = false; go.textContent = "もう一度試す"; }
+    };
+    c.append(go, h("button", { class: "sm", type: "button", text: "やめる", onclick: () => c.remove() })); acts.append(c);
+  };
+  ng.onclick = async () => {
+    ng.disabled = true; const nd = { ...dr, body: ta.value, status: "rejected", decidedAt: new Date().toISOString() };
+    const saved = await saveDoc("drafts/" + x.id, nd);
+    if (saved) { S.drafts[x.id] = nd; toast("下書き候補を却下しました"); renderAll(); } else { ng.disabled = false; toast("却下を記録できませんでした（保存領域に接続できません）", "err"); }
+  };
+  acts.append(ok, ng); box.append(acts); return box;
+}
+async function genDraft(btn, x) {
+  btn.disabled = true; btn.textContent = "作成中…";
+  try {
+    const th = await call("Gmail", "get_thread", { threadId: x.id, messageFormat: "PLAIN_TEXT" }) || {};
+    const msgs = (th.messages || []).slice(-3).map((mm) => `From: ${mm.sender}\nTo: ${(mm.toRecipients || []).join(", ")}\nCc: ${(mm.ccRecipients || []).join(", ")}\nDate: ${mm.date}\nSubject: ${mm.subject}\n\n${String(mm.plaintextBody || mm.snippet || "").slice(0, 3500)}`).join("\n\n-----\n\n");
+    const last = (th.messages || [])[th.messages.length - 1] || {};
+    const me = String(S.config.me || "");
+    const prompt = `あなたは日本の会社員（メールアドレス ${me}）の秘書です。次のメールスレッドへの返信の下書きを日本語で作ってください。事実や約束を勝手に作らず、確認が必要な箇所は【要確認：…】と書いてください。署名は不要です。JSON だけで答えてください：{"body":"本文"}\n\n${msgs}`;
+    const res = await S.sample.json(prompt, { modelTier: "default" });
+    if (!res || typeof res.body !== "string" || !res.body.trim()) throw { code: "invalid_json", message: "本文が空でした" };
+    const lower = me.toLowerCase(); const fromLast = String(last.sender || x.from);
+    const to = fromLast.toLowerCase() === lower ? (last.toRecipients || []) : [fromLast];
+    const cc = [...(last.toRecipients || []), ...(last.ccRecipients || [])].filter((a) => a.toLowerCase() !== lower && !to.includes(a));
+    const subj = String(last.subject || x.subject); const dr = { threadId: x.id, replyToMessageId: String(last.id || x.lastMsgId), to, cc, subject: /^re:/i.test(subj) ? subj : "Re: " + subj, body: res.body, status: "pending", createdAt: new Date().toISOString(), createdBy: "page" };
+    S.drafts[x.id] = dr; const saved = await saveDoc("drafts/" + x.id, dr); if (!saved) toast("下書き候補を作りましたが保存できませんでした", "err"); renderAll();
+  } catch (e) { toast("下書き候補を作れませんでした：" + (e && e.code === "not_granted" ? "Claude への問い合わせが許可されていません" : errText(e, "Gmail")), "err"); btn.disabled = false; btn.textContent = "下書き候補を作る"; }
+}
+
+/* ---------- 描画：参考・履歴・自動更新・監査 ---------- */
+function renderRef(M) {
+  const b = $("#ref-body"); b.textContent = "";
+  const ids = Array.isArray(S.config.refCalendars) ? S.config.refCalendars : [];
+  const rs = M.refSrc;
+  if (rs && rs.status === "error") b.append(h("div", { class: "note err", text: `${rs.error}${rs.lastSuccess ? `（前回 ${fmtStamp(rs.lastSuccess)} のデータを表示）` : ""}` }));
+  if (!ids.length) b.append(h("div", { class: "small muted", text: "参考にしたいカレンダーはまだ登録されていません。下にカレンダーID（メールアドレス）を入れると、その人の今日の予定をここにだけ表示します。" }));
+  else if (!rs || !rs.data) b.append(h("div", { class: "small muted", text: "未取得" }));
+  else {
+    const list = h("div", { class: "list" }); const ev = M.refEvents.filter((e) => e.start).sort((a, c) => String(a.start).localeCompare(String(c.start)));
+    if (!ev.length) list.append(h("div", { class: "small muted", text: `今日の予定 0 件（${fmtStamp(rs.lastSuccess)} 取得）` }));
+    for (const e of ev) list.append(h("div", { class: "row" }, h("div", { class: "main" }, h("span", { class: "pill gray", text: e.calendar || "参考" }), e.allDay ? "終日 " : `${hm(toDate(e.start))}–${hm(toDate(e.end))} `, e.title || "（予定あり）")));
+    b.append(list);
+    if (rs.data.partialErrors && rs.data.partialErrors.length) b.append(h("div", { class: "note warn", text: "一部取得失敗：" + rs.data.partialErrors.join(" / ") }));
+  }
+  const inp = h("input", { type: "text", id: "ref-cal-input", placeholder: "name@example.com をカンマ区切りで", style: "flex:1 1 14em;min-width:0" }); inp.value = ids.join(", ");
+  const sv = h("button", { class: "sm", type: "button", text: "参考カレンダーを保存" });
+  sv.onclick = async () => { const list = inp.value.split(/[,\s]+/).map((x) => x.trim()).filter((x) => /^[^@\s]+@[^@\s]+$/.test(x)); const cfg = { ...S.config, refCalendars: list }; if (await saveDoc("meta/config", cfg)) { S.config = cfg; toast("参考カレンダーを保存しました"); refresh(["reference"], "設定変更"); } else toast("保存できませんでした", "err"); };
+  b.append(h("div", { style: "display:flex;flex-wrap:wrap;gap:6px;align-items:center" }, inp, sv));
+}
+function renderHist(M) {
+  const b = $("#hist-body"); b.textContent = "";
+  const days = []; for (let i = 6; i >= 0; i--) days.push(addDays(M.t, -i));
+  const vals = days.map((d) => S.daily[d] && typeof S.daily[d].overdue === "number" ? S.daily[d].overdue : null);
+  const max = Math.max(1, ...vals.filter((v) => v != null));
+  const g = h("div", { class: "hist" });
+  days.forEach((d, i) => {
+    const v = vals[i];
+    g.append(h("div", { class: "hcol" }, v == null ? h("div", { class: "hgap", text: "欠け・未同期" }) : h("div", { class: "hbar-area" }, h("div", { class: "hbar", style: `height:${Math.max(2, v / max * 100)}%`, title: `${v}件` })),
+      h("div", { class: "hlab num", text: v == null ? "—" : `${v}件` }), h("div", { class: "hlab", text: `${mmdd(d)}（${WD[dow(d)]}）` })));
+  });
+  const nMiss = vals.filter((v) => v == null).length;
+  b.append(g, h("div", { class: "small muted", text: `その日に Asana を取得できた記録（朝の自動更新かこのページの更新）がある日だけ値を描いています。欠け ${nMiss} 日。` }));
+}
+function renderAuto() {
+  const b = $("#auto-body"); b.textContent = "";
+  const a = S.automation; const tr = S.trigger; const rs = S.runstate;
+  if (!a || !a.triggerId) { b.append(h("div", { class: "note warn", text: "自動更新：未設定（予約情報が保存されていません）" })); return; }
+  const dl = h("dl", { class: "kv" });
+  const add = (k, v) => dl.append(h("dt", { text: k }), h("dd", null, v));
+  add("予定", a.scheduleText || "毎朝6時台");
+  if (tr) {
+    add("状態", h("span", null, h("span", { class: "pill " + (tr.enabled ? "ok" : "gray"), text: tr.enabled ? "有効" : "停止中" }), tr.ended_reason ? `（終了理由：${tr.ended_reason}）` : ""));
+    add("次回実行予定", tr.enabled && tr.next_run_at ? fmtStamp(tr.next_run_at) : "なし");
+    add("最後の起動", tr.last_run ? `${fmtStamp(tr.last_run.fired_at)}（${tr.last_run.status || "不明"}）` : "まだ起動していません");
+  } else add("状態", h("span", { class: "muted", text: S.triggerErr ? `予約の状態を読めません：${S.triggerErr}` : "確認中…" }));
+  if (rs) {
+    add("最終実行結果", h("span", null, h("span", { class: "pill " + (rs.lastRunOk ? "ok" : "crit"), text: rs.lastRunOk ? "成功" : "一部失敗" }), `${fmtStamp(rs.lastRunAt)}${rs.lastRunSummary ? "　" + rs.lastRunSummary : ""}`));
+    add("連続失敗", `${rs.consecutiveFailures || 0} 回${rs.failureNotified ? "（通知済み）" : ""}`);
+    if (rs.lastReport) add("直近の報告", rs.lastReport);
+  } else add("最終実行結果", "まだ自動更新は実行されていません");
+  add("起動時更新", `開いたとき、最終同期から ${staleMin()} 分以上経ったソースだけ裏で更新`);
+  b.append(dl);
+  const acts = h("div", { class: "acts" });
+  if (tr) {
+    const btn = h("button", { class: tr.enabled ? "danger sm" : "primary sm", type: "button", text: tr.enabled ? "自動更新を停止…" : "自動更新を再開…", disabled: !S.mcp });
+    btn.onclick = () => {
+      acts.querySelectorAll(".confirm").forEach((n) => n.remove());
+      const c = h("div", { class: "confirm" }, h("span", { text: tr.enabled ? "毎朝の自動更新を止めます。手動更新と起動時更新は使えます。" : "毎朝の自動更新を再開します。" }));
+      const go = h("button", { class: "primary sm", type: "button", text: tr.enabled ? "停止する" : "再開する" });
+      go.onclick = async () => {
+        go.disabled = true; const want = !tr.enabled;
+        try { await call("Claude Code Remote", "update_trigger", { trigger_id: a.triggerId, enabled: want }, true); await loadTrigger(); if (S.trigger && !!S.trigger.enabled === want) toast(want ? "自動更新を再開しました（予約を確認済み）" : "自動更新を停止しました（予約を確認済み）"); else toast("切り替えを確認できませんでした", "err"); }
+        catch (e) { toast("切り替えできませんでした：" + errText(e, "Claude Code Remote"), "err"); go.disabled = false; }
+      };
+      c.append(go, h("button", { class: "sm", type: "button", text: "やめる", onclick: () => c.remove() })); acts.append(c);
+    };
+    acts.prepend(btn);
+  }
+  b.append(acts);
+  if (S.runs.length) { const t = h("table"); t.append(h("tr", null, h("th", { text: "実行" }), h("th", { text: "結果" }), h("th", { text: "内容" }))); for (const r of S.runs.slice(0, 5)) t.append(h("tr", null, h("td", { class: "num", text: fmtStamp(r.at) }), h("td", null, h("span", { class: "pill " + (r.ok ? "ok" : "crit"), text: r.ok ? "成功" : "一部失敗" })), h("td", { class: "small", text: r.summary || "" }))); b.append(h("details", null, h("summary", { text: "自動更新の履歴" }), h("div", { class: "tblwrap" }, t))); }
+}
+function renderAudit(M) {
+  const b = $("#audit-body"); b.textContent = "";
+  const extra = [];
+  if (S.tlLabelCheck) extra.push(S.tlLabelCheck.got === S.tlLabelCheck.want ? { st: "ok", text: `時間軸図のラベル ${S.tlLabelCheck.got}/${S.tlLabelCheck.want} 件すべて表示（帯の外に配置）` } : { st: "bad", text: `時間軸図のラベル欠け ${S.tlLabelCheck.want - S.tlLabelCheck.got} 件` });
+  if (S.donutLabelCheck) extra.push(S.donutLabelCheck.got === S.donutLabelCheck.want ? { st: "ok", text: `ドーナツ図の区分ラベル ${S.donutLabelCheck.got}/${S.donutLabelCheck.want} 件すべて表示（0件の区分も表示）` } : { st: "bad", text: "ドーナツ図のラベル欠けあり" });
+  const wide = [...document.querySelectorAll(".card")].filter((c) => c.scrollWidth > c.clientWidth + 2 && !c.querySelector(".svgbox"));
+  extra.push(wide.length ? { st: "bad", text: `横にはみ出しているカード ${wide.length} 件` } : { st: "ok", text: `この画面幅（${document.documentElement.clientWidth}px）ではみ出しなし` });
+  const all = M.audit.concat(extra); S.audit = all;
+  const ICON = { ok: ["ok", "OK"], fixed: ["warn", "修正済"], warn: ["warn", "要確認"], bad: ["crit", "不一致"], na: ["gray", "対象外"] };
+  const ul = h("ul"); for (const a of all) ul.append(h("li", null, h("span", { class: "pill " + ICON[a.st][0], text: ICON[a.st][1] }), h("span", { text: a.text }))); b.append(ul);
+  $("#audit-meta").textContent = `表示時刻 ${hm(M.now)} に実施`;
+}
+function renderAll() {
+  const now = new Date(); const j = jst(now);
+  $("#today-line").textContent = `${+j.date.slice(0, 4)}年${+j.date.slice(5, 7)}月${+j.date.slice(8, 10)}日（${WD[dow(j.date)]}） ${hm(now)} 時点・日本時間`;
+  const M = compute(now); S.M = M;
+  renderChips(); renderPageNote(); renderBand(M); renderSchedule(M); renderTasks(M); renderMail(M); renderRef(M); renderHist(M); renderAuto(); renderAudit(M);
+}
+
+/* ---------- 日次記録（前日比のため） ---------- */
+async function saveDaily() {
+  const M = S.M; if (!M || !S.db) return;
+  const a = S.sources.asana; if (!a || a.status !== "ok" || jst(new Date(a.lastSuccess)).date !== M.t) return;
+  const c = S.sources.calendar; const calToday = c && c.status === "ok" && jst(new Date(c.lastSuccess)).date === M.t;
+  const doc = { date: M.t, at: new Date().toISOString(), by: "page", total: M.tk.total, overdue: M.tk.counts.overdue, today: M.tk.counts.today, week: M.tk.counts.week, other: M.tk.counts.other,
+    overdueIds: M.tk.byB.overdue.map((x) => x.gid), dueTodayIds: M.tk.byB.today.map((x) => x.gid),
+    conflictKeys: calToday ? M.cal.conflicts.map((x) => x.key) : null, conflictCount: calToday ? M.cal.conflicts.length : null,
+    mailDeadlineIds: M.ml.available ? M.ml.act.filter((x) => x.deadline).map((x) => x.id) : null };
+  const prev = S.daily[M.t]; if (prev && prev.by === "scheduled") { doc.morning = prev.morning || { overdue: prev.overdue, today: prev.today, conflictCount: prev.conflictCount, at: prev.at }; }
+  S.daily[M.t] = doc; await saveDoc("daily/" + M.t, doc); renderHist(M);
+}
+
+/* ---------- 起動 ---------- */
+async function loadTrigger() {
+  if (!S.automation || !S.automation.triggerId || !S.mcp) { renderAuto(); return; }
+  try { const p = await call("Claude Code Remote", "get_trigger", { trigger_id: S.automation.triggerId }); S.trigger = (p && (p.trigger || p)) || null; S.triggerErr = null; }
+  catch (e) { S.trigger = null; S.triggerErr = errText(e, "Claude Code Remote"); }
+  renderAuto();
+}
+async function loadDb() {
+  const db = S.db; const g = async (p) => { const sn = await db.doc(p).get(); return sn.exists ? sn.data() : null; };
+  const [cfg, auto, rs] = await Promise.all([g("meta/config"), g("meta/automation"), g("meta/runstate")]);
+  S.config = cfg || {}; S.automation = auto; S.runstate = rs;
+  for (const k of Object.keys(SRC)) { const d = await g("sources/" + k); if (d) S.sources[k] = d; }
+  const dr = await db.collection("drafts").get(); for (const d of dr.docs) S.drafts[d.id] = d.data();
+  const dl = await db.collection("daily").get(); for (const d of dl.docs) S.daily[d.id] = d.data();
+  try { const rn = await db.collection("runs").orderBy("at", "desc").limit(10).get(); S.runs = rn.docs.map((d) => d.data()); } catch (_) { S.runs = []; }
+}
+async function boot() {
+  renderAll();
+  const C = window.claude;
+  if (!C || typeof C.use !== "function") { S.boot = "nodb"; renderAll(); return; }
+  const [db, mcp, sample] = await Promise.all([C.use("db").catch(() => null), C.use("mcp").catch(() => null), C.use("sample").catch(() => null)]);
+  S.db = db; S.mcp = mcp; S.sample = sample;
+  if (db) {
+    try { await Promise.race([loadDb(), sleep(10000).then(() => { throw { code: "timeout" }; })]); S.boot = "ok"; }
+    catch (e) { S.boot = "ok"; S.dbErr = "読み込みに時間がかかっています（" + ((e && e.code) || "error") + "）"; }
+  } else S.boot = "nodb";
+  renderAll();
+  if (mcp) {
+    loadTrigger();
+    const stale = Object.keys(SRC).filter((k) => { const x = S.sources[k]; return !x || !x.lastSuccess || ageMin(x.lastSuccess) >= staleMin() || jst(new Date(x.lastSuccess)).date !== todayStr(); });
+    if (stale.length) refresh(stale, "起動時");
+  }
+}
+$("#btn-refresh").addEventListener("click", () => refresh(Object.keys(SRC), "手動"));
+let rT; window.addEventListener("resize", () => { clearTimeout(rT); rT = setTimeout(() => { if (S.M) renderAll(); }, 200); });
+setInterval(() => { const now = new Date(); const j = jst(now); $("#today-line").textContent = `${+j.date.slice(0, 4)}年${+j.date.slice(5, 7)}月${+j.date.slice(8, 10)}日（${WD[dow(j.date)]}） ${hm(now)} 時点・日本時間`; const M = compute(now); S.M = M; renderChips(); renderBand(M); }, 60000);
+boot();
+</script>
