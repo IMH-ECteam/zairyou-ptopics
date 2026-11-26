@@ -73,7 +73,7 @@ td.r,th.r{text-align:right}
 @media (max-width:520px){.bar-row{grid-template-columns:1fr}}
 .bar-name{font-size:12px;overflow-wrap:anywhere;line-height:1.35}
 .bar-track{display:flex;align-items:center;gap:6px;min-width:0}
-.bar-stack{display:flex;height:14px;border-radius:3px;overflow:hidden;flex:none;max-width:calc(100% - 3.5em)}
+.bar-stack{display:flex;height:14px;border-radius:3px;overflow:hidden;flex:none;max-width:calc(100% - 8em)}
 .bar-stack span{display:block;height:100%}
 .bar-val{font-size:12px;white-space:nowrap}
 .legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px}
@@ -330,7 +330,11 @@ function classify(t, me) {
 }
 function normThread(t) {
   const ms = Array.isArray(t.messages) ? t.messages : []; const last = ms[ms.length - 1] || {};
-  return { id: String(t.id), lastMsgId: String(last.id || ""), subject: String(last.subject || ""), from: String(last.sender || ""), to: (last.toRecipients || []).map(String), cc: (last.ccRecipients || []).map(String), date: last.date || null, url: safeUrl(t.viewUrl || last.viewUrl), count: t.messageCount || ms.length, snippet: String(last.snippet || "").slice(0, 280) };
+  const id = String(t.id), mid = String(last.id || "");
+  let date = last.date || null;
+  if (!date && /^[0-9a-f]{12,16}$/i.test(mid)) { try { const ms2 = Number(BigInt("0x" + mid) >> 20n); if (ms2 > 1.2e12 && ms2 < 4e12) date = new Date(ms2).toISOString(); } catch (_) {} }
+  const url = safeUrl(t.viewUrl || last.viewUrl) || (/^[0-9a-f]+$/i.test(id) ? `https://mail.google.com/mail/u/0/#all/${id}` : null);
+  return { id, lastMsgId: mid, subject: String(last.subject || ""), from: String(last.sender || ""), to: (last.toRecipients || []).map(String), cc: (last.ccRecipients || []).map(String), date, url, count: t.messageCount || ms.length, snippet: String(last.snippet || "").slice(0, 280) };
 }
 async function fetchGmail(prev) {
   const q = "in:inbox newer_than:7d -category:promotions -category:social -category:forums";
@@ -339,7 +343,7 @@ async function fetchGmail(prev) {
   const prevMap = new Map(((prev && prev.threads) || []).map((x) => [x.id, x]));
   const threads = (p.threads || []).map(normThread).map((t) => {
     const old = prevMap.get(t.id);
-    if (old && old.method === "claude" && old.lastMsgId === t.lastMsgId) return { ...t, subject: t.subject || old.subject, categories: old.categories || [], deadline: old.deadline || null, reason: old.reason || "", method: "claude", summary: old.summary || "" };
+    if (old && old.method === "claude" && old.lastMsgId === t.lastMsgId) return { ...t, subject: old.subject || t.subject, url: old.url || t.url, date: old.date || t.date, snippet: old.snippet || t.snippet, categories: old.categories || [], deadline: old.deadline || null, reason: old.reason || "", method: "claude", summary: old.summary || "" };
     return { ...t, ...classify(t, me), method: "rule" };
   });
   return { query: q, scanned: threads.length, threads };
@@ -666,7 +670,7 @@ function renderTasks(M) {
   const max = Math.max(1, ...k.projs.map((p) => p.total));
   const bars = h("div", { class: "bars" });
   for (const p of k.projs) {
-    const st = h("div", { class: "bar-stack", style: `width:calc((100% - 3.5em) * ${p.total / max})` });
+    const st = h("div", { class: "bar-stack", style: `width:calc((100% - 8em) * ${p.total / max})` });
     for (const b of BUCKETS) if (p.c[b.key]) st.append(h("span", { style: `width:${p.c[b.key] / p.total * 100}%;background:${b.color}`, title: `${b.label} ${p.c[b.key]}件` }));
     bars.append(h("div", { class: "bar-row" }, h("div", { class: "bar-name", text: p.name }), h("div", { class: "bar-track" }, st, h("span", { class: "bar-val num", text: `${p.total}件` + (p.c.overdue ? `（切れ${p.c.overdue}）` : "") }))));
   }
@@ -864,8 +868,8 @@ function renderAudit(M) {
   const extra = [];
   if (S.tlLabelCheck) extra.push(S.tlLabelCheck.got === S.tlLabelCheck.want ? { st: "ok", text: `時間軸図のラベル ${S.tlLabelCheck.got}/${S.tlLabelCheck.want} 件すべて表示（帯の外に配置）` } : { st: "bad", text: `時間軸図のラベル欠け ${S.tlLabelCheck.want - S.tlLabelCheck.got} 件` });
   if (S.donutLabelCheck) extra.push(S.donutLabelCheck.got === S.donutLabelCheck.want ? { st: "ok", text: `ドーナツ図の区分ラベル ${S.donutLabelCheck.got}/${S.donutLabelCheck.want} 件すべて表示（0件の区分も表示）` } : { st: "bad", text: "ドーナツ図のラベル欠けあり" });
-  const wide = [...document.querySelectorAll(".card")].filter((c) => c.scrollWidth > c.clientWidth + 2 && !c.querySelector(".svgbox"));
-  extra.push(wide.length ? { st: "bad", text: `横にはみ出しているカード ${wide.length} 件` } : { st: "ok", text: `この画面幅（${document.documentElement.clientWidth}px）ではみ出しなし` });
+  const cw = document.documentElement.clientWidth; const over = [...document.querySelectorAll(".wrap *")].filter((e) => !e.closest(".svgbox") && e.getBoundingClientRect().right > cw + 1).length;
+  extra.push(over || document.documentElement.scrollWidth > cw + 1 ? { st: "bad", text: `この画面幅（${cw}px）で横にはみ出している要素 ${over} 件` } : { st: "ok", text: `この画面幅（${cw}px）でページの横はみ出しなし` });
   const all = M.audit.concat(extra); S.audit = all;
   const ICON = { ok: ["ok", "OK"], fixed: ["warn", "修正済"], warn: ["warn", "要確認"], bad: ["crit", "不一致"], na: ["gray", "対象外"] };
   const ul = h("ul"); for (const a of all) ul.append(h("li", null, h("span", { class: "pill " + ICON[a.st][0], text: ICON[a.st][1] }), h("span", { text: a.text }))); b.append(ul);
